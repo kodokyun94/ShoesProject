@@ -1,4 +1,4 @@
-package com.busanit501.shoesproject.lsjdto;
+package com.busanit501.shoesproject.dto.lsjdto;
 
 
 import jakarta.validation.constraints.NotEmpty;

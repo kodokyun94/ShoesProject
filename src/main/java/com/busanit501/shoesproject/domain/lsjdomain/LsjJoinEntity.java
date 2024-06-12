@@ -1,4 +1,4 @@
-package com.busanit501.shoesproject.lsjdomain;
+package com.busanit501.shoesproject.domain.lsjdomain;
 
 
 import jakarta.persistence.EntityListeners;
