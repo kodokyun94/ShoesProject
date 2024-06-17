@@ -1,4 +1,4 @@
-package com.busanit501.shoesproject.config;
+package com.busanit501.shoesproject.config.kdkconfig;
 
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
