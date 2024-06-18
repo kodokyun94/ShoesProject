@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>상품 추가</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+<header>
+    <div class="top-nav">
+        <div class="left-nav">
+            <a href="#">매장 찾기</a>
+            <a href="#">고객센터</a>
+            <a href="signUp.html">회원가입</a>
+            <a href="signIn.html">로그인</a>
+        </div>
+    </div>
+    <div class="main-nav">
+        <div class="logo">
+            <a href="main.html">
+                <img src="../static/images/shoesicon.png" alt="나이키 로고">
+            </a>
+        </div>
+        <nav>
+            <a href="#">New</a>
+            <a href="#">Men</a>
+            <a href="#">Women</a>
+            <a href="#">Kids</a>
+        </nav>
+        <div class="search-cart">
+            <input type="text" placeholder="검색">
+            <button type="button">검색</button>
+            <a href="#"><img src="../static/images/carticon.jpg" alt="장바구니 아이콘"></a>
+        </div>
+    </div>
+</header>
+
+<div class="container mt-4">
+    <h2>상품 추가</h2>
+    <form th:action="@{/cart/add}" th:object="${cartItem}" method="post">
+        <div class="form-group">
+            <label for="itemId">상품 선택</label>
+            <select class="form-control" id="itemId" name="itemId">
+                <option th:each="item : ${items}" th:value="${item.id}"
+                        th:text="${item.name}"></option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="memberId">회원 선택</label>
+            <select class="form-control" id="memberId" name="memberId">
+                <option th:each="member : ${members}" th:value="${member.id}"
+                        th:text="${member.name}"></option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="quantity">수량</label>
+            <input type="number" class="form-control" id="quantity" th:field="*{quantity}">
+        </div>
+        <button type="submit" class="btn btn-primary">추가</button>
+    </form>
+</div>
+</body>
+</html>
+
+
+
