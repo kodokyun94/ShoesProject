@@ -3,17 +3,13 @@ package com.busanit501.shoesproject.dto.lsjdto;
 
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
-@Data
-@Builder
-@AllArgsConstructor
-@NoArgsConstructor
+
+@Getter
+@Setter
 public class LsjJoinDTO {
-
+//회원 가입 페이지로 부터 넘어오는 가입정보르 담은 DTO
     @NotEmpty
     @Size(min = 1, max = 50)
     private Long  member_id;
@@ -34,9 +30,8 @@ public class LsjJoinDTO {
     @Size(min = 1, max = 50)
     private String member_phone;
 
-
-
-
-
+    @NotEmpty
+    @Size(min = 1, max = 100)
+    private String member_address;
 
 }

@@ -1,22 +1,21 @@
 package com.busanit501.shoesproject.domain.lsjdomain;
 
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+import com.busanit501.shoesproject.constant.isjconstant.Role;
+import com.busanit501.shoesproject.dto.lsjdto.LsjJoinDTO;
+import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
-@Builder
-@Getter
-@AllArgsConstructor
-@NoArgsConstructor
-@ToString
 @Entity
-
-public class LsjJoin extends LsjJoinEntity{
-
+@Table(name = "shoes")
+@Getter
+@Setter
+@ToString
+public class LsjJoin {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long member_id;
 
     @Column(length = 50, nullable = false)
@@ -34,12 +33,22 @@ public class LsjJoin extends LsjJoinEntity{
     @Column(length = 50, nullable = false)
     private String member_address;
 
-    public void change(String member_pw, String member_name, String member_phone, String member_email, String member_address) {
-        this.member_pw = member_pw;
-        this.member_name = member_name;
-        this.member_phone = member_phone;
-        this.member_email = member_email;
-        this.member_address = member_address;
+    @Enumerated(EnumType.STRING)
+    private Role role;
+
+    public static LsjJoin createMember(LsjJoinDTO lsjJoinDTO, PasswordEncoder passwordEncoder) {
+
+        LsjJoin lsjJoin = new LsjJoin();
+        lsjJoin.setMember_id(lsjJoinDTO.getMember_id());
+        lsjJoin.setMember_name(lsjJoinDTO.getMember_name());
+        lsjJoin.setMember_email(lsjJoinDTO.getMember_email());
+        lsjJoin.setMember_phone(lsjJoinDTO.getMember_phone());
+        lsjJoin.setMember_address(lsjJoinDTO.getMember_address());
+        String pw = passwordEncoder.encode(lsjJoinDTO.getMember_pw());
+        lsjJoin.setMember_pw(pw);
+        lsjJoin.setRole(Role.USER);
+        return lsjJoin;
+
     }
 
 
