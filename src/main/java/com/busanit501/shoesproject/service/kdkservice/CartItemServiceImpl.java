@@ -21,8 +21,9 @@ public class CartItemServiceImpl implements CartItemService {
     }
 
     @Override
-    public void saveCartItem(CartItem cartItem) {
+    public Long saveCartItem(CartItem cartItem) {
         cartItemRepository.save(cartItem);
+        return null;
     }
 
     @Override

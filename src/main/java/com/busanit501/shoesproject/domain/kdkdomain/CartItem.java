@@ -10,7 +10,7 @@ import lombok.*;
 @ToString
 @Entity
 @Setter
-@Table(name = "cart")
+@Table(name = "cart_item")
 public class CartItem {
 
     @Id

@@ -8,7 +8,7 @@ public interface CartItemService {
 
     List<CartItem> getAllCartItems();
 
-    void saveCartItem(CartItem cartItem);
+    Long saveCartItem(CartItem cartItem);
 
     void deleteCartItem(Long id);
 }

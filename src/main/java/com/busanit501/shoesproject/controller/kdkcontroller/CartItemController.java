@@ -17,7 +17,7 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/cart")
-public class CartController {
+public class CartItemController {
 
     @Autowired
     private CartItemService cartItemService;
@@ -61,7 +61,7 @@ public class CartController {
     }
 
     // 장바구니에서 상품 삭제 처리
-    @GetMapping("/delete/{id}")
+    @DeleteMapping("/delete/{id}")
     public String deleteFromCart(@PathVariable("id") Long id) {
         cartItemService.deleteCartItem(id);
         return "redirect:/cart/";
