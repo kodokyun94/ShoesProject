@@ -9,6 +9,7 @@ import lombok.ToString;
 @Table(name = "cart")
 @Getter @Setter
 @ToString
+
 public class Cart {
 
     @Id
@@ -16,8 +17,13 @@ public class Cart {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long cart_id;
 
-    @OneToMany
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
     private Member member;
 
+    public static Cart createCart(Member member){
+        Cart cart = new Cart();
+        cart.setMember(member);
+        return cart;
+    }
 }

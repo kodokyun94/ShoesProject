@@ -1,10 +1,10 @@
 package com.busanit501.shoesproject.domain.kdkdomain;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import lombok.*;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Builder
 @Getter
@@ -26,7 +26,6 @@ public class Member {
     private String member_address;
 
 
-    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<CartItem> cartItems = new ArrayList<>();
+
 }
 

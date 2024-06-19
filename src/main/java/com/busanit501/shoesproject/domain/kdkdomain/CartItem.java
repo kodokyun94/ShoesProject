@@ -18,22 +18,37 @@ public class CartItem {
     private Long cartItem_id;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="cart_id")
+    private Cart cart;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @Column(name = "item_id")
     private Item item;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @Column(name = "member_id")
     private Member member;
 
 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long quantity;
+    private Long count;
 
 
-    public CartItem(Item item, Member member, Long quantity) {
-        this.item = item;
-        this.member = member;
-        this.quantity = quantity;
+    public static CartItem createCartItem(Cart cart, Item item, Long count) {
+        CartItem cartItem = new CartItem();
+        cartItem.setCart(cart);
+        cartItem.setItem(item);
+        cartItem.setCount(count);
+        return cartItem;
     }
 
+    public void addCount(Long count){
+        this.count += count;
+    }
+
+    public void updateCount(Long count){
+        this.count = count;
+    }
 
 
 }
