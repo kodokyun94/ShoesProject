@@ -36,31 +36,83 @@
     </div>
 </header>
 
-<div class="container mt-4">
-    <h2>상품 추가</h2>
-    <form th:action="@{/cart/add}" th:object="${cartItem}" method="post">
-        <div class="form-group">
-            <label for="itemId">상품 선택</label>
-            <select class="form-control" id="itemId" name="itemId">
-                <option th:each="item : ${items}" th:value="${item.id}"
-                        th:text="${item.name}"></option>
-            </select>
+<!-- content area start -->
+<div class="content_area">
+    <div class="shopping_basket_title">
+        <h2>장바구니</h2>
+    </div>
+    <div class="content_wrap">
+        <div class="content_wrap_top">
+            <div class="shop_list">
+                <div class="delete_all">
+                    <a href="#">전체삭제</a>
+                </div>
+                <div class="item_list">
+                    <img class="thumbnail" src="../img/shoppimg_basket/shoes01.jpg" alt="">
+                    <div class="item_list_text">
+                        <div class="item_info">
+                            <h4>조던 MA2 파리 생제르맹</h4>
+                            <p>스타일 : DJ2657-104</p>
+                            <p>사이즈 : 260</p>
+                            <p>수량 : 1</p>
+                            <ul>
+                                <li><a href="#">위시리스트에 추가</a></li>
+                                <li><a href="#">나중에 구매하기</a></li>
+                            </ul>
+                        </div>
+                        <div class="option_change">
+                            <a href="#">옵션 변경</a>
+                            <span>149,000원</span>
+                        </div>
+                    </div>
+                    <img class="close_btn" src="../img/shoppimg_basket/item_close.png" alt="아이템_닫기버튼">
+                </div>
+                <div class="item_list">
+                    <img class="thumbnail" src="../img/shoppimg_basket/shoes02.jpg" alt="">
+                    <div class="item_list_text">
+                        <div class="item_info">
+                            <h4>나이키 에어 리프트 브리드</h4>
+                            <p>스타일 : DJ2657-104</p>
+                            <p>사이즈 : 260</p>
+                            <p>수량 : 1</p>
+                            <ul>
+                                <li><a href="#">위시리스트에 추가</a></li>
+                                <li><a href="#">나중에 구매하기</a></li>
+                            </ul>
+                        </div>
+                        <div class="option_change">
+                            <a href="#">옵션 변경</a>
+                            <span>149,000원</span>
+                        </div>
+
+                    </div>
+                    <img class="close_btn" src="../img/shoppimg_basket/item_close.png" alt="아이템_닫기버튼">
+                </div>
+            </div>
+            <div class="right_order_area">
+                <div class="order">
+                    <h3>주문예정금액</h3>
+                    <div class="order_div_wrap">
+                        <div class="order_money"><span>상품 금액</span><span>149,000원</span></div>
+                        <div class="order_delivery"><span>예상 배송비</span><span>0원</span></div>
+                        <div class="order_product_discount"><span>상품 할인 금액</span><span>0원</span></div>
+                        <div class="order_discount"><span>주문 할인 금액</span><span>0원</span></div>
+                        <div class="order_total"><span>총 결제 예정 금액</span><span>149,000원</span></div>
+                        <a href="../templates/main.html">주문하기</a>
+                    </div>
+                </div>
+
+            </div>
         </div>
-        <div class="form-group">
-            <label for="memberId">회원 선택</label>
-            <select class="form-control" id="memberId" name="memberId">
-                <option th:each="member : ${members}" th:value="${member.id}"
-                        th:text="${member.name}"></option>
-            </select>
-        </div>
-        <div class="form-group">
-            <label for="quantity">수량</label>
-            <input type="number" class="form-control" id="quantity" th:field="*{quantity}">
-        </div>
-        <button type="submit" class="btn btn-primary">추가</button>
-    </form>
+
+    </div>
 </div>
+
+<!--    우리가 정의한 /js/reply.js 불러오기-->
+<script src="/js/cartItem.js"></script>
+
 </body>
+
 </html>
 
 

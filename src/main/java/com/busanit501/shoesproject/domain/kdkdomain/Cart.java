@@ -16,8 +16,8 @@ public class Cart {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long cart_id;
 
-    @OneToMany
-    @JoinColumn(name = "member_id")
-    private Member member;
+//    @OneToMany
+//    @JoinColumn(name = "member_id")
+//    private Member member;
 
 }
