@@ -3,6 +3,9 @@ package com.busanit501.shoesproject.domain.kdkdomain;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Builder
 @Getter
 @AllArgsConstructor
@@ -17,20 +20,14 @@ public class Item {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long item_id;
 
-    @Column(nullable = false, length = 50)
     private String item_name;
+    private String item_price;
+    private String item_type;
+    private String item_brand;
+    private String item_gender;
 
-    @Column(name="price", nullable = false)
-    private Long item_price;
-
-    @Column(nullable = false)
-    private int item_stockNumber; //재고수량
-
-    @Lob
-    @Column(nullable = false)
-    private String itemDetail; //상품 상세 설명
-
-
+    @ManyToMany(mappedBy = "item")
+    private List<Cart> cart = new ArrayList<>();
 
 
 
