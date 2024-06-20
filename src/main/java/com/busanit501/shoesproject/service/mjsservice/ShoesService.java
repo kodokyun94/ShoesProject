@@ -1,6 +1,7 @@
 package com.busanit501.shoesproject.service.mjsservice;
 
-import com.busanit501.shoesproject.dto.mjsdot.ShoesDTO;
+
+import com.busanit501.shoesproject.dto.mjsdto.ShoesDTO;
 
 public interface ShoesService {
     Long register(ShoesDTO shoesDTO);
