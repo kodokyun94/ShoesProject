@@ -74,6 +74,7 @@ dependencies {
             "com.querydsl:querydsl-apt:${queryDslVersion}:jakarta")
 
 
+
 }
 
 //작업중
