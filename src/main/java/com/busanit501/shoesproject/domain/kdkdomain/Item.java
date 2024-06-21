@@ -5,6 +5,7 @@ import lombok.*;
 
 @Builder
 @Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
@@ -17,20 +18,15 @@ public class Item {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long item_id;
 
-    @Column(nullable = false, length = 50)
     private String item_name;
+    private String item_price;
+    private String item_type;
+    private String item_brand;
+    private String item_gender;
 
-    @Column(name="price", nullable = false)
-    private Long item_price;
-
-    @Column(nullable = false)
-    private int item_stockNumber; //재고수량
-
-    @Lob
-    @Column(nullable = false)
-    private String itemDetail; //상품 상세 설명
-
-
+    @ManyToOne
+    @JoinColumn(name = "cart_id")
+    private Cart cart;
 
 
 
