@@ -11,7 +11,7 @@ plugins {
     id 'io.spring.dependency-management' version '1.1.5'
 }
 
-group = 'com.ShoesProject'
+group = 'com.busanit501'
 version = '0.0.1-SNAPSHOT'
 
 java {
@@ -74,9 +74,14 @@ dependencies {
     // 썸네일 도구
     implementation group: 'net.coobird', name: 'thumbnailator', version: '0.4.20'
 
+    // 시큐리티 도구
     // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-security
-    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-security', version: '3.2.4'
+    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-security', version: '3.3.0'
 
+    // 타임리프 화면에서, 인증된 유저 마다 화면 조건식으로 표현하는 도구
+    // https://mvnrepository.com/artifact/org.thymeleaf.extras/thymeleaf-extras-springsecurity6
+    // https://mvnrepository.com/artifact/org.thymeleaf.extras/thymeleaf-extras-springsecurity6
+    implementation group: 'org.thymeleaf.extras', name: 'thymeleaf-extras-springsecurity6', version: '3.1.2.RELEASE'
 
 
     annotationProcessor(
