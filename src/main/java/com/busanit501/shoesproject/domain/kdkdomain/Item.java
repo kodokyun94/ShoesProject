@@ -3,11 +3,9 @@ package com.busanit501.shoesproject.domain.kdkdomain;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.ArrayList;
-import java.util.List;
-
 @Builder
 @Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
@@ -26,8 +24,9 @@ public class Item {
     private String item_brand;
     private String item_gender;
 
-    @ManyToMany(mappedBy = "item")
-    private List<Cart> cart = new ArrayList<>();
+    @ManyToOne
+    @JoinColumn(name = "cart_id")
+    private Cart cart;
 
 
 

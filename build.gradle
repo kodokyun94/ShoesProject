@@ -54,6 +54,9 @@ dependencies {
     // 방법1
 //    implementation group: 'com.querydsl', name: 'querydsl-jpa', version: '5.0.0'
 
+    // Swagger UI, RESTful 테스트를 위한 화면 제공 툴.
+    implementation group: 'org.springdoc', name: 'springdoc-openapi-starter-webmvc-ui', version: '2.5.0'
+
 
     //Querydsl 도구 설치.
     // 방법2,

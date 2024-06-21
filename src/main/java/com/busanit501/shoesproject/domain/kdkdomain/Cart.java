@@ -3,7 +3,6 @@ package com.busanit501.shoesproject.domain.kdkdomain;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -17,14 +16,13 @@ public class Cart {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long cart_id;
 
-    @ManyToOne
-    @JoinColumn(name = "member_id")
-    private Member member;
+//    @ManyToOne
+//    @JoinColumn(name = "member_id")
+//    private Member member;
 
-    @ManyToMany
-    @JoinTable(
-            name = "cart_item",
-            joinColumns = @JoinColumn(name = "cart_id"),
-            inverseJoinColumns = @JoinColumn(name = "item_id"))
-    private List<Item> item = new ArrayList<>();
+    @OneToMany(mappedBy = "item_id", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Item> items;
+
+
+    private Long item_id;
 }

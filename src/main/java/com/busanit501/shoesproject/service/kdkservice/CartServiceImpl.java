@@ -1,84 +1,95 @@
 package com.busanit501.shoesproject.service.kdkservice;
 
+import com.busanit501.shoesproject.dto.kdkdto.PageRequestDTO;
 import com.busanit501.shoesproject.domain.kdkdomain.Cart;
 import com.busanit501.shoesproject.domain.kdkdomain.Item;
-import com.busanit501.shoesproject.domain.kdkdomain.Member;
 import com.busanit501.shoesproject.dto.kdkdto.CartDTO;
+import com.busanit501.shoesproject.dto.kdkdto.ItemDTO;
 import com.busanit501.shoesproject.repository.kdkrepository.CartRepository;
 import com.busanit501.shoesproject.repository.kdkrepository.ItemRepository;
-import com.busanit501.shoesproject.repository.kdkrepository.MemberRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import jakarta.transaction.Transactional;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
+@RequiredArgsConstructor
+@Log4j2
 public class CartServiceImpl implements CartService {
 
     private final CartRepository cartRepository;
-    private final MemberRepository memberRepository;
+//    private final MemberRepository memberRepository;
     private final ItemRepository itemRepository;
+    private final ModelMapper modelMapper;
 
-    @Autowired
-    public CartServiceImpl(CartRepository cartRepository, MemberRepository memberRepository, ItemRepository itemRepository) {
-        this.cartRepository = cartRepository;
-        this.memberRepository = memberRepository;
-        this.itemRepository = itemRepository;
-    }
 
     @Override
-    public CartDTO saveCart(CartDTO cartDTO) {
-        Optional<Member> memberOptional = memberRepository.findById(cartDTO.getMember_Id());
-        if (!memberOptional.isPresent()) {
-            throw new RuntimeException("Member not found");
-        }
+    @Transactional
+    public Long register(CartDTO cartDTO) {
+        Cart cart = modelMapper.map(cartDTO, Cart.class);
+        Item item = itemRepository.findById(cartDTO.getCart_Id())
+                .orElseThrow(() -> new RuntimeException("Item not found"));
+        item.setCart(cart);
+        cartRepository.save(cart);
+        return cart.getCart_id();
+    }
 
-        List<Item> items = cartDTO.getItem_Id().stream()
-                .map(itemId -> itemRepository.findById(itemId)
-                        .orElseThrow(() -> new RuntimeException("Item not found")))
+
+    @Override
+    public CartDTO read(Long cart_id) {
+        Cart cart = cartRepository.findById(cart_id)
+                .orElseThrow(() -> new RuntimeException("Cart not found"));
+
+        List<ItemDTO> itemDTOList = cart.getItems().stream()
+                .map(item -> modelMapper.map(item, ItemDTO.class))
                 .collect(Collectors.toList());
 
-        Cart cart = new Cart();
-        cart.setMember(memberOptional.get());
-        cart.setItem(items);
-
-        Cart savedCart = cartRepository.save(cart);
-
-        cartDTO.setCart_Id(savedCart.getCart_id());
+        CartDTO cartDTO = modelMapper.map(cart, CartDTO.class);
+        cartDTO.setItems(itemDTOList);
         return cartDTO;
     }
 
+
     @Override
-    public CartDTO getCartById(Long id) {
-        Optional<Cart> optionalCart = cartRepository.findById(id);
-        if (!optionalCart.isPresent()) {
-            throw new RuntimeException("Cart not found");
-        }
+    @Transactional
+    public void delete(Long cart_id) {
+        Cart cart = cartRepository.findById(cart_id)
+                .orElseThrow(() -> new RuntimeException("Cart not found"));
 
-        Cart cart = optionalCart.get();
-        CartDTO cartDTO = new CartDTO();
-        cartDTO.setCart_Id(cart.getCart_id());
-        cartDTO.setMember_Id(cart.getMember().getMember_id());
-        cartDTO.setItem_Id(cart.getItem().stream().map(Item::getItem_id).collect(Collectors.toList()));
+        // Delete the cart
+        cartRepository.delete(cart);
+    }
 
+
+    @Override
+    public CartDTO getCartItems(Long cart_id, PageRequestDTO pageRequestDTO) {
+        Cart cart = cartRepository.findById(cart_id)
+                .orElseThrow(() -> new RuntimeException("Cart not found"));
+
+        List<ItemDTO> itemDTOList = cart.getItems().stream()
+                .map(item -> modelMapper.map(item, ItemDTO.class))
+                .collect(Collectors.toList());
+
+        CartDTO cartDTO = modelMapper.map(cart, CartDTO.class);
+        cartDTO.setItems(itemDTOList);
         return cartDTO;
     }
 
-    @Override
-    public List<CartDTO> getAllCarts() {
-        return cartRepository.findAll().stream().map(cart -> {
-            CartDTO cartDTO = new CartDTO();
-            cartDTO.setCart_Id(cart.getCart_id());
-            cartDTO.setMember_Id(cart.getMember().getMember_id());
-            cartDTO.setItem_Id(cart.getItem().stream().map(Item::getItem_id).collect(Collectors.toList()));
-            return cartDTO;
-        }).collect(Collectors.toList());
-    }
+
 
     @Override
-    public void deleteCart(Long id) {
-        cartRepository.deleteById(id);
+    @Transactional
+    public void update(CartDTO cartDTO) {
+        Cart cart = cartRepository.findById(cartDTO.getCart_Id())
+                .orElseThrow(() -> new RuntimeException("Cart not found"));
+
+        // Update cart information if needed
+
+        // Save the updated cart
+        cartRepository.save(cart);
     }
 }
