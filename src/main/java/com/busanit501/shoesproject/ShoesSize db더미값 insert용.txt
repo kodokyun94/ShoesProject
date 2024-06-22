@@ -1,0 +1,19 @@
+ShoesSize table DB더미값 ISNERT용
+
+나중에 productpage에서
+제품옆 사이즈 버튼 클릭 후 장바구니 버튼 누를 시에 사이즈값 넘겨줘야해서
+우선 값 삽입해놓음.
+
+insert into shoes_size values (230,'230');
+insert into shoes_size values (235,'235');
+insert into shoes_size values (240,'240');
+insert into shoes_size values (245,'245');
+insert into shoes_size values (250,'250');
+insert into shoes_size values (255,'255');
+insert into shoes_size values (260,'260');
+insert into shoes_size values (265,'265');
+insert into shoes_size values (270,'270');
+insert into shoes_size values (275,'275');
+insert into shoes_size values (280,'280');
+insert into shoes_size values (285,'285');
+insert into shoes_size values (290,'290');
