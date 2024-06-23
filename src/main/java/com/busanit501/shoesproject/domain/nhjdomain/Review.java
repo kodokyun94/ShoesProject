@@ -5,34 +5,35 @@ import lombok.*;
 
 @Builder
 @Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-//@Table(name="reviews")
 @Entity
-public class Review {
+public class Review extends BaseEntity {
 
     @Id
-//    pr키
-//    나중에 합치고 아래변경
-//    @OneToMany
-//    @JoinColumn(name = "item_id")
+    @GeneratedValue(strategy= GenerationType.IDENTITY)
+    private Long rev_id;
 
+    //    나중에 합치고 아래변경
+    @ManyToOne
+    @JoinColumn(name = "item_id")
+    private Item item;
 
-    private long item_id;
-
-//    @OneToMany
-//    @JoinColumn(name = "member_id")
-    private long member_id;
+    @ManyToOne
+    @JoinColumn(name = "member_id")
+    private Member member;
 
     @Column(length=50, nullable = false)
     private String member_name;
 
-    @Column(length=50, nullable = false)
+    private String imagePath;
+
+    @Column(length=200, nullable = false)
     private String item_rev;
 
-    @Column(length=50, nullable = false)
-    private String item_rank;
-
+    @Column(length=5, nullable = false)
+    private int item_rank;
 
 }

@@ -9,13 +9,12 @@ import lombok.*;
 @NoArgsConstructor
 @ToString
 @Entity
-public class ShoesColor {
+public class Size {
 
     @Id
-    @GeneratedValue(strategy= GenerationType.IDENTITY)
-    private long color_id;
+    private Long size_id;
 
     @Column(length = 50,nullable = false)
-    private String item_color;
+    private String item_size;
 
 }

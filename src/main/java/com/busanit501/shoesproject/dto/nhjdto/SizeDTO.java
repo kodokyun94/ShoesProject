@@ -9,9 +9,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class ShoesSizeDTO {
-
-    private long size_id;
+public class SizeDTO {
+    private Long size_id;
     private String item_size;
-
 }

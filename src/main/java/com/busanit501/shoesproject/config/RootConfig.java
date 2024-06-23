@@ -6,8 +6,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-public class
-RootConfig {
+public class RootConfig {
   @Bean
   public ModelMapper getMapper() {
     ModelMapper mapper = new ModelMapper();
@@ -16,14 +15,5 @@ RootConfig {
         .setFieldAccessLevel(org.modelmapper.config.Configuration.AccessLevel.PRIVATE)
         .setMatchingStrategy(MatchingStrategies.STRICT);
     return mapper;
-
   }
 }
-
-
-
-
-
-
-
-
