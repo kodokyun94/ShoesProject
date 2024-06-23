@@ -19,33 +19,18 @@
                 <div class="card-body">
                     <form id="registrationForm" action="/member/join" method="post">
                         <div class="input-group mb-3">
-                            <span class="input-group-text">ID</span>
-                            <input type="text" name="member_id" class="form-control">
+                            <span class="input-group-text">MID</span>
+                            <input type="text" name="mid" class="form-control">
                         </div>
 
                         <div class="input-group mb-3">
-                            <span class="input-group-text">PW</span>
-                            <input type="password" name="member_pw" class="form-control">
-                        </div>
-
-                        <div class="input-group mb-3">
-                            <span class="input-group-text">NAME</span>
-                            <input type="email" name="member_name" class="form-control">
-                        </div>
-
-                        <div class="input-group mb-3">
-                            <span class="input-group-text">PHONE</span>
-                            <input type="email" name="member_phone" class="form-control">
+                            <span class="input-group-text">MPW</span>
+                            <input type="password" name="mpw" class="form-control">
                         </div>
 
                         <div class="input-group mb-3">
                             <span class="input-group-text">EMAIL</span>
-                            <input type="email" name="member_email" class="form-control">
-                        </div>
-
-                        <div class="input-group mb-3">
-                            <span class="input-group-text">ADDRESS</span>
-                            <input type="email" name="address" class="form-control">
+                            <input type="email" name="email" class="form-control">
                         </div>
 
                         <!--                        파일 첨부 하는 화면 넣기-->
@@ -120,8 +105,8 @@
 
     const error = [[${error}]]
 
-    if(error && error === 'member_id'){
-        alert("동일한 ID를 가진 계정이 존재합니다.")
+    if(error && error === 'mid'){
+        alert("동일한 MID를 가진 계정이 존재합니다.")
     }
 
     // 회원 가입시 프로필 이미지 , 모달창, 미리보기 화면, 엑스 표시, 엑스 클릭시 이벤트 처리

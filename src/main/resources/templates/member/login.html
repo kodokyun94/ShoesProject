@@ -28,7 +28,7 @@
                 <h1>접근 권한이 없습니다. 다시 로그인해주세요</h1>
             </th:block>
 
-            <form id="registerForm" action="/member/login" method="post">
+            <form id="registerForm" action="/shoes/login" method="post">
                 <div class="input-group mb-3">
                     <span class="input-group-text">아이디</span>
                     <input type="text" name="id" class="form-control" placeholder="USER ID">
@@ -61,7 +61,7 @@
     document.querySelector(".joinBtn").addEventListener("click", function (e) {
         e.preventDefault()
         e.stopPropagation()
-        self.location = "/member/join"
+        self.location = "/shoes/join"
 
     })
 </script>

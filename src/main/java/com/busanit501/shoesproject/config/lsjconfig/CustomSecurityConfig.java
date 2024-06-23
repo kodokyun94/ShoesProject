@@ -64,6 +64,7 @@ public class CustomSecurityConfig {
 
         // 특정 페이지에 접근 권한 설정.
         http.authorizeRequests()
+                // 정적 자원 모두 허용.
                 .requestMatchers("/css/**", "/js/**","/images/**").permitAll()
                 // 리스트는 기본으로 다 들어갈수 있게., 모두 허용
                 .requestMatchers("/", "/board/list","/member/join", "/login", "/joinUser","/joinForm","/findAll","/images/**").permitAll()
@@ -96,6 +97,14 @@ public class CustomSecurityConfig {
                                 .tokenValiditySeconds(60*60*24*30)
         );
 
+        // 캐시 설정 비활성화
+//        http.headers(
+//                cacheDisable -> cacheDisable.cacheControl(
+//                        disable -> disable.disable()
+//                )
+//        );
+
+
         return http.build();
     }
 
@@ -124,7 +133,6 @@ public class CustomSecurityConfig {
     public AccessDeniedHandler accessDeniedHandler() {
         return new Custom403Handler();
     }
-
 
 
 }
