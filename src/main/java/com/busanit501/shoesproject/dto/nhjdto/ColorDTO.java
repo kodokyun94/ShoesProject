@@ -9,10 +9,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class ShoesColorDTO {
-
+public class ColorDTO {
     private long color_id;
     private String item_color;
-    
-
 }
