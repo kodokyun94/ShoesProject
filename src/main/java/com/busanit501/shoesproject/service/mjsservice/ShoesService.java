@@ -9,23 +9,23 @@ import java.util.stream.Collectors;
 
 public interface ShoesService {
     Long register(ShoesDTO shoesDTO);
-    ShoesDTO read(Long item_id);
+    ShoesDTO read(Long itemId);
     void update(ShoesDTO shoesDTO);
-    void delete(Long item_id);
-    void deleteAll(Long item_id);
+    void delete(Long itemId);
+    void deleteAll(Long itemId);
 
     PageResponseDTO<ShoesListAllDTO> listWithAll(PageRequestDTO pageRequestDTO);
 
     default Shoes dtoToEntity(ShoesDTO shoesDTO){
 
         Shoes shoes = Shoes.builder()
-                .item_id(shoesDTO.getItem_id())
-                .item_name(shoesDTO.getItem_name())
-                .item_brand(shoesDTO.getItem_brand())
-                .item_price(shoesDTO.getItem_price())
-                .item_type(shoesDTO.getItem_type())
-                .item_gender(shoesDTO.getItem_gender())
-                .item_review_rank_avg(shoesDTO.getItem_review_rank_avg())
+                .itemId(shoesDTO.getItemId())
+                .itemName(shoesDTO.getItemName())
+                .itemBrand(shoesDTO.getItemBrand())
+                .itemPrice(shoesDTO.getItemPrice())
+                .itemType(shoesDTO.getItemType())
+                .itemGender(shoesDTO.getItemGender())
+                .itemReviewRankAvg(shoesDTO.getItemReviewRankAvg())
                 .build();
 
         // 첨부 이미지들이 추가
@@ -43,13 +43,13 @@ public interface ShoesService {
     // 화면(DTO) ->  컨트롤러 ->서비스(각 변환작업을함.) - Entity 타입으로 - DB
     default ShoesDTO entityToDTO(Shoes shoes) {
         ShoesDTO shoesDTO = ShoesDTO.builder()
-                .item_id(shoes.getItem_id())
-                .item_name(shoes.getItem_name())
-                .item_type(shoes.getItem_type())
-                .item_brand(shoes.getItem_brand())
-                .item_price(shoes.getItem_price())
-                .item_gender(shoes.getItem_gender())
-                .item_review_rank_avg(shoes.getItem_review_rank_avg())
+                .itemId(shoes.getItemId())
+                .itemName(shoes.getItemName())
+                .itemType(shoes.getItemType())
+                .itemBrand(shoes.getItemBrand())
+                .itemPrice(shoes.getItemPrice())
+                .itemGender(shoes.getItemGender())
+                .itemReviewRankAvg(shoes.getItemReviewRankAvg())
                 .build();
 
         // 첨부된 이미지 파일들.

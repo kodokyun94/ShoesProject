@@ -13,19 +13,19 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ShoesDTO {
-    private Long item_id;
+    private Long itemId;
 
-    private String item_name;
+    private String itemName;
 
-    private String item_type;
+    private String itemType;
 
-    private String item_brand;
+    private String itemBrand;
 
-    private String item_price;
+    private String itemPrice;
 
-    private String item_review_rank_avg;
+    private String itemReviewRankAvg;
 
-    private String item_gender;
+    private String itemGender;
 
     private List<String> fileNames;
 

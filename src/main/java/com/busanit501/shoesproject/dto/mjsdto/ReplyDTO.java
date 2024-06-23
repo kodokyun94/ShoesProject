@@ -19,7 +19,7 @@ public class ReplyDTO {
     private Long rno;
 
     @NotNull
-    private Long item_id;
+    private Long itemId;
     @NotEmpty
     private String replyText;
 //    @NotEmpty

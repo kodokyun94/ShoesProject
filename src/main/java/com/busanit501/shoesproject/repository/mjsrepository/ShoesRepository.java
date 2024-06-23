@@ -11,7 +11,8 @@ import java.util.Optional;
 public interface ShoesRepository extends JpaRepository<Shoes, Long>, ShoesSearch {
 
     @EntityGraph(attributePaths = {"imageSet"})
-    @Query("select s from Shoes s where s.item_id=:item_id")
-    Optional<Shoes> findByIdWithImages(Long item_id);
+    @Query("select s from Shoes s where s.itemId=:itemId")
+    Optional<Shoes> findByIdWithImages(Long itemId);
+
 
 }

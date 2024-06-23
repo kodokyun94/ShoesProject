@@ -1,12 +1,10 @@
 package com.busanit501.shoesproject.dto.mjsdto;
 
-import com.busanit501.shoesproject.domain.mjsdomain.ShoesImage;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Data
@@ -14,13 +12,20 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ShoesListAllDTO {
-    private Long item_id;
-    private String item_name;
-    private String item_type;
-    private String item_brand;
-    private String item_price;
-    private String item_review_rank_avg;
-    private String item_gender;
+    private Long itemId;
+
+    private String itemName;
+
+    private String itemType;
+
+    private String itemBrand;
+
+    private String itemPrice;
+
+    private String itemReviewRankAvg;
+
+    private String itemGender;
+
 
     //댓글 갯수 표기 하기 위한 용도.
     private Long replyCount;

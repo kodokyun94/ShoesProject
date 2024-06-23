@@ -1,11 +1,6 @@
 package com.busanit501.shoesproject.repository.mjsrepository.search;
 
-import com.busanit501.boot501.domain.Board;
-import com.busanit501.boot501.domain.QBoard;
-import com.busanit501.boot501.domain.QReply;
-import com.busanit501.boot501.dto.BoardImageDTO;
-import com.busanit501.boot501.dto.BoardListAllDTO;
-import com.busanit501.boot501.dto.BoardListReplyCountDTO;
+
 import com.busanit501.shoesproject.domain.mjsdomain.QReply;
 import com.busanit501.shoesproject.domain.mjsdomain.QShoes;
 import com.busanit501.shoesproject.domain.mjsdomain.Shoes;
@@ -13,7 +8,6 @@ import com.busanit501.shoesproject.dto.mjsdto.ShoesImageDTO;
 import com.busanit501.shoesproject.dto.mjsdto.ShoesListAllDTO;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.Tuple;
-import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.JPQLQuery;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.data.domain.Page;
@@ -45,19 +39,19 @@ public class ShoesSearchImpl extends QuerydslRepositorySupport implements ShoesS
 
     //BooleanBuilder를 이용한 조건절 추가 해보기.
     BooleanBuilder booleanBuilder = new BooleanBuilder();
-    booleanBuilder.or(shoes.item_name.contains("1"));
-    booleanBuilder.or(shoes.item_brand.contains("1"));
-    booleanBuilder.or(shoes.item_type.contains("1"));
-    booleanBuilder.or(shoes.item_price.contains("1"));
-    booleanBuilder.or(shoes.item_review_rank_avg.contains("1"));
-    booleanBuilder.or(shoes.item_gender.contains("1"));
+    booleanBuilder.or(shoes.itemName.contains("1"));
+    booleanBuilder.or(shoes.itemBrand.contains("1"));
+    booleanBuilder.or(shoes.itemType.contains("1"));
+    booleanBuilder.or(shoes.itemPrice.contains("1"));
+    booleanBuilder.or(shoes.itemReviewRankAvg.contains("1"));
+    booleanBuilder.or(shoes.itemGender.contains("1"));
 
     // where 조건절  where title like
 //    query.where(board.title.contains("1"));
     // BooleanBuilder를 적용하기.
     query.where(booleanBuilder);
     // bno > 0 보다 큰 조건 넣을 경우
-    query.where(shoes.item_id.gt(0L));
+    query.where(shoes.itemId.gt(0L));
 
 
     // 페이징 처리 적용하기.
@@ -90,28 +84,28 @@ public class ShoesSearchImpl extends QuerydslRepositorySupport implements ShoesS
       for (String type : types) {
         switch (type) {
           case "n":
-            log.info("조건절 실행여부 확인 2 :  item_name");
-            booleanBuilder.or(shoes.item_name.contains(keyword));
+            log.info("조건절 실행여부 확인 2 :  itemName");
+            booleanBuilder.or(shoes.itemName.contains(keyword));
             break;
           case "t":
-            log.info("조건절 실행여부 확인 2 :  item_type");
-            booleanBuilder.or(shoes.item_type.contains(keyword));
+            log.info("조건절 실행여부 확인 2 :  itemType");
+            booleanBuilder.or(shoes.itemType.contains(keyword));
             break;
           case "b":
-            log.info("조건절 실행여부 확인 2 :  item_brand");
-            booleanBuilder.or(shoes.item_brand.contains(keyword));
+            log.info("조건절 실행여부 확인 2 :  itemBrand");
+            booleanBuilder.or(shoes.itemBrand.contains(keyword));
             break;
           case "p":
-            log.info("조건절 실행여부 확인 2 :  item_price");
-            booleanBuilder.or(shoes.item_price.contains(keyword));
+            log.info("조건절 실행여부 확인 2 :  itemPrice");
+            booleanBuilder.or(shoes.itemPrice.contains(keyword));
             break;
           case "r":
-            log.info("조건절 실행여부 확인 2 :  item_price");
-            booleanBuilder.or(shoes.item_price.contains(keyword));
+            log.info("조건절 실행여부 확인 2 :  itemReviewRankAvg");
+            booleanBuilder.or(shoes.itemReviewRankAvg.contains(keyword));
             break;
           case "g":
-            log.info("조건절 실행여부 확인 2 :  item_gender");
-            booleanBuilder.or(shoes.item_gender.contains(keyword));
+            log.info("조건절 실행여부 확인 2 :  itemGender");
+            booleanBuilder.or(shoes.itemGender.contains(keyword));
             break;
         } //switch
       } // end for
@@ -121,7 +115,7 @@ public class ShoesSearchImpl extends QuerydslRepositorySupport implements ShoesS
 
 
     // bno >0 보다 큰 조건.
-    query.where(shoes.item_id.gt(0L));
+    query.where(shoes.itemId.gt(0L));
 
     // 그룹은 board 로 지정해서.
     query.groupBy(shoes);
@@ -141,12 +135,12 @@ public class ShoesSearchImpl extends QuerydslRepositorySupport implements ShoesS
 
       // 1번, 게시글
       ShoesListAllDTO shoesListAllDTO = ShoesListAllDTO.builder()
-              .item_id(shoes1.getItem_id())
-              .item_type(shoes1.getItem_type())
-              .item_brand(shoes1.getItem_brand())
-              .item_price(shoes1.getItem_price())
-              .item_gender(shoes1.getItem_gender())
-              .item_review_rank_avg(shoes1.getItem_review_rank_avg())
+              .itemId(shoes1.getItemId())
+              .itemType(shoes1.getItemType())
+              .itemBrand(shoes1.getItemBrand())
+              .itemPrice(shoes1.getItemPrice())
+              .itemGender(shoes1.getItemGender())
+              .itemReviewRankAvg(shoes1.getItemReviewRankAvg())
               .build();
 
       // 2번,  첨부 이미지 추가하는 작업.

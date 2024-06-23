@@ -16,25 +16,25 @@ import java.util.Set;
 public class Shoes {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
-    private Long item_id;
+    private Long itemId;
 
     @Column(length = 50,nullable = false)
-    private String item_name;
+    private String itemName;
 
     @Column(length = 50,nullable = false)
-    private String item_type;
+    private String itemType;
 
     @Column(length = 50,nullable = false)
-    private String item_brand;
+    private String itemBrand;
 
     @Column(length = 500,nullable = false)
-    private String item_price;
+    private String itemPrice;
 
     @Column(length = 50,nullable = false)
-    private String item_review_rank_avg;
+    private String itemReviewRankAvg;
 
     @Column(length = 50,nullable = false)
-    private String item_gender;
+    private String itemGender;
 
     @OneToMany(mappedBy = "shoes",
             // 부모 테이블의 1차 캐시 테이블에 작업시, 하위 테이블에도 다 적용함.
@@ -73,18 +73,18 @@ public class Shoes {
         this.imageSet.clear();
     }
 
-    public void changeall(String[] itemDetails) {
-        if (itemDetails.length != 6) {
-            throw new IllegalArgumentException("7개의 값이 필요합니다.");
-        }
-        this.item_name = itemDetails[0];
-        this.item_brand = itemDetails[1];
-        this.item_type = itemDetails[2];
-        this.item_price = itemDetails[3];
-        this.item_review_rank_avg = itemDetails[4];
-        this.item_gender = itemDetails[5];
+    public void changeall(String itemName, String itemType,  String itemBrand, String itemPrice, String itemReviewRankAvg, String itemGender) {
+        this.itemName = itemName;
+        this.itemType = itemType;
+        this.itemBrand = itemBrand;
+        this.itemPrice = itemPrice;
+        this.itemReviewRankAvg = itemReviewRankAvg;
+        this.itemGender = itemGender;
+    }
+
+
     }
 
 
 
-}
+

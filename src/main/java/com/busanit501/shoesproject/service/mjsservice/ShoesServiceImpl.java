@@ -31,14 +31,14 @@ public class ShoesServiceImpl implements ShoesService {
     @Override
     public Long register(ShoesDTO shoesDTO) {
       Shoes shoes = dtoToEntity(shoesDTO);
-      Long item_id = shoesRepository.save(shoes).getItem_id();
+      Long itemId = shoesRepository.save(shoes).getItemId();
 
-        return item_id;
+        return itemId;
     }
 
     @Override
-    public ShoesDTO read(Long item_id) {
-        Optional<Shoes> result = shoesRepository.findById(item_id);
+    public ShoesDTO read(Long itemId) {
+        Optional<Shoes> result = shoesRepository.findById(itemId);
         Shoes shoes = result.orElseThrow();
         ShoesDTO shoesDTO = entityToDTO(shoes);
         return shoesDTO;
@@ -46,10 +46,9 @@ public class ShoesServiceImpl implements ShoesService {
 
     @Override
     public void update(ShoesDTO shoesDTO) {
-        Optional<Shoes> result = shoesRepository.findById(shoesDTO.getItem_id());
+        Optional<Shoes> result = shoesRepository.findById(shoesDTO.getItemId());
         Shoes shoes = result.orElseThrow();
-        String[] itemDetails = {shoes.getItem_name(),shoes.getItem_brand(),shoes.getItem_type(),shoes.getItem_price(),shoes.getItem_review_rank_avg(),shoes.getItem_gender()};
-        shoes.changeall(itemDetails);
+        shoes.changeall(shoes.getItemName(),shoes.getItemBrand(),shoes.getItemType(),shoes.getItemPrice(),shoes.getItemReviewRankAvg(),shoes.getItemGender());
         shoes.clearImages();
         if(shoesDTO.getFileNames() !=null){
             for(String fileName : shoesDTO.getFileNames()){
@@ -62,29 +61,30 @@ public class ShoesServiceImpl implements ShoesService {
     }
 
     @Override
-    public void delete(Long item_id) {
-        shoesRepository.deleteById(item_id);
+    public void delete(Long itemId) {
+        shoesRepository.deleteById(itemId);
     }
 
-    @Override
-    public void deleteAll(Long item_id) {
 
-        List<Reply> result = shoesReplyRepository.findByShoesItem_id(item_id);
+    @Override
+    public void deleteAll(Long itemId) {
+
+        List<Reply> result = shoesReplyRepository.findByShoesItemId(itemId);
         log.info("result.isEmpty() 값  확인:" + result.isEmpty());
         boolean checkReply = result.isEmpty() ? false : true;
         log.info("result.isEmpty() 값  확인2 checkReply:" + checkReply);
         if(checkReply){
-            shoesReplyRepository.deleteByShoes_item_id(item_id);
+            shoesReplyRepository.deleteByShoes_ItemId(itemId);
         }
 
-        shoesRepository.deleteById(item_id);
+        shoesRepository.deleteById(itemId);
     }
 
     @Override
     public PageResponseDTO<ShoesListAllDTO> listWithAll(PageRequestDTO pageRequestDTO) {
         String[] types = pageRequestDTO.getTypes();
         String keyword = pageRequestDTO.getKeyword();
-        Pageable pageable = pageRequestDTO.getPageable("item_id");
+        Pageable pageable = pageRequestDTO.getPageable("itemId");
 
         Page<ShoesListAllDTO> result = shoesRepository.searchWithAll(types,keyword,pageable);
 
