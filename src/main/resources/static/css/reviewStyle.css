@@ -1,0 +1,123 @@
+/* 평점 */
+@import url(//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css);
+
+fieldset, label { margin: 0; padding: 0; }
+body{ margin: 20px; }
+h1 { font-size: 1.5em; margin: 10px; }
+
+/****** Style Star Rating Widget *****/
+
+.rating {
+    border: none;
+    float: left;
+}
+
+.rating > input { display: none; }
+.rating > label:before {
+    margin: 5px;
+    font-size: 1.25em;
+    font-family: FontAwesome;
+    display: inline-block;
+    content: "\f005";
+}
+
+.rating > .half:before {
+    content: "\f089";
+    position: absolute;
+}
+
+.rating > label {
+    color: #ddd;
+    float: right;
+}
+
+/***** CSS Magic to Highlight Stars on Hover *****/
+
+.rating > input:checked ~ label, /* show gold star when clicked */
+.rating:not(:checked) > label:hover, /* hover current star */
+.rating:not(:checked) > label:hover ~ label { color: #FFD700;  } /* hover previous stars in list */
+
+.rating > input:checked + label:hover, /* hover current star when changing rating */
+.rating > input:checked ~ label:hover,
+.rating > label:hover ~ input:checked ~ label, /* lighten current selection */
+.rating > input:checked ~ label:hover ~ label { color: #FFED85;  }
+
+/* 리뷰 작성 */
+.textarea-container {
+    width: 100%;
+    height: 100px; /* 고정 높이 */
+}
+
+.textarea-container textarea {
+    width: 100%;
+    height: 100%;
+    padding: 10px;
+    box-sizing: border-box;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    resize: none; /* 크기 조정 비활성화 */
+}
+
+.textarea-container .buttons {
+    bottom: 10px;
+    right: 10px;
+    display: flex;
+    gap: 10px;
+    float: right;
+}
+
+.textarea-container .buttons button {
+    padding: 30px 20px;
+    font-size: 14px;
+    background-color: black;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+/* 리뷰 목록 */
+.reviews {
+    display: flex;
+    flex-direction: column;
+    gap: 20px; /* 각 리뷰 사이의 간격 */
+    margin-top: 20px;
+}
+
+.review-item {
+    display: flex;
+    margin-right: 5px;
+    border: 1px solid #ccc; /* 테두리 */
+    border-radius: 10px; /* 둥근 모서리 */
+    padding: 20px; /* 내부 여백 */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* 그림자 */
+    background-color: #fff; /* 배경색 */
+    gap: 20px; /* 이미지와 내용 사이의 간격 */
+}
+
+.review-image img {
+    max-width: 100px; /* 이미지 최대 너비 */
+    border-radius: 5px; /* 이미지 둥근 모서리 */
+}
+
+.review-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* 세로 정렬 */
+}
+
+.review-content h3 {
+    margin: 0;
+    color: #ff9800; /* 별점 색상 */
+}
+
+.review-content p {
+    margin: 10px 0 0; /* 위쪽 여백 */
+    color: #333; /* 글자 색상 */
+}
+
+.review-container {
+    margin-top: 150px;
+    border: 2px solid gray;
+}
