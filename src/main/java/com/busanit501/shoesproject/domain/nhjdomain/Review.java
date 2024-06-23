@@ -8,13 +8,17 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-@Table(name="reviews")
+//@Table(name="reviews")
 @Entity
 public class Review {
 
     @Id
+//    pr키
+//    나중에 합치고 아래변경
 //    @OneToMany
 //    @JoinColumn(name = "item_id")
+
+
     private long item_id;
 
 //    @OneToMany

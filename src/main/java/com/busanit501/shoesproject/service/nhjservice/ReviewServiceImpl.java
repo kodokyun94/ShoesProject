@@ -17,9 +17,7 @@ import java.util.Optional;
 // all or nothing,
 @Transactional
 public class ReviewServiceImpl implements ReviewService {
-  // 의존성 주입
   private final ReviewRepository reviewRepository;
-  //  private final ReplyRepository replyRepository;
   private final ModelMapper modelMapper;
 
   @Override

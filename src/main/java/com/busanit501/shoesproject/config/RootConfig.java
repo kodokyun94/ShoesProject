@@ -16,6 +16,7 @@ RootConfig {
         .setFieldAccessLevel(org.modelmapper.config.Configuration.AccessLevel.PRIVATE)
         .setMatchingStrategy(MatchingStrategies.STRICT);
     return mapper;
+
   }
 }
 
