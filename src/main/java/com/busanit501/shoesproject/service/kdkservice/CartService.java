@@ -1,16 +1,50 @@
 package com.busanit501.shoesproject.service.kdkservice;
 
-import com.busanit501.shoesproject.dto.kdkdto.CartDTO;
-import com.busanit501.shoesproject.dto.kdkdto.PageRequestDTO;
+import com.busanit501.shoesproject.domain.kdkdomain.Cart;
+import com.busanit501.shoesproject.dto.kdkdto.CartItemDTO;
+import com.busanit501.shoesproject.dto.kdkdto.ItemDTO;
+import com.busanit501.shoesproject.repository.kdkrepository.CartItemRepository;
+import com.busanit501.shoesproject.repository.kdkrepository.CartRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
-public interface CartService {
-    Long register(CartDTO cartDTO);
+import java.util.List;
+import java.util.stream.Collectors;
 
-    CartDTO read(Long cart_id);
+@Service
+public class CartService {
 
-    void delete(Long cart_id);
+    @Autowired
+    private CartRepository cartRepository;
 
-    void update(CartDTO cartDTO);
+    @Autowired
+    private CartItemRepository cartItemRepository;
 
-    CartDTO getCartItems(Long cart_id, PageRequestDTO pageRequestDTO);
-   }
+    public Cart getCartById(Long cartId) {
+        return cartRepository.findById(cartId).orElse(new Cart());
+    }
+
+    public List<CartItemDTO> getCartItems(Long cartId) {
+        Cart cart = getCartById(cartId);
+        return cart.getCartItems().stream()
+                .map(cartItem -> CartItemDTO.builder()
+                        .id(cartItem.getId())
+                        .item(ItemDTO.builder()
+                                .itemId(cartItem.getItem().getItemId())
+                                .itemName(cartItem.getItem().getItemName())
+                                .itemPrice(cartItem.getItem().getItemPrice())
+                                .itemType(cartItem.getItem().getItemType())
+                                .itemBrand(cartItem.getItem().getItemBrand())
+                                .itemGender(cartItem.getItem().getItemGender())
+                                .image(cartItem.getItem().getImage())
+                                .build())
+                        .quantity(cartItem.getQuantity())
+                        .build())
+                .collect(Collectors.toList());
+    }
+
+    public void deleteCartItem(Long id) {
+        cartItemRepository.deleteById(id);
+    }
+
+}

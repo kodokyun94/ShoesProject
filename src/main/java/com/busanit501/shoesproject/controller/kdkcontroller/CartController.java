@@ -1,36 +1,51 @@
 package com.busanit501.shoesproject.controller.kdkcontroller;
 
-import com.busanit501.shoesproject.dto.kdkdto.CartDTO;
-import com.busanit501.shoesproject.service.kdkservice.CartService;
-import io.swagger.v3.oas.annotations.tags.Tag;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.log4j.Log4j2;
-import org.springframework.ui.Model;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+//@Controller
+//@RequestMapping("/cart")
+//@Log4j2
+//@RequiredArgsConstructor
+//@Tag(name = "CartController", description = "장바구니 관련 API")
+//public class CartController {
+//    @Autowired
+//    private CartService cartService;
+//
+//    @GetMapping("/cart")
+//    public String showCart(Model model) {
+//        List<CartItemDTO> cartItems = cartService.getCartItems(1L); // 예시로 1번 카트를 가져옵니다. 실제 구현에서는 사용자 ID나 세션 ID로 가져와야 합니다.
+//        model.addAttribute("cartItems", cartItems);
+//        return "cart";
+//    }
+//
+//
+//}//class End
 
-import java.util.Collections;
+import com.busanit501.shoesproject.dto.kdkdto.CartItemDTO;
+import com.busanit501.shoesproject.service.kdkservice.CartService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
 import java.util.List;
 
 @Controller
-@RequestMapping("/cart")
-@Log4j2
-@RequiredArgsConstructor
-@Tag(name = "CartController", description = "장바구니 관련 API")
 public class CartController {
-    private final CartService cartService;
 
+    @Autowired
+    private CartService cartService;
 
-
-    @GetMapping("/list")
-    public String getCartList(Model model) {
-        // 여기에 실제 데이터를 가져오는 로직을 추가
-        List<CartDTO> cartItems = Collections.singletonList(cartService.getCartItems()); // 서비스에서 장바구니 아이템을 가져옴
-
+    @GetMapping("/cart")
+    public String showCart(Model model) {
+        List<CartItemDTO> cartItems = cartService.getCartItems(1L); // 예시로 1번 카트를 가져옵니다. 실제 구현에서는 사용자 ID나 세션 ID로 가져와야 합니다.
         model.addAttribute("cartItems", cartItems);
-        return "cartList";
+        return "cart";
     }
 
-
-}//class End
+    @PostMapping("/cart/delete")
+    public String deleteCartItem(@RequestParam("id") Long id) {
+        cartService.deleteCartItem(id);
+        return "redirect:/cart";
+    }
+}

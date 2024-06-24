@@ -13,16 +13,15 @@ import java.util.List;
 public class Cart {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long cart_id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long cartId;
 
+    @OneToMany(mappedBy = "cart", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<CartItem> cartItems;
+
+    // 사용자와의 관계 매핑
 //    @ManyToOne
-//    @JoinColumn(name = "member_id")
-//    private Member member;
-
-    @OneToMany(mappedBy = "item_id", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<Item> items;
-
-
-    private Long item_id;
+//    @JoinColumn(name = "user_id")
+//    private User user;
+    // 기타 필요한 필드 및 메소드
 }

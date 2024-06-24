@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>장바구니</title>
+    <link rel="stylesheet" href="../../static/css/style.css">
+    <script src="../static/js/load.js" defer></script>
+</head>
+<body>
+<header>
+    <div class="top-nav">
+        <div class="left-nav">
+            <a href="#">매장 찾기</a>
+            <a href="#">고객센터</a>
+            <a href="signUp.html">회원가입</a>
+            <a href="signIn.html">로그인</a>
+        </div>
+    </div>
+    <div class="main-nav">
+        <div class="logo">
+            <a href="main.html">
+                <img src="../static/images/shoesicon.png" alt="나이키 로고">
+            </a>
+        </div>
+        <nav>
+            <a href="#">New</a>
+            <a href="#">Men</a>
+            <a href="#">Women</a>
+            <a href="#">Kids</a>
+        </nav>
+        <div class="search-cart">
+            <input type="text" placeholder="검색">
+            <button type="button">검색</button>
+            <a href="cart.html"><img src="../static/images/carticon.jpg" alt="장바구니 아이콘"></a>
+        </div>
+    </div>
+</header>
+<main>
+    <section class="cart-section">
+        <h2>장바구니</h2>
+        <table class="cart-table">
+            <thead>
+            <tr>
+                <th>상품 이미지</th>
+                <th>상품 이름</th>
+                <th>가격</th>
+                <th>수량</th>
+                <th>총 금액</th>
+                <th>삭제</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="item : ${cartItems}">
+                <td><img th:src="@{/images/ + ${item.item.image}}" alt="상품 이미지"></td>
+                <td th:text="${item.item.itemName}">상품 이름</td>
+                <td th:text="${#numbers.formatDecimal(item.item.itemPrice, 0, 'COMMA', 3, '₩')}">가격</td>
+                <td><input type="number" th:value="${item.quantity}" min="1"></td>
+                <td th:text="${#numbers.formatDecimal(item.item.itemPrice * item.quantity, 0, 'COMMA', 3, '₩')}">총 금액</td>
+                <td>
+                    <form th:action="@{/cart/delete}" method="post">
+                        <input type="hidden" th:value="${item.id}" name="id"/>
+                        <button type="submit">삭제</button>
+                    </form>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <div class="total-price">
+            <p>총 금액: <span th:text="${#numbers.formatDecimal(cartItems.stream().mapToDouble(i -> i.item.itemPrice * i.quantity).sum(), 0, 'COMMA', 3, '₩')}">₩0</span></p>
+            <button>결제하기</button>
+        </div>
+    </section>
+</main>
+</body>
+</html>
