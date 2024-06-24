@@ -20,7 +20,7 @@ body {
     color: black;
 }
 .container {
-    margin-left: 110px;
+    margin-left: 350px;
     margin-top: 40px;
     display: flex;
     padding: 20px;
@@ -38,7 +38,7 @@ body {
 }
 .main-image img {
     width: 550px;
-    height: 600px;
+    height: 550px;
     margin-right: 150px;
 }
 .details {

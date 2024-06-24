@@ -17,11 +17,11 @@ public class Review extends BaseEntity {
 
     //    나중에 합치고 아래변경
     @ManyToOne
-    @JoinColumn(name = "item_id")
+    @JoinColumn(name = "itemId")
     private Item item;
 
     @ManyToOne
-    @JoinColumn(name = "member_id")
+    @JoinColumn(name = "memberId")
     private Member member;
 
     //@Column(length=50, nullable = false)

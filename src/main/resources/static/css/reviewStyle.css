@@ -68,7 +68,7 @@ h1 { font-size: 1.5em; margin: 10px; }
 }
 
 .textarea-container .buttons button {
-    /*padding: 30px 20px;*/
+    padding: 30px 20px;
     font-size: 14px;
     background-color: black;
     color: #fff;
@@ -93,11 +93,11 @@ h1 { font-size: 1.5em; margin: 10px; }
     padding: 20px; /* 내부 여백 */
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* 그림자 */
     background-color: #fff; /* 배경색 */
-    gap: 60px; /* 이미지와 내용 사이의 간격 */
+    gap: 20px; /* 이미지와 내용 사이의 간격 */
 }
 
 .review-image img {
-    max-width: 180px; /* 이미지 최대 너비 */
+    max-width: 100px; /* 이미지 최대 너비 */
     border-radius: 5px; /* 이미지 둥근 모서리 */
 }
 
