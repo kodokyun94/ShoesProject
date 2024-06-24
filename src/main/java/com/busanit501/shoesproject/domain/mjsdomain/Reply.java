@@ -11,7 +11,7 @@ import lombok.*;
 @Setter
 @Builder
 @Table(name = "reply", indexes = {
-        @Index(name = "idx_reply_shoes_item_id", columnList = "shoes_item_id")
+        @Index(name = "idx_reply_shoes_itemId", columnList = "shoes_itemId")
 })
 @AllArgsConstructor
 @NoArgsConstructor
@@ -28,13 +28,22 @@ public class Reply extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     private Shoes shoes;
 
-    private String replyText;
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Member2 member;
 
-    private String replyer;
+    @Column(length=200, nullable = false)
+    private String content;
+
+    private String imagePath;
+
+    @Column(length=5, nullable = false)
+    private int rating;
+
+
 
     // 댓글 내용만 교체 하기.
     public void chageText(String text) {
-        this.replyText = text;
+        this.content = text;
     }
 
 }

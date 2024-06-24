@@ -21,9 +21,13 @@ public class ReplyDTO {
     @NotNull
     private Long itemId;
     @NotEmpty
-    private String replyText;
-//    @NotEmpty
-    private String replyer;
+    private String content;
+    @NotEmpty
+    private String memberId;
+    private int rating;
+
+
+
 
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime regDate;

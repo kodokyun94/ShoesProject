@@ -32,6 +32,7 @@ public class nhjController {
     @GetMapping("/product")
     public void productGet() {
 
+
     }
 
     @GetMapping("/productpage")

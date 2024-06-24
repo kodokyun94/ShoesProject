@@ -83,8 +83,8 @@ public class ShoesRepositoyryTest {
         // 첫번째 파라미터 :페이지수(1페이지 , 0)
         // 두번째 파라미터 :페이지 당 보여줄 갯수(10개)
         // 세번째 파라미터 :정렬 기준, bno , 내림차순.
-        Sort sort = Sort.by("itemId").descending();
-        Pageable pageable = PageRequest.of(0, 10, sort);
+
+        Pageable pageable = PageRequest.of(0, 10,Sort.by("itemId").descending());
         // 10개씩 조회 해보기.
         //Page 타입이라는 것은, 해당 결과에, 여러 정보들이 있음.
         // 예) 10개씩 가져온 데이터, 2)페이지 정보, 3)갯수, 4)전체 갯수 등.
