@@ -50,7 +50,7 @@ public class PageRequestDTO {
     public Pageable getPageable(String... props) {
         // 화면에서 1페이지 -> 0
         // 화면에서 2페이지 -> 1
-        return PageRequest.of(this.page - 1, 9, Sort.by(props).descending());
+        return PageRequest.of(this.page - 1, 8, Sort.by(props).descending());
     }
 
     // 페이징 정보와, 검색 정보를 , URL에서, 쿼리스트링으로

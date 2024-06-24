@@ -27,73 +27,55 @@
             <aside class="left-nav">
                 <h2>필터</h2>
                 <ul>
-                    <li><a href="#">카테고리1</a></li>
-                    <li><a href="#">카테고리2</a></li>
-                    <li><a href="#">카테고리3</a></li>
-                    <li><a href="#">카테고리4</a></li>
-                    <li><a href="#">카테고리5</a></li>
+                    <li><a href="/shoes/product2/?type=b&keyword=">브랜드</a></li>
+                    <li><a href="/shoes/product2/?type=t&keyword=">종류</a></li>
+                    <li><a href="/shoes/product2/?type=p&keyword=">가격</a></li>
+                    <li><a href="/shoes/product2/?type=r&keyword=">평점</a></li>
+                    <li><a href="/shoes/product2/?type=g&keyword=">성별</a></li>
                 </ul>
             </aside>
             <main>
-                <section class="products">
+                <section class="products" th:with="link = ${pageRequestDTO.getLink()}">
                     <div class="product-card">
                         <div class="col" th:each="dto:${responseDTO.dtoList}">
-                        <a th:href="|@{/shoes/productpage(itemId=${dto.itemId})}|">
+                        <a th:href="|@{/shoes/productpage2(itemId=${dto.itemId})}&${link}|">
                             <img th:src="@{/images/shoesimg1.PNG}" alt="상품 이미지1">
                         </a>
                         <h3>[[${dto.itemName}]]</h3>
                         <p>[[${dto.itemPrice}]]</p>
                     </div>
+                    </div>
 
                     <!-- 추가 상품 카드 -->
-                    <div class="paging-container">
-                        <ul class="pagination paging-content">
-                            <!--                                    이전화면이 나오고-->
-                            <li class="page-item" th:if="${responseDTO.prev}">
-                                <a class="page-link" th:data-num="${responseDTO.start-1}">Previous</a>
-                            </li>
 
-                            <th:blcok th:each="i:${#numbers.sequence(responseDTO.start,responseDTO.end)}">
-                                <li th:class="${responseDTO.page == i}?'page-item active':'page-item'">
-                                    <a class="page-link" th:data-num="${i}">[[${i}]]</a>
-                                </li>
-                            </th:blcok>
-
-                            <!--                            다음 화면 이 나오고-->
-
-                            <li class="page-item" th:if="${responseDTO.next}">
-                                <a class="page-link" th:data-num="${responseDTO.end +1}">Next</a>
-                            </li>
-                        </ul>
-                    </div>
                 </section>
+                <div class="paging-container">
+                    <ul class="pagination paging-content">
+                        <!--                                    이전화면이 나오고-->
+                        <li class="page-item" th:if="${responseDTO.prev}">
+                            <a class="page-link" th:data-num="${responseDTO.start-1}">Previous</a>
+                        </li>
 
-                <div class="modal" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h1 class="modal-title fs-5"
-                                    th:if="${resultType == 'register'}">상품추가 성공</h1>
-                                <h1 class="modal-title fs-5"
-                                    th:if="${resultType == 'update'}">상품수정 성공</h1>
-                                <h1 class="modal-title fs-5"
-                                    th:if="${resultType == 'delete'}">상품삭제 성공</h1>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body" th:if="${result}" >
-                                작성한 게시글 번호 : [[${result}]]
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                <button type="button" class="btn btn-primary">Save changes</button>
-                            </div>
-                        </div>
-                    </div>
+                        <th:blcok th:each="i:${#numbers.sequence(responseDTO.start,responseDTO.end)}">
+                            <li th:class="${responseDTO.page == i}?'page-item active':'page-item'">
+                                <a class="page-link" th:data-num="${i}">[[${i}]]</a>
+                            </li>
+                        </th:blcok>
+
+                        <!--                            다음 화면 이 나오고-->
+
+                        <li class="page-item" th:if="${responseDTO.next}">
+                            <a class="page-link" th:data-num="${responseDTO.end +1}">Next</a>
+                        </li>
+                    </ul>
                 </div>
+
+
+
             </main>
         </div>
     </form>
-</div>
+
 <script layout:fragment="javascript" th:inline="javascript">
 
     // 유저 확인
