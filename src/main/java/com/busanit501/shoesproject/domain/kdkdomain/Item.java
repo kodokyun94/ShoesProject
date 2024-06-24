@@ -13,15 +13,24 @@ import lombok.*;
 public class Item {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Long itemId;
 
+    @Column(length=50, nullable = false)
     private String itemName;
-    private String itemPrice;
-    private String itemType;
-    private String itemBrand;
-    private String itemGender;
-    private String image; // 상품 이미지 경로 필드 추가
 
-    // CartItem과의 관계 설정은 생략
+    @Column(length=50, nullable = false)
+    private String itemType;
+
+    @Column(length=50, nullable = false)
+    private String itemBrand;
+
+    @Column(length=50, nullable = false)
+    private String itemPrice;
+
+    //@Column(length=50, nullable = false)
+    //private String review_rank_avg;
+
+    @Column(length=50, nullable = false)
+    private String itemGender;
 }

@@ -1,27 +1,29 @@
 package com.busanit501.shoesproject.domain.kdkdomain;
 
 import jakarta.persistence.*;
-import lombok.*;
-
-import java.util.List;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
 @Entity
+@Table(name = "cart")
 @Getter @Setter
 @ToString
-@AllArgsConstructor
-@NoArgsConstructor
-public class Cart {
+public class Cart extends BaseEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "cartId")
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long cartId;
 
-    @OneToMany(mappedBy = "cart", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<CartItem> cartItems;
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "memberId")
+    private Member member;
 
-    // 사용자와의 관계 매핑
-//    @ManyToOne
-//    @JoinColumn(name = "user_id")
-//    private User user;
-    // 기타 필요한 필드 및 메소드
+    public static Cart createCart(Member member) {
+        Cart cart = new Cart();
+        cart.setMember(member);
+        return cart;
+    }
 }
+

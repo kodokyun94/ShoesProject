@@ -4,25 +4,39 @@ import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
-@Getter
-@Setter
-@ToString
-@AllArgsConstructor
-@NoArgsConstructor
-public class CartItem {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+@Getter @Setter
+@Table(name="cartItem")
+public class CartItem extends BaseEntity {
 
-    @ManyToOne
-    @JoinColumn(name = "cart_id")
+    @Id
+    @GeneratedValue
+    @Column(name = "cartItemId")
+    private Long cartItemId;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="cartId")
     private Cart cart;
 
-    @ManyToOne
-    @JoinColumn(name = "item_id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "itemId")
     private Item item;
 
-    private int quantity;
+    private int count;
 
-    // 기타 필요한 필드 및 메소드
+    public static CartItem createCartItem(Cart cart, Item item, int count) {
+        CartItem cartItem = new CartItem();
+        cartItem.setCart(cart);
+        cartItem.setItem(item);
+        cartItem.setCount(count);
+        return cartItem;
+    }
+
+    public void addCount(int count){
+        this.count += count;
+    }
+
+    public void updateCount(int count){
+        this.count = count;
+    }
+
 }
