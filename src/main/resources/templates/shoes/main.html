@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org"
+      layout:decorate="~{layout/base.html}">
+<head>
+    <title>메인 페이지</title>
+</head>
+<body>
+<div layout:fragment="content">
+    <form action="/shoes/main" method="get">
+        <div class="promo">
+            <div class="promo-images">
+                <img th:src="@{/images/nikmain1.PNG}" alt="main1">
+                <img th:src="@{/images/nikmain2.PNG}" alt="main2">
+            </div>
+            <div class="promo-text">
+                <h1>메인페이지 header</h1>
+                <p>제품 소개</p>
+            </div>
+        </div>
+    </form>
+</div>
+</body>
+</html>
