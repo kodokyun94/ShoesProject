@@ -28,7 +28,7 @@ public class CartService {
         Cart cart = getCartById(cartId);
         return cart.getCartItems().stream()
                 .map(cartItem -> CartItemDTO.builder()
-                        .id(cartItem.getId())
+                        .cartId(cartItem.getId())
                         .item(ItemDTO.builder()
                                 .itemId(cartItem.getItem().getItemId())
                                 .itemName(cartItem.getItem().getItemName())
