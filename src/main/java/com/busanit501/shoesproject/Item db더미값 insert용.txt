@@ -1,0 +1,6 @@
+insert into item values (신발id, 이름, 종류, 브랜드, 가격, 평균평점, 성별);
+
+insert into item values (1, "신발1", "러닝", "나이키", "139,000", "M");
+insert into item values (2, "신발2", "슬리퍼", "나이키", "119,000", "M");
+insert into item values (3, "신발3", "러닝", "나이키", "129,000", "F");
+insert into item values (4, "신발4", "샌들", "나이키", "149,000", "F");
