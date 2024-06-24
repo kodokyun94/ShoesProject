@@ -35,11 +35,13 @@ body {
     height: 100px;
     margin-bottom: 50px;
     cursor: pointer;
+    border: 1px solid gray;
 }
 .main-image img {
     width: 550px;
     height: 600px;
     margin-right: 150px;
+    border: 1px solid gray;
 }
 .details {
     margin-top: 50px;
@@ -54,12 +56,14 @@ body {
 .sizes div {
     width: 70px;
     height: 70px;
-    border: 1px solid #ccc;
+    border: 1px solid;
     display: flex;
     align-items: center;
     justify-content: center;
     margin: 5px;
     cursor: pointer;
+    background-color: #f1f2ed;
+
 }
 .sizes div:hover {
     border-color: #000;
