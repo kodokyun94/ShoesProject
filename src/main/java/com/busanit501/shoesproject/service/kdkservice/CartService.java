@@ -30,16 +30,15 @@ public class CartService {
     private final CartItemRepository cartItemRepository;
 //    private final OrderService orderService;
 
+    public Long addCart(CartItemDTO cartItemDto, String memberEmail){
+
+        Item item = itemRepository.findByItemId(cartItemDto.getItemId());
+
+        Member member = memberRepository.findByMemberEmail(memberEmail);
+
+        Cart cart = cartRepository.findBymemberId(member.getMemberId());
 
 
-    public Long addCart(CartItemDTO cartItemDto, Long memberId){
-
-        Item item = itemRepository.findById(cartItemDto.getItemId())
-                .orElseThrow(EntityNotFoundException::new);
-
-        Member member = memberRepository.findByMemberId(memberId);
-
-        Cart cart = cartRepository.findByMemberId(memberId);
         if(cart == null){
             cart = Cart.createCart(member);
             cartRepository.save(cart);
@@ -58,12 +57,14 @@ public class CartService {
     }
 
     @Transactional(readOnly = true)
-    public List<CartDetailDto> getCartList(Long memberId){
+    public List<CartDetailDto> getCartList(String memberEmail){
 
         List<CartDetailDto> cartDetailDtoList = new ArrayList<>();
 
-        Member member = memberRepository.findByMemberId(memberId);
-        Cart cart = cartRepository.findByMemberId(member.getMemberId());
+        Member member = memberRepository.findByMemberEmail(memberEmail);
+
+        Cart cart = cartRepository.findBymemberId(member.getMemberId());
+
         if(cart == null){
             return cartDetailDtoList;
         }
@@ -72,11 +73,14 @@ public class CartService {
         return cartDetailDtoList;
     }
 
+
+
     @Transactional(readOnly = true)
-    public boolean validateCartItem(Long cartItemId, Long memberId){
-        Member curMember = memberRepository.findByMemberId(memberId);
-        CartItem cartItem = cartItemRepository.findById(cartItemId)
-                .orElseThrow(EntityNotFoundException::new);
+    public boolean validateCartItem(Long cartItemId, String memberEmail){
+        Member curMember = memberRepository.findByMemberEmail(memberEmail);
+
+        CartItem cartItem = cartItemRepository.findByCartIdAndItemId(cartItemId, cartItemId);
+
         Member savedMember = cartItem.getCart().getMember();
 
         if(!StringUtils.equals(curMember.getMemberId(), savedMember.getMemberId())){
@@ -85,6 +89,7 @@ public class CartService {
 
         return true;
     }
+
 
     public void updateCartItemCount(Long cartItemId, int count){
         CartItem cartItem = cartItemRepository.findById(cartItemId)

@@ -43,7 +43,7 @@ public class CartController {
         Long Id;
 
         try {
-            Id = cartService.addCart(cartItemDTO, Long.valueOf(email));
+            Id = cartService.addCart(cartItemDTO, email);
         } catch(Exception e){
             return new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
@@ -53,7 +53,7 @@ public class CartController {
 
     @GetMapping(value = "/cart")
     public String orderHist(Principal principal, Model model){
-        List<CartDetailDto> cartDetailList = cartService.getCartList(Long.valueOf(principal.getName()));
+        List<CartDetailDto> cartDetailList = cartService.getCartList(principal.getName());
         model.addAttribute("cartItems", cartDetailList);
         return "/shoes/cart";
     }
@@ -63,7 +63,7 @@ public class CartController {
 
         if(count <= 0){
             return new ResponseEntity<String>("최소 1개 이상 담아주세요", HttpStatus.BAD_REQUEST);
-        } else if(!cartService.validateCartItem(cartId, Long.valueOf(principal.getName()))){
+        } else if(!cartService.validateCartItem(cartId, principal.getName())){
             return new ResponseEntity<String>("수정 권한이 없습니다.", HttpStatus.FORBIDDEN);
         }
 
@@ -74,7 +74,7 @@ public class CartController {
     @DeleteMapping(value = "/cartItem/{cartId}")
     public @ResponseBody ResponseEntity deleteCartItem(@PathVariable("cartId") Long cartId, Principal principal){
 
-        if(!cartService.validateCartItem(cartId, Long.valueOf(principal.getName()))){
+        if(!cartService.validateCartItem(cartId, principal.getName())){
             return new ResponseEntity<String>("수정 권한이 없습니다.", HttpStatus.FORBIDDEN);
         }
 
