@@ -65,6 +65,7 @@
                 <div class="review-item" th:each="review : ${reviews}">
                     <div class="review-image">
                         <img th:if="${review.imagePath}" th:src="@{${review.imagePath}}" alt="리뷰 이미지">
+<!--                        <img th:if="${review.imagePath}" th:src="@{/images/shoesimg1.PNG}" alt="리뷰 이미지">이미지 크기확인용 주석-->
                     </div>
                     <div class="review-content">
                         <h3 th:text="${#strings.repeat('★', review.rating)}">별점</h3>
@@ -75,6 +76,7 @@
         </div>
     </form>
 </div>
+
 
 <script layout:fragment="javascript" th:inline="javascript">
     // 신발 사이즈 선택
