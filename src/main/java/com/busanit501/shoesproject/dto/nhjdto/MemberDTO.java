@@ -10,10 +10,10 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class MemberDTO {
-    private String member_id;
-    private String member_pw;
-    private String member_name;
-    private String member_phone;
-    private String member_email;
-    private String member_address;
+    private String id;
+    private String pw;
+    private String name;
+    private String phone;
+    private String email;
+    private String address;
 }

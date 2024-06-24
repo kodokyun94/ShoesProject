@@ -12,9 +12,9 @@ import lombok.*;
 public class Size {
 
     @Id
-    private Long size_id;
+    private Long sizeId;
 
     @Column(length = 50,nullable = false)
-    private String item_size;
+    private String size;
 
 }

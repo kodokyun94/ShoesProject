@@ -2,7 +2,6 @@ package com.busanit501.shoesproject.domain.nhjdomain;
 
 import jakarta.persistence.*;
 import lombok.*;
-
 @Builder
 @Getter
 @AllArgsConstructor
@@ -13,9 +12,9 @@ public class Color {
 
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
-    private Long color_id;
+    private Long colorId;
 
     @Column(length = 50,nullable = false)
-    private String item_color;
+    private String color;
 
 }

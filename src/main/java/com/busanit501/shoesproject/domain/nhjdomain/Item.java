@@ -13,24 +13,24 @@ public class Item {
 
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
-    private Long item_id;
+    private Long itemId;
 
     @Column(length=50, nullable = false)
-    private String item_name;
+    private String name;
 
     @Column(length=50, nullable = false)
-    private String item_type;
+    private String type;
 
     @Column(length=50, nullable = false)
-    private String item_brand;
+    private String brand;
 
     @Column(length=50, nullable = false)
-    private String item_price;
+    private String price;
+
+    //@Column(length=50, nullable = false)
+    //private String review_rank_avg;
 
     @Column(length=50, nullable = false)
-    private String item_review_rank_avg;
-
-    @Column(length=50, nullable = false)
-    private String item_gender;
+    private String gender;
 
 }

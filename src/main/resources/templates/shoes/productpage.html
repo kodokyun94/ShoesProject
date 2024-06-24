@@ -27,7 +27,7 @@
                 <p>₩149,000</p>
                 <div class="sizes">
                     <div th:each="size:${sizes}">
-                        [[${size.item_size}]]
+                        [[${size.size}]]
                     </div>
                 </div>
                 <div class="cart-button">
@@ -40,19 +40,19 @@
             <h2>고객 리뷰</h2>
             <form action="/shoes/review" method="post" enctype="multipart/form-data">
 <!--                예시 데이터-->
-                <input type="hidden" name="item_id" value="1">
-                <input type="hidden" name="member_id" value="nhj">
+                <input type="hidden" name="itemId" value="1">
+                <input type="hidden" name="memberId" value="nhj">
 <!--                평점-->
                 <fieldset class="rating">
-                    <input type="radio" id="star5" name="item_rank" value="5" /><label class="full" for="star5" title="Awesome - 5 stars"></label>
-                    <input type="radio" id="star4" name="item_rank" value="4" /><label class="full" for="star4" title="Pretty good - 4 stars"></label>
-                    <input type="radio" id="star3" name="item_rank" value="3" /><label class="full" for="star3" title="Meh - 3 stars"></label>
-                    <input type="radio" id="star2" name="item_rank" value="2" /><label class="full" for="star2" title="Kinda bad - 2 stars"></label>
-                    <input type="radio" id="star1" name="item_rank" value="1" /><label class="full" for="star1" title="Sucks big time - 1 star"></label>
+                    <input type="radio" id="star5" name="rating" value="5" /><label class="full" for="star5" title="Awesome - 5 stars"></label>
+                    <input type="radio" id="star4" name="rating" value="4" /><label class="full" for="star4" title="Pretty good - 4 stars"></label>
+                    <input type="radio" id="star3" name="rating" value="3" /><label class="full" for="star3" title="Meh - 3 stars"></label>
+                    <input type="radio" id="star2" name="rating" value="2" /><label class="full" for="star2" title="Kinda bad - 2 stars"></label>
+                    <input type="radio" id="star1" name="rating" value="1" /><label class="full" for="star1" title="Sucks big time - 1 star"></label>
                 </fieldset>
 <!--                리뷰 작성-->
                 <div class="textarea-container">
-                    <textarea id="content" name="item_rev" placeholder="리뷰 내용을 입력해주세요..."></textarea>
+                    <textarea id="content" name="content" placeholder="리뷰 내용을 입력해주세요..."></textarea>
                     <input type="file" id="fileInput" name="file" style="display:none;">
                     <div class="buttons">
                         <button type="button" onclick="document.getElementById('fileInput').click()">사진 첨부</button>
@@ -65,16 +65,18 @@
                 <div class="review-item" th:each="review : ${reviews}">
                     <div class="review-image">
                         <img th:if="${review.imagePath}" th:src="@{${review.imagePath}}" alt="리뷰 이미지">
+<!--                        <img th:if="${review.imagePath}" th:src="@{/images/shoesimg1.PNG}" alt="리뷰 이미지">이미지 크기확인용 주석-->
                     </div>
                     <div class="review-content">
-                        <h3 th:text="${#strings.repeat('★', review.item_rank)}">별점</h3>
-                        <p th:text="${review.item_rev}">리뷰 내용</p>
+                        <h3 th:text="${#strings.repeat('★', review.rating)}">별점</h3>
+                        <p th:text="${review.content}">리뷰 내용</p>
                     </div>
                 </div>
             </div>
         </div>
     </form>
 </div>
+
 
 <script layout:fragment="javascript" th:inline="javascript">
     // 신발 사이즈 선택
