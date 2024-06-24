@@ -1,8 +1,8 @@
-insert into review(moddate, regdate, item_rank, item_rev, image_path, item_id, member_id, member_name)
-values (now(),now(),3,"리뷰 쓰기 좀 해주세요.","쿵야.jpg",1,"nhj","나호진");
+insert into review(moddate, regdate, rating, content, image_path, item_id, member_id)
+values (now(),now(),3,"리뷰 쓰기 좀 해주세요.","쿵야.jpg",1,"nhj");
 
-insert into review(moddate, regdate, item_rank, item_rev, image_path, item_id, member_id, member_name)
-values (now(),now(),1,"이딴게 리뷰?","쿵야.jpg",1,"nhj","나호진");
+insert into review(moddate, regdate, rating, content, image_path, item_id, member_id)
+values (now(),now(),1,"이딴게 리뷰?","쿵야.jpg",1,"nhj");
 
-insert into review(moddate, regdate, item_rank, item_rev, image_path, item_id, member_id, member_name)
-values (now(),now(),5,"리뷰 쓰기 싫어요.","쿵야.jpg",1,"nhj","나호진");
+insert into review(moddate, regdate, rating, content, image_path, item_id, member_id)
+values (now(),now(),5,"리뷰 쓰기 싫어요.","쿵야.jpg",1,"nhj");

@@ -9,25 +9,26 @@ import lombok.*;
 @NoArgsConstructor
 @ToString
 @Entity
+@Table (name = "shoes_member")
 public class Member {
 
     @Id
     @Column(length=50, nullable = false)
-    private String member_id;
+    private String memberId;
 
     @Column(length=50, nullable = false)
-    private String member_pw;
+    private String pw;
 
     @Column(length=50, nullable = false)
-    private String member_name;
+    private String name;
 
     @Column(length=50, nullable = false)
-    private String member_phone;
+    private String phone;
 
     @Column(length=50, nullable = false)
-    private String member_email;
+    private String email;
 
     @Column(length=50, nullable = false)
-    private String member_address;
+    private String address;
 
 }
