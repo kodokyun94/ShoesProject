@@ -49,8 +49,8 @@ public class ReviewServiceImpl implements ReviewService {
       }
 
       Review review = Review.builder()
-              .item_rank(reviewDTO.getItem_rank())
-              .item_rev(reviewDTO.getItem_rev())
+              .rating(reviewDTO.getRating())
+              .content(reviewDTO.getContent())
               .imagePath(imagePath)
               .build();
 
