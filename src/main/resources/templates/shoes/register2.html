@@ -3,9 +3,8 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       xmlns:th="www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6"
-      layout:decorate="~{layout/baseSearch.html}"
+      layout:decorate="~{layout/base2.html}"
 >
-
 <body>
 <div layout:fragment="content">
     <div class="row content">
@@ -16,47 +15,20 @@
                     글작성
                 </div>
                 <div class="card-body">
-                    <form method="post" action="/shoes/register">
+                    <form method="post" action="/board/register">
                         <div class="mb-3">
-                            <label for="itemName" class="form-label">상품이름</label>
-                            <input type="text" name="itemName" class="form-control" id="itemName"
-                                  >
+                            <label for="title" class="form-label">제목</label>
+                            <input type="text" name="title" class="form-control" id="title" placeholder="제목을 입력해주세요.">
                         </div>
                         <div class="mb-3">
-                            <label for="itemType" class="form-label">상품타입</label>
-                            <input type="text" name="itemType" class="form-control" id="itemType"
-                                   >
+                            <label for="content" class="form-label">내용</label>
+                            <textarea type="text" placeholder="내용을 입력해주세요." name="content" rows="5" class="form-control col-sm-5" id="content"></textarea>
                         </div>
 
                         <div class="mb-3">
-                            <label for="itemBrand" class="form-label">상품브랜드</label>
-                            <input type="text" name="itemBrand" class="form-control" id="itemBrand"
-                                   >
-                        </div>
+                            <label for="writer" class="form-label">작성자</label>
 
-                        <div class="mb-3">
-                            <label for="itemPrice" class="form-label">상품가격</label>
-                            <input type="text" name="itemPrice" class="form-control" id="itemPrice"
-                                   >
                         </div>
-
-                        <div class="mb-3">
-                            <label for="itemReviewRankAvg" class="form-label">상품평점</label>
-                            <input type="text" name="itemReviewRankAvg" class="form-control" id="itemReviewRankAvg"
-                                   >
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="itemGender" class="form-label">상품성별</label>
-                            <input type="text" name="itemGender" class="form-control" id="itemGender"
-                                   >
-                        </div>
-<!--                        <div class="mb-3 input-group">-->
-<!--                            <span class="input-group-text">첨부파일  </span>-->
-<!--                            <div class="uploadHidden">-->
-<!--                                <button type="button" class="btn btn-warning uploadFileBtn" data-bs-toggle="modal" data-bs-target=".uploadModal">파일추가</button>-->
-<!--                            </div>-->
-<!--                        </div>-->
                         <div class="mb-3 input-group">
                             <span class="input-group-text">첨부파일  </span>
                             <div class="uploadHidden">
@@ -73,12 +45,12 @@
 
                 </div>
             </div>
-<!--            col 닫는 부분-->
+            <!--            col 닫는 부분-->
         </div>
         <!--            row 닫는 부분-->
     </div>
 
-<!--    첨부 파일 이미지 미리 보기 화면, -->
+    <!--    첨부 파일 이미지 미리 보기 화면, -->
     <div class="row mt-3">
         <div class="col">
             <div class="d-flex uploadResult" style="flex-wrap: wrap">
@@ -87,6 +59,7 @@
         </div>
     </div>
 
+    <!--    첨부 파일 업로드 하는 폼 , 모달창 필요함. -->
     <!--    댓글 작성 모달 창 폼-->
     <!-- Modal -->
     <div class="modal uploadModal" tabindex="-1">
@@ -113,7 +86,6 @@
         </div>
     </div>
     <!--모달창 끝-->
-    <!--모달창 끝-->
     <!--    axios 사용하기 위한 도구 설치-->
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <!--    우리가 정의한 /js/reply.js 불러오기-->
@@ -124,9 +96,8 @@
 
 <!--자바스크립트 추가하는 영역-->
 <script layout:fragment="javascript" th:inline="javascript">
-console.log("자바스크립트 파일 인식 하니?")
-    // 시큐리티 객체 확인 해보기.
 
+    // 시큐리티 객체 확인 해보기.
 
     // 로그인한 유저의 정보가 들어가 있음.
     // 예) lsy , pw :123456,
@@ -135,36 +106,37 @@ console.log("자바스크립트 파일 인식 하니?")
 
     //글쓰기 후, 작성된 게시글 번호를 출력하기, 경고창으로
     // 모달창으로 변경해보기.
-    // const result = [[${result}]]
-    // if(result) {
-    //     alert("작성된 게시글 번호 : " + result +"번")
-    // }
-    //
-    // // 글쓰기 폼에서 에러가 발생해서, 서버로 부터, 키: errors에
-    // // 정보가 담겨져 있음.
-    // const errors = [[${errors}]]
-    // console.log("errors : " + errors)
-    // let errorMsg =''
-    // if(errors) {
-    //     for(let i = 0; i < errors.length; i++){
-    //         errorMsg += `${errors[i].field} 는 ${errors[i].code}\n`
-    //     }
-    //     alert(errorMsg)
-    // }
-// 필요한 요소 준비물 준비.
-const uploadFileBtn = document.querySelector(".uploadFileBtn")
+    const result = [[${result}]]
+    if(result) {
+        alert("작성된 게시글 번호 : " + result +"번")
+    }
+
+    // 글쓰기 폼에서 에러가 발생해서, 서버로 부터, 키: errors에
+    // 정보가 담겨져 있음.
+    const errors = [[${errors}]]
+    console.log("errors : " + errors)
+    let errorMsg =''
+    if(errors) {
+        for(let i = 0; i < errors.length; i++){
+            errorMsg += `${errors[i].field} 는 ${errors[i].code}\n`
+        }
+        alert(errorMsg)
+    }
+
     // 업로드 모달창 띄우기.
     // 모달 댓글 폼 표시하기=====================================================
     const uploadModal = new bootstrap.Modal(document.querySelector(".uploadModal"))
 
+    // 필요한 요소 준비물 준비.
+    const uploadFileBtn = document.querySelector(".uploadFileBtn")
+
+    // 이벤트 처리하기.
     uploadFileBtn.addEventListener("click", function (e) {
 
         e.preventDefault()
         e.stopPropagation()
         uploadModal.show()
     }, false)
-
-
 
     // 서버에 이미지들 보내기, axios 이용해서 비동기 통신으로 데이터만 전달중
     document.querySelector(".uploadBtn").addEventListener("click",function (e){

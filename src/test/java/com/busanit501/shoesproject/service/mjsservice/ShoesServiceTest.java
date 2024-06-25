@@ -76,6 +76,15 @@ public class ShoesServiceTest {
 
     }
     @Test
+    public void read(){
+        ShoesDTO shoesDTO = shoesService.read(204L);
+        log.info("조회 결과 : " + shoesDTO);
+        log.info("조회 결과 : " + shoesDTO.getItemId());
+
+    }
+
+
+    @Test
     public void testListAll() {
         // 화면에서 전달할 내용을 담은 PageRequestDTO 더미가 필요.
         PageRequestDTO pageRequestDTO = PageRequestDTO.builder()

@@ -1,19 +1,26 @@
 <!DOCTYPE html>
 <html lang="ko"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      xmlns:th="http://www.thymeleaf.org">
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6"
+      xmlns:th="www.thymeleaf.org">
+
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>base</title>
     <link th:href="@{/css/style.css}" rel="stylesheet">
     <link th:href="@{/css/styles.css}" rel="stylesheet">
     <link th:href="@{/css/style2.css}" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
-          integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
-          crossorigin="anonymous">
-    <link th:href="@{/js/load.js}" rel="stylesheet">
+    integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+    crossorigin="anonymous">
+<!--    <link th:href="@{/js/load.js}" rel="stylesheet">-->
+
+
 </head>
+
+
+
 <body>
 <header>
     <div class="top-nav">
@@ -41,7 +48,7 @@
                 <button type="button">작성</button>
             </a>
 
-            <a th:href="@{/shoes/search}">
+            <a th:href="@{/shoes/product2}">
             <button type="button">검색</button>
             </a>
             <a th:href="@{/shoes/cart}"><img th:src="@{/images/carticon.jpg}" alt="장바구니 아이콘"></a>
@@ -55,6 +62,8 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
             integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
             crossorigin="anonymous"></script>
+
+
     <script th:src="@{/js/scripts.js}"></script>
 
 <th:block layout:fragment="javascript">

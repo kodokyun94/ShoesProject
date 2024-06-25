@@ -13,3 +13,4 @@ document.getElementById('profileImage').addEventListener('change', function(even
         document.getElementById('imagePreview').style.display = 'none';
     }
 });
+

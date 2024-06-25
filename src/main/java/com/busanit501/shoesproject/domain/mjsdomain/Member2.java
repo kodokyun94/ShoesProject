@@ -9,7 +9,7 @@ import lombok.*;
 @NoArgsConstructor
 @ToString
 @Entity
-@Table(name = "member", indexes = {
+@Table(name = "member2", indexes = {
         @Index(name = "idx_member_shoes_itemId", columnList = "shoes_itemId")
 })
 public class Member2 {
@@ -32,5 +32,8 @@ public class Member2 {
 
     @Column(length=50, nullable = false)
     private String memberAddress;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Shoes shoes;
 
 }

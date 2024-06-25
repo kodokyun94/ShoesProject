@@ -65,8 +65,10 @@ public class ShoesController {
     } //list 닫는 부분
 
     @GetMapping("/productpage2")
-    public void search2( PageRequestDTO pageRequestDTO, Model model) {
+    public void search2( Long itemId, ShoesDTO shoesDTO2,PageRequestDTO pageRequestDTO, Model model) {
 
+        ShoesDTO shoesDTO = shoesService.read(itemId);
+        model.addAttribute("shoesDTO", shoesDTO);
         log.info("BoardController : /board/list  확인 중, pageRequestDTO : " + pageRequestDTO);
 
         // dto 변경하기, 메서드도 변경하기. 댓글 갯수 포함, 첨부 이미지들 모두 포함.
@@ -82,6 +84,29 @@ public class ShoesController {
         model.addAttribute("sizes", sizes);
         List<Review> reviews = reviewService.getAllReviews();
         model.addAttribute("reviews", reviews);
+
+        // 서버로부터 응답확인.
+        log.info("BoardController 확인 중, responseDTO : " + responseDTO);
+
+        // 서버 -> 화면 데이터 전달.
+        model.addAttribute("responseDTO", responseDTO);
+        // 로그인 여부에 따라, 로그 아웃 표시하기.
+
+
+    } //list 닫는 부분
+    @GetMapping("/search")
+    public void search3( PageRequestDTO pageRequestDTO, Model model) {
+
+        log.info("BoardController : /board/list  확인 중, pageRequestDTO : " + pageRequestDTO);
+
+        // dto 변경하기, 메서드도 변경하기. 댓글 갯수 포함, 첨부 이미지들 모두 포함.
+        PageResponseDTO<ShoesListAllDTO> responseDTO
+                = shoesService.listWithAll(pageRequestDTO);
+
+        // 로그인 유저의 , 정보 가져오기.
+//        boolean loginCheck = false;
+//        memberService.
+//        if ()
 
         // 서버로부터 응답확인.
         log.info("BoardController 확인 중, responseDTO : " + responseDTO);

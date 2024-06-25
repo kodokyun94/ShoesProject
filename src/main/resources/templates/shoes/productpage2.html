@@ -11,6 +11,9 @@
 <body>
 <div layout:fragment="content">
     <form action="/shoes/productpage2" method="get">
+        <input type="hidden" name="page" th:value="${pageRequestDTO.page}">
+        <input type="hidden" name="size" th:value="${pageRequestDTO.size}">
+
         <div class="container">
             <div class="product-images">
                 <img th:src="@{/images/shoesimg1.PNG}" alt="제품 이미지 1">
@@ -22,9 +25,10 @@
                 <img th:src="@{/images/shoesimg1.PNG}" alt="주요 제품 이미지">
             </div>
             <div class="details">
-                <h1>[[${shoesDTO.itemName}]]</h1>
-                <p>[[${shoesDTO.itemGender}]]</p>
-                <p>[[${shoesDTO.itemPrice}]]</p>
+                <h1>Product ID: <span th:text="${shoesDTO.itemId}"></span></h1>
+                <h1>Product ID: <span th:text="${shoesDTO.itemName}"></span></h1>
+                <h1>Product ID: <span th:text="${shoesDTO.itemGender}"></span></h1>
+                <h1>Product ID: <span th:text="${shoesDTO.itemPrice}"></span></h1>
                 <div class="sizes">
                     <div th:each="size:${sizes}">
                         [[${size.size}]]
