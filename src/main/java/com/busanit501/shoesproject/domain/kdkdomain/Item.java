@@ -31,6 +31,15 @@ public class Item {
     //@Column(length=50, nullable = false)
     //private String review_rank_avg;
 
+    @Column(nullable = false)
+    private int stockNumber; //재고수량
+
     @Column(length=50, nullable = false)
     private String itemGender;
+
+
+    public void addStock(int stockNumber){
+        this.stockNumber += stockNumber;
+    }
+
 }
