@@ -4,7 +4,7 @@ import com.busanit501.shoesproject.domain.kdkdomain.Cart;
 import com.busanit501.shoesproject.domain.kdkdomain.CartItem;
 import com.busanit501.shoesproject.domain.kdkdomain.Item;
 import com.busanit501.shoesproject.domain.kdkdomain.Member;
-import com.busanit501.shoesproject.dto.kdkdto.CartDetailDto;
+import com.busanit501.shoesproject.dto.kdkdto.CartDetailDTO;
 import com.busanit501.shoesproject.dto.kdkdto.CartItemDTO;
 import com.busanit501.shoesproject.repository.kdkrepository.CartItemRepository;
 import com.busanit501.shoesproject.repository.kdkrepository.CartRepository;
@@ -36,7 +36,7 @@ public class CartService {
 
         Member member = memberRepository.findByMemberEmail(memberEmail);
 
-        Cart cart = cartRepository.findBymemberId(member.getMemberId());
+        Cart cart = cartRepository.findByMember_MemberId(member.getMemberId());
 
 
         if(cart == null){
@@ -44,7 +44,7 @@ public class CartService {
             cartRepository.save(cart);
         }
 
-        CartItem savedCartItem = cartItemRepository.findByCartIdAndItemId(cart.getCartId(), item.getItemId());
+        CartItem savedCartItem = cartItemRepository.findByCart_CartIdAndItem_ItemId(cart.getCartId(), item.getItemId());
 
         if(savedCartItem != null){
             savedCartItem.addCount(cartItemDto.getCount());
@@ -57,20 +57,20 @@ public class CartService {
     }
 
     @Transactional(readOnly = true)
-    public List<CartDetailDto> getCartList(String memberEmail){
+    public List<CartDetailDTO> getCartList(String memberEmail){
 
-        List<CartDetailDto> cartDetailDtoList = new ArrayList<>();
+        List<CartDetailDTO> cartDetailDTOList = new ArrayList<>();
 
         Member member = memberRepository.findByMemberEmail(memberEmail);
 
-        Cart cart = cartRepository.findBymemberId(member.getMemberId());
+        Cart cart = cartRepository.findByMember_MemberId(member.getMemberId());
 
         if(cart == null){
-            return cartDetailDtoList;
+            return cartDetailDTOList;
         }
 
-        cartDetailDtoList = cartItemRepository.findCartDetailDtoList(cart.getCartId());
-        return cartDetailDtoList;
+        cartDetailDTOList = cartItemRepository.findCartDetailDtoList(cart.getCartId());
+        return cartDetailDTOList;
     }
 
 
@@ -79,7 +79,7 @@ public class CartService {
     public boolean validateCartItem(Long cartItemId, String memberEmail){
         Member curMember = memberRepository.findByMemberEmail(memberEmail);
 
-        CartItem cartItem = cartItemRepository.findByCartIdAndItemId(cartItemId, cartItemId);
+        CartItem cartItem = cartItemRepository.findByCart_CartIdAndItem_ItemId(cartItemId, cartItemId);
 
         Member savedMember = cartItem.getCart().getMember();
 

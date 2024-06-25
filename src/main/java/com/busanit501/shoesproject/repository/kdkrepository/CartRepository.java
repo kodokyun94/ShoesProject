@@ -9,5 +9,5 @@ import org.springframework.stereotype.Repository;
 public interface CartRepository extends JpaRepository<Cart,Long> {
     Member member = new Member();
 
-    Cart findBymemberId(Long memberId);
+    Cart findByMember_MemberId(Long memberId);
 }

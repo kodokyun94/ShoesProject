@@ -1,6 +1,6 @@
 package com.busanit501.shoesproject.controller.kdkcontroller;
 
-import com.busanit501.shoesproject.dto.kdkdto.CartDetailDto;
+import com.busanit501.shoesproject.dto.kdkdto.CartDetailDTO;
 import com.busanit501.shoesproject.dto.kdkdto.CartItemDTO;
 import com.busanit501.shoesproject.service.kdkservice.CartService;
 import jakarta.validation.Valid;
@@ -25,37 +25,37 @@ public class CartController {
 
     private final CartService cartService;
 
-    @PostMapping(value = "/cart")
-    public @ResponseBody ResponseEntity order(@RequestBody @Valid CartItemDTO cartItemDTO, BindingResult bindingResult, Principal principal){
-
-        if(bindingResult.hasErrors()){
-            StringBuilder sb = new StringBuilder();
-            List<FieldError> fieldErrors = bindingResult.getFieldErrors();
-
-            for (FieldError fieldError : fieldErrors) {
-                sb.append(fieldError.getDefaultMessage());
-            }
-
-            return new ResponseEntity<String>(sb.toString(), HttpStatus.BAD_REQUEST);
-        }
-
-        String email = principal.getName();
-        Long Id;
-
-        try {
-            Id = cartService.addCart(cartItemDTO, email);
-        } catch(Exception e){
-            return new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
-        }
-
-        return new ResponseEntity<Long>(Id, HttpStatus.OK);
-    }
+//    @PostMapping(value = "/cart")
+//    public @ResponseBody ResponseEntity order(@RequestBody @Valid CartItemDTO cartItemDTO, BindingResult bindingResult, Principal principal){
+//
+//        if(bindingResult.hasErrors()){
+//            StringBuilder sb = new StringBuilder();
+//            List<FieldError> fieldErrors = bindingResult.getFieldErrors();
+//
+//            for (FieldError fieldError : fieldErrors) {
+//                sb.append(fieldError.getDefaultMessage());
+//            }
+//
+//            return new ResponseEntity<String>(sb.toString(), HttpStatus.BAD_REQUEST);
+//        }
+//
+//        String email = principal.getName();
+//        Long Id;
+//
+//        try {
+//            Id = cartService.addCart(cartItemDTO, email);
+//        } catch(Exception e){
+//            return new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
+//        }
+//
+//        return new ResponseEntity<Long>(Id, HttpStatus.OK);
+//    }
 
     @GetMapping(value = "/cart")
-    public String orderHist(Principal principal, Model model){
-        List<CartDetailDto> cartDetailList = cartService.getCartList(principal.getName());
-        model.addAttribute("cartItems", cartDetailList);
-        return "/shoes/cart";
+    public void orderHist(Principal principal, Model model){
+//        List<CartDetailDTO> cartDetailList = cartService.getCartList(principal.getName());
+//        model.addAttribute("cartItems", cartDetailList);
+//        return "/shoes/cart";
     }
 
     @PatchMapping(value = "/cartItem/{cartId}")
