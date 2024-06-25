@@ -5,6 +5,8 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.util.List;
+
 @Entity
 @Table(name = "cart")
 @Getter @Setter
@@ -19,6 +21,9 @@ public class Cart extends BaseEntity {
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "memberId")
     private Member member;
+
+    @OneToMany(mappedBy = "cart")
+    private List<CartItem> cartItems;
 
     public static Cart createCart(Member member) {
         Cart cart = new Cart();

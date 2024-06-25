@@ -1,6 +1,6 @@
 package com.busanit501.shoesproject.controller.kdkcontroller;
 
-import com.busanit501.shoesproject.dto.kdkdto.CartDetailDto;
+import com.busanit501.shoesproject.dto.kdkdto.CartDetailDTO;
 import com.busanit501.shoesproject.dto.kdkdto.CartItemDTO;
 import com.busanit501.shoesproject.service.kdkservice.CartService;
 import jakarta.validation.Valid;
@@ -27,59 +27,53 @@ public class CartController {
 
     @PostMapping(value = "/cart")
     public @ResponseBody ResponseEntity order(@RequestBody @Valid CartItemDTO cartItemDTO, BindingResult bindingResult, Principal principal){
-
         if(bindingResult.hasErrors()){
             StringBuilder sb = new StringBuilder();
             List<FieldError> fieldErrors = bindingResult.getFieldErrors();
-
             for (FieldError fieldError : fieldErrors) {
                 sb.append(fieldError.getDefaultMessage());
             }
-
             return new ResponseEntity<String>(sb.toString(), HttpStatus.BAD_REQUEST);
         }
-
         String email = principal.getName();
         Long Id;
-
         try {
             Id = cartService.addCart(cartItemDTO, email);
         } catch(Exception e){
             return new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
-
         return new ResponseEntity<Long>(Id, HttpStatus.OK);
     }
 
-    @GetMapping(value = "/cart")
-    public String orderHist(Principal principal, Model model){
-        List<CartDetailDto> cartDetailList = cartService.getCartList(principal.getName());
-        model.addAttribute("cartItems", cartDetailList);
-        return "/shoes/cart";
+
+    @GetMapping("/cart")
+    public String showCartItems(Model model) {
+        String testMemberEmail = "test@example.com"; // 테스트용 이메일
+        List<CartDetailDTO> cartItems = cartService.getCartList(testMemberEmail);
+        model.addAttribute("cartItems", cartItems);
+        return "/shoes/cart"; // 뷰 이름
     }
+
 
     @PatchMapping(value = "/cartItem/{cartId}")
     public @ResponseBody ResponseEntity updateCartItem(@PathVariable("cartId") Long cartId, int count, Principal principal){
-
         if(count <= 0){
             return new ResponseEntity<String>("최소 1개 이상 담아주세요", HttpStatus.BAD_REQUEST);
         } else if(!cartService.validateCartItem(cartId, principal.getName())){
             return new ResponseEntity<String>("수정 권한이 없습니다.", HttpStatus.FORBIDDEN);
         }
-
         cartService.updateCartItemCount(cartId, count);
         return new ResponseEntity<Long>(cartId, HttpStatus.OK);
     }
 
+
     @DeleteMapping(value = "/cartItem/{cartId}")
     public @ResponseBody ResponseEntity deleteCartItem(@PathVariable("cartId") Long cartId, Principal principal){
-
         if(!cartService.validateCartItem(cartId, principal.getName())){
             return new ResponseEntity<String>("수정 권한이 없습니다.", HttpStatus.FORBIDDEN);
         }
-
         cartService.deleteCartItem(cartId);
-
         return new ResponseEntity<Long>(cartId, HttpStatus.OK);
     }
+
 }

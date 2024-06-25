@@ -44,14 +44,14 @@ public class nhjController {
         model.addAttribute("reviews", reviews);
     }
 
-    @GetMapping("/cart")
-    public void cartGet(Model model) {
-    }
+//    @GetMapping("/cart")
+//    public void cartGet(Model model) {
+//    }
 
 
-    public void cartGet() {
-
-    }
+//    public void cartGet() {
+//
+//    }
 
     @PostMapping("/review")
     public String addreview(ReviewDTO reviewDTO) {

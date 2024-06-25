@@ -4,7 +4,7 @@ import com.busanit501.shoesproject.domain.kdkdomain.Cart;
 import com.busanit501.shoesproject.domain.kdkdomain.CartItem;
 import com.busanit501.shoesproject.domain.kdkdomain.Item;
 import com.busanit501.shoesproject.domain.kdkdomain.Member;
-import com.busanit501.shoesproject.dto.kdkdto.CartDetailDto;
+import com.busanit501.shoesproject.dto.kdkdto.CartDetailDTO;
 import com.busanit501.shoesproject.dto.kdkdto.CartItemDTO;
 import com.busanit501.shoesproject.repository.kdkrepository.CartItemRepository;
 import com.busanit501.shoesproject.repository.kdkrepository.CartRepository;
@@ -14,7 +14,6 @@ import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.thymeleaf.util.StringUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,25 +27,20 @@ public class CartService {
     private final MemberRepository memberRepository;
     private final CartRepository cartRepository;
     private final CartItemRepository cartItemRepository;
-//    private final OrderService orderService;
 
-    public Long addCart(CartItemDTO cartItemDto, String memberEmail){
+    public Long addCart(CartItemDTO cartItemDto, String memberEmail) {
+        Item item = itemRepository.findByItemId(cartItemDto.getItemId())
+                .orElseThrow(() -> new EntityNotFoundException("Item not found"));
 
-        Item item = itemRepository.findByItemId(cartItemDto.getItemId());
+        Member member = memberRepository.findByMemberEmail(memberEmail)
+                .orElseThrow(() -> new EntityNotFoundException("Member not found"));
 
-        Member member = memberRepository.findByMemberEmail(memberEmail);
+        Cart cart = cartRepository.findByMember_MemberId(member.getMemberId())
+                .orElseGet(() -> createAndSaveCart(member));
 
-        Cart cart = cartRepository.findBymemberId(member.getMemberId());
+        CartItem savedCartItem = cartItemRepository.findByCart_CartIdAndItem_ItemId(cart.getCartId(), item.getItemId());
 
-
-        if(cart == null){
-            cart = Cart.createCart(member);
-            cartRepository.save(cart);
-        }
-
-        CartItem savedCartItem = cartItemRepository.findByCartIdAndItemId(cart.getCartId(), item.getItemId());
-
-        if(savedCartItem != null){
+        if (savedCartItem != null) {
             savedCartItem.addCount(cartItemDto.getCount());
             return savedCartItem.getCartItemId();
         } else {
@@ -56,42 +50,45 @@ public class CartService {
         }
     }
 
-    @Transactional(readOnly = true)
-    public List<CartDetailDto> getCartList(String memberEmail){
-
-        List<CartDetailDto> cartDetailDtoList = new ArrayList<>();
-
-        Member member = memberRepository.findByMemberEmail(memberEmail);
-
-        Cart cart = cartRepository.findBymemberId(member.getMemberId());
-
-        if(cart == null){
-            return cartDetailDtoList;
-        }
-
-        cartDetailDtoList = cartItemRepository.findCartDetailDtoList(cart.getCartId());
-        return cartDetailDtoList;
+    private Cart createAndSaveCart(Member member) {
+        Cart cart = Cart.createCart(member);
+        cartRepository.save(cart);
+        return cart;
     }
 
+    @Transactional(readOnly = true)
+    public List<CartDetailDTO> getCartList(String memberEmail) {
+        Member member = memberRepository.findByMemberEmail(memberEmail)
+                .orElseThrow(() -> new EntityNotFoundException("Member not found"));
 
+        Cart cart = cartRepository.findByMember_MemberId(member.getMemberId())
+                .orElse(null);
+
+        if (cart == null) {
+            return new ArrayList<>();
+        }
+
+        return cartItemRepository.findCartDetailDtoList(cart.getCartId());
+    }
 
     @Transactional(readOnly = true)
-    public boolean validateCartItem(Long cartItemId, String memberEmail){
-        Member curMember = memberRepository.findByMemberEmail(memberEmail);
+    public boolean validateCartItem(Long cartItemId, String memberEmail) {
+        Member curMember = memberRepository.findByMemberEmail(memberEmail)
+                .orElseThrow(() -> new EntityNotFoundException("Member not found"));
 
-        CartItem cartItem = cartItemRepository.findByCartIdAndItemId(cartItemId, cartItemId);
+        CartItem cartItem = cartItemRepository.findById(cartItemId)
+                .orElseThrow(() -> new EntityNotFoundException("CartItem not found"));
 
         Member savedMember = cartItem.getCart().getMember();
 
-        if(!StringUtils.equals(curMember.getMemberId(), savedMember.getMemberId())){
-            return false;
-        }
-
-        return true;
+        return curMember.getMemberId().equals(savedMember.getMemberId());
     }
 
+    public void updateCartItemCount(Long cartItemId, int count) {
+        if (count <= 0) {
+            throw new IllegalArgumentException("Count must be greater than zero");
+        }
 
-    public void updateCartItemCount(Long cartItemId, int count){
         CartItem cartItem = cartItemRepository.findById(cartItemId)
                 .orElseThrow(EntityNotFoundException::new);
 
@@ -103,30 +100,6 @@ public class CartService {
                 .orElseThrow(EntityNotFoundException::new);
         cartItemRepository.delete(cartItem);
     }
-
-//    public Long orderCartItem(List<CartOrderDto> cartOrderDtoList, String email){
-//        List<OrderDto> orderDtoList = new ArrayList<>();
-//
-//        for (CartOrderDto cartOrderDto : cartOrderDtoList) {
-//            CartItem cartItem = cartItemRepository
-//                            .findById(cartOrderDto.getCartItemId())
-//                            .orElseThrow(EntityNotFoundException::new);
-//
-//            OrderDto orderDto = new OrderDto();
-//            orderDto.setItemId(cartItem.getItem().getId());
-//            orderDto.setCount(cartItem.getCount());
-//            orderDtoList.add(orderDto);
-//        }
-//
-//        Long orderId = orderService.orders(orderDtoList, email);
-//        for (CartOrderDto cartOrderDto : cartOrderDtoList) {
-//            CartItem cartItem = cartItemRepository
-//                            .findById(cartOrderDto.getCartItemId())
-//                            .orElseThrow(EntityNotFoundException::new);
-//            cartItemRepository.delete(cartItem);
-//        }
-//
-//        return orderId;
-//    }
-
 }
+
+
