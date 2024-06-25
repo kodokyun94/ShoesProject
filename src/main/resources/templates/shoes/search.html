@@ -47,15 +47,18 @@
                         <div class="col" th:each="dto:${responseDTO.dtoList}">
                             <div class="card h-100">
                                 <div class="card-body">
-                                    <a th:href="|@{/shoes/productpage(itemId=${dto.itemId})}|">
+
                                     <div th:if="${dto.shoesImages != null && dto.shoesImages.size() > 0}">
                                         <img class="card-img-top" th:src="|/view/s_${dto.shoesImages[0].uuid}_${dto.shoesImages[0].fileName}|"
                                              alt="Product Image">
                                     </div>
-                                    </a>
+
+                                    <a th:href="|@{/shoes/update(itemId=${dto.itemId})}|">
                                     <h5 class="card-title">
                                             [[${dto.itemName}]]
                                     </h5>
+                                    </a>
+
                                     <p class="card-text">
                                         <strong>브랜드:</strong> [[${dto.itemBrand}]]<br>
                                         <strong>타입:</strong> [[${dto.itemType}]]<br>

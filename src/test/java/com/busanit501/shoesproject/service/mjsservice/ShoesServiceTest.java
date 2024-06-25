@@ -82,6 +82,21 @@ public class ShoesServiceTest {
         log.info("조회 결과 : " + shoesDTO.getItemId());
 
     }
+    @Test
+    public void update(){
+        ShoesDTO shoesDTO = ShoesDTO.builder()
+                .itemId(201L)
+                .itemBrand("테스트")
+                .itemName("테스트")
+                .itemType("테스트")
+                .itemReviewRankAvg("테스트")
+                .itemPrice("테스트")
+                .itemGender("테스트")
+                .build();
+
+        shoesService.update(shoesDTO);
+        log.info("조회 결과2 후: " + shoesDTO);
+    }
 
 
     @Test

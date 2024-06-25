@@ -2,6 +2,7 @@
 <html lang="ko"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       xmlns:th="www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6"
       layout:decorate="~{layout/baseSearch.html}"
 >
 <body>
@@ -61,25 +62,13 @@
                             </div>
                         </div>
 
-                        <div class="mb-3">
-                            <label for="regDate" class="form-label">등록시간</label>
-                            <input type="text" name="regDate" class="form-control" id="regDate"
-                                   th:value="${#temporals.format(boardDTO.regDate, 'yyyy-MM-dd HH:mm:ss')}" disabled>
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="modDate" class="form-label">수정시간</label>
-                            <input type="text" name="modDate" class="form-control" id="modDate"
-                                   th:value="${#temporals.format(boardDTO.modDate, 'yyyy-MM-dd HH:mm:ss')}" disabled>
-                        </div>
 
                         <div class="mb-3" th:with="link = ${pageRequestDTO.getLink()}">
-<!--                            <div th:with="user=${#authentication.principal}">-->
-<!--                                <div th:if="${user != null && user.username==boardDTO.writer}">-->
+
                                     <button type="button" class="btn btn-primary updateBtn">수정하기</button>
                                     <button type="button" class="btn btn-warning deleteBtn">삭제하기</button>
 <!--                                </div>-->
-                                <a th:href="|@{/board/list}?${link}|">
+                                <a th:href="|@{/shoes/search}?${link}|">
                                     <button type="button" class="btn btn-danger">목록가기</button>
                                 </a>
                             </div>
@@ -97,7 +86,7 @@
     <div class="row mt-3">
         <div class="col">
             <div class="d-flex uploadResult" style="flex-wrap: wrap">
-                <th:block th:each="fileName:${boardDTO.fileNames}">
+                <th:block th:each="fileName:${shoesDTO.fileNames}">
                     <div class="card col-4" th:with="arr = ${fileName.split('_')}">
                         <div class="card-header d-flex justify-content-center">
                             [[${arr[1]}]]
@@ -181,7 +170,7 @@
         e.preventDefault()
         e.stopPropagation()
 
-        formObj.action = `/board/update`
+        formObj.action = `/shoes/update`
         formObj.method = 'post'
         formObj.submit()
 
@@ -290,7 +279,7 @@
         e.preventDefault()
         e.stopPropagation()
 
-        formObj.action = `/board/update?${link}`
+        formObj.action = `/shoes/update?${link}`
 
         // 첨부 파일 : 히든으로 추가.
         // 새로운 이미지 추가.
@@ -319,7 +308,7 @@
         // 임시로, 화면에서 만 안보이는 사진.
         appendNotShownData()
 
-        formObj.action = `/board/delete`
+        formObj.action = `/shoes/delete`
         formObj.method = 'post'
         formObj.submit()
 
