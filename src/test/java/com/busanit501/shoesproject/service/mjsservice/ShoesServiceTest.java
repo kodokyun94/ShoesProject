@@ -94,6 +94,7 @@ public class ShoesServiceTest {
                 .itemGender("테스트")
                 .build();
 
+
         shoesService.update(shoesDTO);
         log.info("조회 결과2 후: " + shoesDTO);
     }
