@@ -8,7 +8,7 @@ import lombok.Setter;
 import org.hibernate.validator.constraints.Length;
 
 @Getter @Setter
-public class MemberFormDto {
+public class MemberDTO {
 
     private Long memberId;
 
