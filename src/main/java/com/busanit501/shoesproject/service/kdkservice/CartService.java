@@ -29,7 +29,7 @@ public class CartService {
     private final CartItemRepository cartItemRepository;
 
     public Long addCart(CartItemDTO cartItemDto, String memberEmail) {
-        Item item = itemRepository.findByItemId(cartItemDto.getItemId())
+        Item item = itemRepository.findByItemId(cartItemDto.getCartItemId())
                 .orElseThrow(() -> new EntityNotFoundException("Item not found"));
 
         Member member = memberRepository.findByMemberEmail(memberEmail)

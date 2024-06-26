@@ -13,6 +13,7 @@ import lombok.*;
 @Entity
 public class Member {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(length=50, nullable = false)
     private Long memberId;
 
