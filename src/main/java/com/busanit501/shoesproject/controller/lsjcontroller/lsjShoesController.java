@@ -1,5 +1,6 @@
 package com.busanit501.shoesproject.controller.lsjcontroller;
 
+import com.busanit501.shoesproject.domain.lsjdomain.ShoesRole;
 import com.busanit501.shoesproject.dto.lsjdto.ShoesJoinDTO;
 import com.busanit501.shoesproject.service.lsjservice.ShoesService2;
 import lombok.RequiredArgsConstructor;
@@ -85,7 +86,7 @@ public class lsjShoesController {
         log.info("joinPost====================");
         log.info("shoesJoinDTO = " + shoesJoinDTO);
 
-        // 회원 가입 로직 처리 없음.
+
         try {
             shoesService2.join(shoesJoinDTO);
         } catch (ShoesService2.IdExistException e) {
