@@ -2,6 +2,7 @@ package com.busanit501.shoesproject.controller.kdkcontroller;
 
 import com.busanit501.shoesproject.dto.kdkdto.OrderDto;
 import com.busanit501.shoesproject.dto.kdkdto.OrderHistDto;
+import com.busanit501.shoesproject.service.kdkservice.OrderService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;

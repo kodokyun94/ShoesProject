@@ -1,5 +1,6 @@
 package com.busanit501.shoesproject.controller.kdkcontroller;
 
+import com.busanit501.shoesproject.domain.kdkdomain.Member;
 import com.busanit501.shoesproject.dto.kdkdto.CartDTO;
 import com.busanit501.shoesproject.dto.kdkdto.CartDetailDTO;
 import com.busanit501.shoesproject.dto.kdkdto.CartItemDTO;
@@ -11,6 +12,9 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -18,6 +22,7 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -31,18 +36,35 @@ public class CartController {
 
     @GetMapping("/cart")
     public void showCart(Model model) {
-        // 로그인된 회원 정보 가져오기 (예: 현재는 memberId가 1인 회원으로 가정)
-        Long memberId = 1L; // 실제 애플리케이션에서는 SecurityContextHolder를 통해 가져와야 함
-        List<CartDetailDTO> cartItems = cartService.getCartList(memberId);
-        log.info("cartItems showCart : " + cartItems);
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String memberEmail = null;
 
-        model.addAttribute("cartItems", cartItems);
+        if (authentication != null && authentication.getPrincipal() instanceof UserDetails) {
+            UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+            memberEmail = userDetails.getUsername();
+        }
+
+        if (memberEmail != null) {
+            Member member = memberRepository.findByMemberEmail(memberEmail);
+            if (member != null) {
+                Long memberId = member.getMemberId();
+                List<CartDetailDTO> cartItems = cartService.getCartList(memberId);
+                log.info("cartItems showCart : " + cartItems);
+                model.addAttribute("cartItems", cartItems);
+            } else {
+                log.warn("Member not found for email: " + memberEmail);
+                model.addAttribute("cartItems", new ArrayList<>());
+            }
+        } else {
+            log.warn("No authenticated user found");
+            model.addAttribute("cartItems", new ArrayList<>());
+        }
     }
 
-    @DeleteMapping("/")
-    public String deleteCartItem(@PathVariable Long cartItemId){
+    @PostMapping("/cart/delete/{cartItemId}")
+    public String deleteCartItem(@PathVariable Long cartItemId) {
         cartService.deleteCartItem(cartItemId);
-        return "redirect:/shoes/cart";
+        return "redirect:/shoes/cart"; // 삭제 후 장바구니 페이지로 리다이렉트
     }
 
 //    @PostMapping(value = "/cart")

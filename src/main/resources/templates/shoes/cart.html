@@ -6,8 +6,6 @@
 <head>
     <title>장바구니</title>
 </head>
-
-
 <body>
 <div layout:fragment="content">
     <section class="cart-section">
@@ -22,20 +20,20 @@
                 <th>총 금액</th>
                 <th>삭제</th>
             </tr>
-
             </thead>
             <tbody>
-            <!-- 데이터베이스에서 가져온 장바구니 상품 목록 반복 처리 -->
-
             <tr th:each="item : ${cartItems}">
                 <td><img th:src="@{/images/shoesimg1.PNG}" alt="상품 이미지"></td>
                 <td th:text="${item.itemName}">상품 이름</td>
                 <td th:text="${item.itemPrice}">₩ 가격</td>
-                <td><input type="number" value="${item.quantity}" min="1"></td>
-                <td th:text="${item.itemPrice * item.count}">₩ 총 금액</td>
-                <td><button>삭제</button></td>
+                <td><input type="number" th:value="${item.quantity}" min="1"></td>
+                <td th:text="${item.itemPrice * item.quantity}">₩ 총 금액</td>
+                <td>
+                    <form th:action="@{'/cart/delete/' + ${item.cartItemId}}" method="post">
+                        <button type="submit">삭제</button>
+                    </form>
+                </td>
             </tr>
-
             </tbody>
         </table>
         <div class="total-price">
