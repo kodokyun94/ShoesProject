@@ -39,7 +39,7 @@ public class CartController {
         model.addAttribute("cartItems", cartItems);
     }
 
-    @DeleteMapping
+    @DeleteMapping("/")
     public String deleteCartItem(@PathVariable Long cartItemId){
         cartService.deleteCartItem(cartItemId);
         return "redirect:/shoes/cart";
