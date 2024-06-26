@@ -43,11 +43,11 @@
         </nav>
         <div class="search-cart">
 
-            <a th:href="@{/shoes/register}">
+            <a th:if="${user != null && user.username=='admin'}" th:href="@{/shoes/register}">
                 <button type="button">작성</button>
             </a>
 
-            <a th:href="@{/shoes/product2}">
+            <a th:href="@{/shoes/search}">
             <button type="button">검색</button>
             </a>
             <a th:href="@{/shoes/cart}"><img th:src="@{/images/carticon.jpg}" alt="장바구니 아이콘"></a>

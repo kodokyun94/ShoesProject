@@ -54,7 +54,9 @@
                                              alt="Product Image">
                                     </div>
 
-                                    <a th:href="|@{/shoes/update(itemId=${dto.itemId})}&${link}|">
+                                    <a th:if="${user != null && user.username=='admin'}"
+                                       th:href="|@{/shoes/update(itemId=${dto.itemId})}&${link}|"
+                                       th:else="|@{/shoes/productpage(itemId=${dto.itemId})}&${link}|">
                                     <h5 class="card-title">
                                             [[${dto.itemName}]]
                                     </h5>
