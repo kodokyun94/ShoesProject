@@ -136,11 +136,13 @@ public class ShoesSearchImpl extends QuerydslRepositorySupport implements ShoesS
       // 1번, 게시글
       ShoesListAllDTO shoesListAllDTO = ShoesListAllDTO.builder()
               .itemId(shoes1.getItemId())
+              .itemName(shoes1.getItemName())
               .itemType(shoes1.getItemType())
               .itemBrand(shoes1.getItemBrand())
               .itemPrice(shoes1.getItemPrice())
-              .itemGender(shoes1.getItemGender())
               .itemReviewRankAvg(shoes1.getItemReviewRankAvg())
+              .itemGender(shoes1.getItemGender())
+              .replyCount(replyCount)
               .build();
 
       // 2번,  첨부 이미지 추가하는 작업.

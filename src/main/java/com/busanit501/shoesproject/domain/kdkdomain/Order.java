@@ -16,7 +16,7 @@ public class Order extends BaseEntity {
 
     @Id @GeneratedValue
     @Column(name = "order_id")
-    private Long id;
+    private Long orderId;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")

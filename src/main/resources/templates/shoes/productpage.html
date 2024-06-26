@@ -3,7 +3,6 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       xmlns:th="http://www.thymeleaf.org"
       layout:decorate="~{layout/base.html}">
-<link rel="stylesheet" th:href="@{/css/reviewStyle.css}">
 <head>
     <title>상품 상세 페이지</title>
     <link rel="stylesheet" th:href="@{/css/reviewStyle.css}">
@@ -11,7 +10,7 @@
 </head>
 <body>
 <div layout:fragment="content">
-    <div class="container">
+    <div class="product-container">
         <div class="product-images">
             <img th:src="@{/images/shoesimg1.PNG}" alt="제품 이미지 1">
             <img th:src="@{/images/shoesimg1.PNG}" alt="제품 이미지 2">
@@ -36,13 +35,12 @@
         </div>
     </div>
 
+    <!-- 리뷰 섹션을 아래로 이동 -->
     <div class="reviews">
         <h2>고객 리뷰</h2>
         <form action="/shoes/review" method="post" enctype="multipart/form-data">
-<!--                예시 데이터-->
             <input type="hidden" name="itemId" value="1">
             <input type="hidden" name="memberId" value="nhj">
-<!--                평점-->
             <fieldset class="rating">
                 <input type="radio" id="star5" name="rating" value="5" /><label class="full" for="star5" title="Awesome - 5 stars"></label>
                 <input type="radio" id="star4" name="rating" value="4" /><label class="full" for="star4" title="Pretty good - 4 stars"></label>
@@ -50,7 +48,6 @@
                 <input type="radio" id="star2" name="rating" value="2" /><label class="full" for="star2" title="Kinda bad - 2 stars"></label>
                 <input type="radio" id="star1" name="rating" value="1" /><label class="full" for="star1" title="Sucks big time - 1 star"></label>
             </fieldset>
-<!--                리뷰 작성-->
             <div class="textarea-container">
                 <textarea id="content" name="content" placeholder="리뷰 내용을 입력해주세요..."></textarea>
                 <input type="file" id="fileInput" name="file" style="display:none;">
@@ -60,12 +57,10 @@
                 </div>
             </div>
         </form>
-<!--            리뷰 목록-->
-        <div class="reviews">
+        <div class="review-list">
             <div class="review-item" th:each="review : ${reviews}">
                 <div class="review-image">
                     <img th:src="${review.imagePath}" alt="리뷰 이미지">
-<!--                        <img th:if="${review.imagePath}" th:src="@{/images/shoesimg1.PNG}" alt="리뷰 이미지">이미지 확인용 주석-->
                 </div>
                 <div class="review-content">
                     <h3 th:text="${#strings.repeat('★', review.rating)}">별점</h3>
@@ -75,7 +70,6 @@
         </div>
     </div>
 </div>
-
 
 <script layout:fragment="javascript" th:inline="javascript">
     // 신발 사이즈 선택
@@ -99,6 +93,7 @@
 
     cartButton.addEventListener('click', function () {
         const selectedSize = document.querySelector('.sizes div.selected');
+
         if (selectedSize) {
             const selectedSizeValue = selectedSize.textContent;
             alert('선택한 사이즈: ' + selectedSizeValue);

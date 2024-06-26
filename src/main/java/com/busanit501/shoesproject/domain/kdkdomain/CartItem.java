@@ -1,6 +1,7 @@
 package com.busanit501.shoesproject.domain.kdkdomain;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Min;
 import lombok.*;
 
 @Entity
@@ -9,7 +10,7 @@ import lombok.*;
 public class CartItem extends BaseEntity {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "cartItemId")
     private Long cartItemId;
 
@@ -21,6 +22,7 @@ public class CartItem extends BaseEntity {
     @JoinColumn(name = "itemId")
     private Item item;
 
+    @Min(value = 1, message = "최소 1개 이상 담아주세요")
     private int count;
 
     public static CartItem createCartItem(Cart cart, Item item, int count) {

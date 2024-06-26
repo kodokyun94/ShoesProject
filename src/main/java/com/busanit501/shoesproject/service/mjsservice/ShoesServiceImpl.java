@@ -38,7 +38,7 @@ public class ShoesServiceImpl implements ShoesService {
 
     @Override
     public ShoesDTO read(Long itemId) {
-        Optional<Shoes> result = shoesRepository.findById(itemId);
+        Optional<Shoes> result = shoesRepository.findByIdWithImages(itemId);
         Shoes shoes = result.orElseThrow();
         ShoesDTO shoesDTO = entityToDTO(shoes);
         return shoesDTO;
@@ -48,7 +48,7 @@ public class ShoesServiceImpl implements ShoesService {
     public void update(ShoesDTO shoesDTO) {
         Optional<Shoes> result = shoesRepository.findById(shoesDTO.getItemId());
         Shoes shoes = result.orElseThrow();
-        shoes.changeall(shoes.getItemName(),shoes.getItemBrand(),shoes.getItemType(),shoes.getItemPrice(),shoes.getItemReviewRankAvg(),shoes.getItemGender());
+        shoes.changeall(shoesDTO.getItemName(),shoesDTO.getItemBrand(),shoesDTO.getItemType(),shoesDTO.getItemPrice(),shoesDTO.getItemReviewRankAvg(),shoesDTO.getItemGender());
         shoes.clearImages();
         if(shoesDTO.getFileNames() !=null){
             for(String fileName : shoesDTO.getFileNames()){

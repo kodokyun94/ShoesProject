@@ -1,4 +1,4 @@
-insert into member values (회원id, pw, 이름, 전화번호, 이메일, 집주소);
+insert into member values (회원id, pw, 이름, 전화번호, 이메일);
 
 insert into shoes_member values ("mjs", "1234", "문정섭", "010-0000-0000", "mjs1234@naver.com", "부산");
 insert into shoes_member values ("nhj", "1234", "나호진", "010-1111-1111", "nhj1234@naver.com", "부산");

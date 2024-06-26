@@ -42,12 +42,12 @@ public class OrderService {
         Item item = itemRepository.findById(orderDto.getItemId())
                 .orElseThrow(EntityNotFoundException::new);
 
-        Optional<Member> member = memberRepository.findByMemberEmail(email);
+        Member member = memberRepository.findByMemberEmail(email);
 
         List<OrderItem> orderItemList = new ArrayList<>();
         OrderItem orderItem = OrderItem.createOrderItem(item, orderDto.getCount());
         orderItemList.add(orderItem);
-        Order order = Order.createOrder(member, orderItemList);
+        Order order = Order.createOrder(Optional.ofNullable(member), orderItemList);
         orderRepository.save(order);
 
         return order.getId();
@@ -74,7 +74,7 @@ public class OrderService {
 
     @Transactional(readOnly = true)
     public boolean validateOrder(Long orderId, String email){
-        Optional<Member> curMember = memberRepository.findByMemberEmail(email);
+        Optional<Member> curMember = Optional.ofNullable(memberRepository.findByMemberEmail(email));
         Order order = orderRepository.findById(orderId)
                 .orElseThrow(EntityNotFoundException::new);
         Member savedMember = order.getMember();
@@ -94,7 +94,7 @@ public class OrderService {
 
     public Long orders(List<OrderDto> orderDtoList, String email){
 
-        Optional<Member> member = memberRepository.findByMemberEmail(email);
+        Member member = memberRepository.findByMemberEmail(email);
         List<OrderItem> orderItemList = new ArrayList<>();
 
         for (OrderDto orderDto : orderDtoList) {
@@ -105,7 +105,7 @@ public class OrderService {
             orderItemList.add(orderItem);
         }
 
-        Order order = Order.createOrder(member, orderItemList);
+        Order order = Order.createOrder(Optional.ofNullable(member), orderItemList);
         orderRepository.save(order);
 
         return order.getId();
