@@ -37,7 +37,7 @@ public class RepositoryTests {
                             .itemBrand("더미브랜드"+i)
                             .itemType("더미타입"+i)
                             .itemGender("더미성ㄴㅁㅇㄹ별"+i)
-                            .itemPrice("100000" + i+"원" )
+                            .itemPrice(Integer.parseInt(100000 + i+"원"))
                             .stockNumber(1)
                             .build();
                     // 데이터베이스에 추가,

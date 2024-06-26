@@ -20,7 +20,7 @@ public class OrderItem extends BaseEntity {
     @JoinColumn(name = "order_id")
     private Order order;
 
-    private String orderPrice; //주문가격
+    private int orderPrice; //주문가격
 
     private int count; //수량
 
@@ -34,7 +34,7 @@ public class OrderItem extends BaseEntity {
     }
 
     public int getTotalPrice(){
-        return Integer.parseInt(orderPrice)*count;
+        return orderPrice*count;
     }
 
 

@@ -13,7 +13,7 @@ public class ItemDTO {
     private String name;
     private String type;
     private String brand;
-    private String price;
+    private int price;
     //private String review_rank_avg;
     private String gender;
 }

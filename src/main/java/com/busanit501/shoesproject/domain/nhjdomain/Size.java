@@ -1,5 +1,6 @@
 package com.busanit501.shoesproject.domain.nhjdomain;
 
+import com.busanit501.shoesproject.domain.kdkdomain.CartItem;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -16,5 +17,6 @@ public class Size {
 
     @Column(length = 50,nullable = false)
     private String size;
+
 
 }

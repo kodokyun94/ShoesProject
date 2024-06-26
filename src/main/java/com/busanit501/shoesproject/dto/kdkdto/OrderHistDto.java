@@ -14,7 +14,7 @@ import java.util.List;
 public class OrderHistDto {
 
     public OrderHistDto(Order order){
-        this.orderId = order.getId();
+        this.orderId = order.getOrderId();
         this.orderDate = order.getOrderDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
         this.orderStatus = order.getOrderStatus();
     }

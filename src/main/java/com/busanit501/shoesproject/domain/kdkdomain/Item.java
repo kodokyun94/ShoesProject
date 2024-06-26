@@ -26,7 +26,7 @@ public class Item {
     private String itemBrand;
 
     @Column(length=50, nullable = false)
-    private String itemPrice;
+    private int itemPrice;
 
     //@Column(length=50, nullable = false)
     //private String review_rank_avg;

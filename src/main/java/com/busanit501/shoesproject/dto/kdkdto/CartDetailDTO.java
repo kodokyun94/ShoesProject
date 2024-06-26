@@ -11,7 +11,7 @@ public class CartDetailDTO {
 
     private String itemName; //상품명
 
-    private String itemPrice; //상품 금액
+    private int itemPrice; //상품 금액
 
     private int count; //수량
 
