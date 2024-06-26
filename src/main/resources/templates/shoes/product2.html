@@ -5,33 +5,22 @@
       layout:decorate="~{layout/base.html}">
 <head>
     <title>상품 페이지</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 <body>
 <div layout:fragment="content">
     <form action="/shoes/product2" method="get">
-        <header>
             <div id="header-container">
-                <h1>쇼핑몰</h1>
-                <nav>
-                    <ul>
-                        <li><a href="#">홈</a></li>
-                        <li><a href="#">신상품</a></li>
-                        <li><a href="#">베스트</a></li>
-                        <li><a href="#">이벤트</a></li>
-                        <li><a href="#">고객센터</a></li>
-                    </ul>
-                </nav>
+                <h2>상품 목록</h2>
             </div>
-        </header>
         <div class="main-container">
-            <aside class="left-nav">
-                <h2>필터</h2>
-                <ul>
-                    <li><a href="/shoes/product2/?type=b&keyword=">브랜드</a></li>
-                    <li><a href="/shoes/product2/?type=t&keyword=">종류</a></li>
-                    <li><a href="/shoes/product2/?type=p&keyword=">가격</a></li>
-                    <li><a href="/shoes/product2/?type=r&keyword=">평점</a></li>
-                    <li><a href="/shoes/product2/?type=g&keyword=">성별</a></li>
+            <aside class="left-nav2">
+                <ul id="category-list">
+                    <li><a href="/shoes/product2/?type=b&keyword=" onclick="filterProducts('category1')">가격</a></li>
+                    <li><a href="#" onclick="filterProducts('category2')">브랜드</a></li>
+                    <li><a href="#" onclick="filterProducts('category3')">종류</a></li>
+                    <li><a href="#" onclick="filterProducts('category4')">평점</a></li>
+
                 </ul>
             </aside>
             <main>
@@ -39,7 +28,10 @@
                     <div class="product-card">
                         <div class="col" th:each="dto:${responseDTO.dtoList}">
                         <a th:href="|@{/shoes/productpage2(itemId=${dto.itemId})}&${link}|">
-                            <img th:src="@{/images/shoesimg1.PNG}" alt="상품 이미지1">
+                            <div th:if="${dto.shoesImages != null && dto.shoesImages.size() > 0}">
+                                <img class="card-img-top" th:src="|/view/s_${dto.shoesImages[0].uuid}_${dto.shoesImages[0].fileName}|"
+                                     alt="Product Image">
+                            </div>
                         </a>
                         <h3>[[${dto.itemName}]]</h3>
                         <p>[[${dto.itemPrice}]]</p>
@@ -74,7 +66,9 @@
 
             </main>
         </div>
+
     </form>
+</div>
 
 <script layout:fragment="javascript" th:inline="javascript">
 
@@ -87,18 +81,9 @@
     const result = [[${result}]]
 
     // 자바스크립트에서 모달 객체를 사용하기 위한 인스턴스 만들기.
-    const modal = new bootstrap.Modal(document.querySelector(".modal"))
 
-    if(result){
-        modal.show()
-    }
 
-    document.querySelector(".clearBtn").addEventListener("click", function (e) {
-        e.preventDefault()
-        e.stopPropagation()
-        self.location = "/board/list"
 
-    })
 
     document.querySelector(".pagination").addEventListener("click", function (e) {
         e.preventDefault()
@@ -120,6 +105,7 @@
         // self.location = `/board/list?page=${num}?${link}`
 
     }, false)
+
 </script>
 </body>
 

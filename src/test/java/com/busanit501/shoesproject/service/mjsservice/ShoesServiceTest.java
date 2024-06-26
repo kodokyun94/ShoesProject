@@ -105,7 +105,7 @@ public class ShoesServiceTest {
         // 화면에서 전달할 내용을 담은 PageRequestDTO 더미가 필요.
         PageRequestDTO pageRequestDTO = PageRequestDTO.builder()
                 .type("tbpgrn")
-                .keyword("더미")
+                .keyword("고양이")
                 .page(1)
                 .size(10)
                 .build();

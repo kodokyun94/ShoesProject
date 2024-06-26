@@ -10,34 +10,53 @@
 </head>
 <body>
 <div layout:fragment="content">
-    <form action="/shoes/productpage2" method="get">
-        <input type="hidden" name="page" th:value="${pageRequestDTO.page}">
-        <input type="hidden" name="size" th:value="${pageRequestDTO.size}">
-
-        <div class="container">
+    <input type="hidden" name="page" th:value="${pageRequestDTO.page}">
+    <input type="hidden" name="size" th:value="${pageRequestDTO.size}">
+    <div th:with="dto=${responseDTO.dtoList[0]}">
+        <form action="/shoes/productpage2" method="get">
             <div class="product-images">
-                <img th:src="@{/images/shoesimg1.PNG}" alt="제품 이미지 1">
-                <img th:src="@{/images/shoesimg1.PNG}" alt="제품 이미지 2">
-                <img th:src="@{/images/shoesimg1.PNG}" alt="제품 이미지 3">
-                <img th:src="@{/images/shoesimg1.PNG}" alt="제품 이미지 4">
+                <div th:if="${dto.shoesImages != null && dto.shoesImages.size() > 1}">
+                    <img class="card-img-top" th:src="|/view/${dto.shoesImages[1].uuid}_${dto.shoesImages[1].fileName}|"
+                         alt="Product Image2">
+                </div>
+                <div th:if="${dto.shoesImages != null && dto.shoesImages.size() > 2}">
+                    <img class="card-img-top" th:src="|/view/${dto.shoesImages[2].uuid}_${dto.shoesImages[2].fileName}|"
+                         alt="Product Image3">
+                </div>
+                <div th:if="${dto.shoesImages != null && dto.shoesImages.size() > 3}">
+                    <img class="card-img-top" th:src="|/view/${dto.shoesImages[3].uuid}_${dto.shoesImages[3].fileName}|"
+                         alt="Product Image4">
+                </div>
+                <div th:if="${dto.shoesImages != null && dto.shoesImages.size() > 4}">
+                    <img class="card-img-top" th:src="|/view/${dto.shoesImages[4].uuid}_${dto.shoesImages[4].fileName}|"
+                         alt="Product Image5">
+                </div>
             </div>
             <div class="main-image">
-                <img th:src="@{/images/shoesimg1.PNG}" alt="주요 제품 이미지">
+                <div th:if="${dto.shoesImages != null && dto.shoesImages.size() > 0}">
+                    <img class="card-img-top" th:src="|/view/s_${dto.shoesImages[0].uuid}_${dto.shoesImages[0].fileName}|"
+                         alt="Product Image">
+                </div>
             </div>
-            <div class="details">
-                <h1>Product ID: <span th:text="${shoesDTO.itemId}"></span></h1>
-                <h1>Product ID: <span th:text="${shoesDTO.itemName}"></span></h1>
-                <h1>Product ID: <span th:text="${shoesDTO.itemGender}"></span></h1>
-                <h1>Product ID: <span th:text="${shoesDTO.itemPrice}"></span></h1>
-                <div class="sizes">
-                    <div th:each="size:${sizes}">
-                        [[${size.size}]]
-                    </div>
+        </form>
+
+        <div class="details">
+            <h1>Product ID: <span th:text="${shoesDTO.itemId}"></span></h1>
+            <h1>Product Name: <span th:text="${shoesDTO.itemName}"></span></h1>
+            <h1>Gender: <span th:text="${shoesDTO.itemGender}"></span></h1>
+            <h1>Price: <span th:text="${shoesDTO.itemPrice}"></span></h1>
+            <div class="sizes">
+                <div th:each="size:${sizes}">
+                    [[${size.size}]]
+                </div>
                 </div>
                 <div class="cart-button">
                     <button type="submit">장바구니에 추가</button>
                 </div>
             </div>
+            </div>
+
+
         </div>
 
         <div class="reviews">
