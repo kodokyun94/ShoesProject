@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>base</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link th:href="@{/js/load.js}" rel="stylesheet">
+</head>
+<body>
+<header>
+    <div class="top-nav">
+        <div class="left-nav">
+            <a href="#">고객센터</a>
+            <a th:href="@{/member/signup}">회원가입</a>
+            <a th:href="@{/member/signin}">로그인</a>
+        </div>
+    </div>
+    <div class="main-nav">
+        <div class="logo">
+            <a th:href="@{/shoes/main}">
+                <img th:src="@{/images/shoesicon.png}">
+            </a>
+        </div>
+        <nav>
+            <a th:href="@{/shoes/product}">New</a>
+            <a th:href="@{/shoes/product}">Men</a>
+            <a th:href="@{/shoes/product}">Women</a>
+            <a th:href="@{/shoes/product}">Kids</a>
+        </nav>
+
+
+        <div class="search-cart">
+            <input type="text" placeholder="검색">
+            <button type="button">검색</button>
+            <a th:href="@{/shoes/cart}"><img th:src="@{/images/carticon.jpg}" alt="장바구니 아이콘"></a>
+        </div>
+    </div>
+</header>
+
+<div class="container" layout:fragment="content">
+
+</div>
+
+<th:block layout:fragment="javascript">
+
+</th:block>
+
+<!--footer base 위치작업 중 -->
+<!--<footer>-->
+<!--    <div class="footer-container">-->
+<!--        <div class="footer-links">-->
+<!--            <div class="footer-column">-->
+<!--                <h3>고객 서비스</h3>-->
+<!--                <ul>-->
+<!--                    <li><a href="#">연락처</a></li>-->
+<!--                    <li><a href="#">주문 배송</a></li>-->
+<!--                    <li><a href="#">반품 정책</a></li>-->
+<!--                    <li><a href="#">FAQ</a></li>-->
+<!--                </ul>-->
+<!--            </div>-->
+<!--            <div class="footer-column">-->
+<!--                <h3>회사 정보</h3>-->
+<!--                <ul>-->
+<!--                    <li><a href="#">소개</a></li>-->
+<!--                    <li><a href="#">채용 정보</a></li>-->
+<!--                    <li><a href="#">뉴스</a></li>-->
+<!--                </ul>-->
+<!--            </div>-->
+<!--            <div class="footer-column">-->
+<!--                <h3>팔로우</h3>-->
+<!--                <ul>-->
+<!--                    <li><a href="#">페이스북</a></li>-->
+<!--                    <li><a href="#">트위터</a></li>-->
+<!--                    <li><a href="#">인스타그램</a></li>-->
+<!--                    <li><a href="#">유튜브</a></li>-->
+<!--                </ul>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--        <div class="footer-bottom">-->
+<!--            <p>&copy; 2024 shoes.</p>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</footer>-->
+</body>
+</html>
