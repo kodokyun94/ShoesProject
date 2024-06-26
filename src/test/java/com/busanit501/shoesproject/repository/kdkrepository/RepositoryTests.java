@@ -30,7 +30,7 @@ public class RepositoryTests {
                             .itemName("더미이름" +i)
                             .itemBrand("더미브랜드"+i)
                             .itemType("더미타입"+i)
-                            .itemGender("더미성별"+i)
+                            .itemGender("더미성ㄴㅁㅇㄹ별"+i)
                             .itemPrice("100000" + i+"원" )
                             .stockNumber(1)
                             .build();
