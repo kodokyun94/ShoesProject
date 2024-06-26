@@ -29,10 +29,10 @@
 
             <tr th:each="item : ${cartItems}">
                 <td><img th:src="@{/images/shoesimg1.PNG}" alt="상품 이미지"></td>
-                <td th:text="${item.item.itemName}">상품 이름</td>
-                <td th:text="${item.item.itemPrice}">₩ 가격</td>
+                <td th:text="${item.itemName}">상품 이름</td>
+                <td th:text="${item.itemPrice}">₩ 가격</td>
                 <td><input type="number" value="${item.quantity}" min="1"></td>
-                <td th:text="${item.item.itemPrice * item.quantity}">₩ 총 금액</td>
+                <td th:text="${item.itemPrice * item.count}">₩ 총 금액</td>
                 <td><button>삭제</button></td>
             </tr>
 

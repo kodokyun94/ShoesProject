@@ -4,6 +4,7 @@ import com.busanit501.shoesproject.domain.kdkdomain.Cart;
 import com.busanit501.shoesproject.domain.kdkdomain.Item;
 import com.busanit501.shoesproject.domain.kdkdomain.Member;
 import com.busanit501.shoesproject.dto.kdkdto.CartDTO;
+import com.busanit501.shoesproject.dto.kdkdto.CartDetailDTO;
 import com.busanit501.shoesproject.dto.kdkdto.CartItemDTO;
 import com.busanit501.shoesproject.repository.kdkrepository.CartRepository;
 import com.busanit501.shoesproject.repository.kdkrepository.ItemRepository;
@@ -13,6 +14,9 @@ import org.junit.jupiter.api.Test;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @SpringBootTest
 @Log4j2
@@ -29,26 +33,42 @@ public class ServiceTests {
     private CartRepository cartRepository;
 
     @Test
+    @Transactional
     public void testCartItemInsert() {
 
-        Item item = itemRepository.findByItemId(2L);
-        Cart cart = cartRepository.findByMember_MemberId(2L);
+        Cart cart = cartRepository.findByMember_MemberId(1L);
 
-
-        log.info("Inserting item : " + item);
+//        log.info("testCartItemInsert item : " + item);
+//        log.info("testCartItemInsert cart : " + cart);
 
         CartItemDTO cartItemDTO = CartItemDTO.builder()
                 .cart(cart)
-                .item(item)
+                .itemId(4L)
+                .count(3)
                 .build();
-//        log.info("Inserting cartItemDTO : " + cartItemDTO);
+        log.info("testCartItemInsert Inserting cartItemDTO : " + cartItemDTO);
 
-        Long rno = cartService.addCart(cartItemDTO,"dassf1@naver.com");
-        log.info("번호 : " + rno);
+        Long cartItemId = cartService.addCartItem(cartItemDTO,1L);
+        log.info("cartItemId번호 : " + cartItemId);
     }
 
     @Test
-    public void testDelete() {
+    public void testCartItemList() {
+        Member member = memberRepository.findByMemberId(10L);
+        Item item = itemRepository.findByItemId(3L);
+
+        CartItemDTO cartItemDTO1 = CartItemDTO.builder()
+                .itemId(item.getItemId())
+                .count(1)
+                .build();
+        cartService.addCartItem(cartItemDTO1,member.getMemberId());
+
+        List<CartDetailDTO> cartDetailDtoList = cartService.getCartList(member.getMemberId());
+        log.info("cartDetailDtoList : " + cartDetailDtoList);
+  }
+
+    @Test
+    public void testDeleteCartItem() {
         cartService.deleteCartItem(1L);
     }
 

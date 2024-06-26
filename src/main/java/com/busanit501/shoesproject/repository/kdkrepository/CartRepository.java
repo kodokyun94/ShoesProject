@@ -10,7 +10,7 @@ import java.util.Optional;
 
 @Repository
 public interface CartRepository extends JpaRepository<Cart,Long> {
-    Member member = new Member();
+//    Member member = new Member();
 
     Cart findByMember_MemberId(Long memberId);
 

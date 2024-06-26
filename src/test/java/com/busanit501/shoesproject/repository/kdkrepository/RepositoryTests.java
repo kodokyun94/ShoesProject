@@ -9,6 +9,7 @@ import lombok.extern.log4j.Log4j2;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 import java.util.stream.IntStream;
@@ -84,22 +85,46 @@ public class RepositoryTests {
 
     @Test
     public void testinsertCart() {
-        Long memberId = 2L;
-        Member member = memberRepository.findById(memberId).orElseThrow();
-
-        Long itemId = 1L;
-        Item item = itemRepository.findById(itemId).orElseThrow();
+        Long memberId = 10L;
+        Member member = memberRepository.findByMemberId(memberId);
 
         Cart cart = Cart.createCart(member);
 //        cart.getCartItems().add(CartItem.createCartItem(cart, item, 1));
         cartRepository.save(cart);
 
         log.info("testinsertCart cart : " + cart);
-
-
     }
 
 
+@Test
+@Transactional
+    public void selectCartTest() {
+        Cart cart= cartRepository.findByMember_MemberId(2L);
+        log.info("testselectCart cart : " + cart);
+}
+
+    @Test
+    @Transactional
+    public void selectItemTest() {
+        Item item= itemRepository.findByItemId(2L);
+        log.info("testselectCart cart : " + item);
+    }
+
+    @Test
+    @Transactional
+    public void selectMemberbyIdTest() {
+        Member member = memberRepository.findByMemberId(2L);
+        log.info("testselectMember member : " + member);
+    }
+
+
+@Test
+@Transactional
+    public void selectMemberTest() {
+        Optional<Member> result = memberRepository.findById(2L);
+        Member member = result.orElseThrow();
+        log.info("testselectMember member : " + member);
+}
 
 
 

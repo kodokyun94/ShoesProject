@@ -38,6 +38,7 @@ public class Item {
     private String itemGender;
 
 
+
     public void addStock(int stockNumber){
         this.stockNumber += stockNumber;
     }
