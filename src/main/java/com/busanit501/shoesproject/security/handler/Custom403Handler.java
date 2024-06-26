@@ -27,7 +27,7 @@ public class Custom403Handler implements AccessDeniedHandler {
         // 일반 request 인경우와, JSON 인 경우 2가지.
         // 일반 request
         if(!jsonRequest) {
-            response.sendRedirect("/member/login?error=ACCESS_DENIED");
+            response.sendRedirect("/member/signin?error=ACCESS_DENIED");
         }
     }
 }

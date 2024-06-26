@@ -1,5 +1,6 @@
 package com.busanit501.shoesproject.domain.nhjdomain;
 
+import com.busanit501.shoesproject.domain.lsjdomain.ShoesMember;
 import jakarta.persistence.*;
 import lombok.*;
 @Builder
@@ -22,7 +23,7 @@ public class Review extends BaseEntity {
 
     @ManyToOne
     @JoinColumn(name = "memberId")
-    private Member member;
+    private ShoesMember shoesmember;
 
     //@Column(length=50, nullable = false)
     //private String member_name;

@@ -1,15 +1,13 @@
 package com.busanit501.shoesproject.controller.lsjcontroller;
 
 import com.busanit501.shoesproject.dto.lsjdto.ShoesJoinDTO;
-import com.busanit501.shoesproject.service.lsjservice.ShoesService;
+import com.busanit501.shoesproject.service.lsjservice.ShoesService2;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 
@@ -17,11 +15,11 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @RequestMapping("/member")
 @Log4j2
 @RequiredArgsConstructor
-public class ShoesController {
+public class lsjShoesController {
 
-    private final ShoesService shoesService;
+    private final ShoesService2 shoesService2;
 
-    @GetMapping("/login")
+    @GetMapping("/signin")
     public void loginGet(String error, String logout,
                          RedirectAttributes redirectAttributes) {
         log.info("loginGet===================");
@@ -42,28 +40,28 @@ public class ShoesController {
     // 자동로그인, remember-me 이름으로 서버에 와요.
 
     //회원가입 폼
-    @GetMapping("/join")
+    @GetMapping("/signup")
     public void joinGet() {
         log.info("joinGet====================");
     }
 
     // 회원 가입 로직 처리
-    @PostMapping("/join")
-    public String joinPost(ShoesJoinDTO shoesJoinDTO, @RequestParam(value = "profileImage", required = false) MultipartFile profileImage,
+    @PostMapping("/signup")
+    public String joinPost(ShoesJoinDTO shoesJoinDTO,
                            RedirectAttributes redirectAttributes) {
         log.info("joinPost====================");
         log.info("shoesJoinDTO = " + shoesJoinDTO);
 
         // 회원 가입 로직 처리 없음.
         try {
-            shoesService.join(shoesJoinDTO);
-        } catch (ShoesService.MidExistException e) {
+            shoesService2.join(shoesJoinDTO);
+        } catch (ShoesService2.IdExistException e) {
             redirectAttributes.addFlashAttribute("error", "아이디 중복입니다");
-            return "redirect:/member/join";
+            return "redirect:/member/signup";
         }
         // 회원 가입 성공시
         redirectAttributes.addFlashAttribute("result","회원가입 성공");
-        return "redirect:/member/login";
+        return "redirect:/member/signin";
     }
 
 }

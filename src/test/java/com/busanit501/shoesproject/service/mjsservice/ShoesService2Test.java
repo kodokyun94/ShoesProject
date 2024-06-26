@@ -13,7 +13,7 @@ import java.util.UUID;
 
 @SpringBootTest
 @Log4j2
-public class ShoesServiceTest {
+public class ShoesService2Test {
     @Autowired
     private ShoesService shoesService;
 

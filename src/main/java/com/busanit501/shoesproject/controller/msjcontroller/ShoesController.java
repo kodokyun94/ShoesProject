@@ -1,4 +1,4 @@
-package com.busanit501.shoesproject.Controller.msjcontroller;
+package com.busanit501.shoesproject.controller.msjcontroller;
 
 import com.busanit501.shoesproject.dto.mjsdto.PageRequestDTO;
 import com.busanit501.shoesproject.dto.mjsdto.PageResponseDTO;

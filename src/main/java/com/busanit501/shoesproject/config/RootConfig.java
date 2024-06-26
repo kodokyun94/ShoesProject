@@ -1,4 +1,4 @@
-package com.busanit501.shoesproject.config.lsjconfig;
+package com.busanit501.shoesproject.config;
 
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
