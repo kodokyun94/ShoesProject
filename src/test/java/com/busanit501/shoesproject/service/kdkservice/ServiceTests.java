@@ -5,6 +5,7 @@ import com.busanit501.shoesproject.domain.kdkdomain.Item;
 import com.busanit501.shoesproject.domain.kdkdomain.Member;
 import com.busanit501.shoesproject.dto.kdkdto.CartDTO;
 import com.busanit501.shoesproject.dto.kdkdto.CartItemDTO;
+import com.busanit501.shoesproject.repository.kdkrepository.CartRepository;
 import com.busanit501.shoesproject.repository.kdkrepository.ItemRepository;
 import com.busanit501.shoesproject.repository.kdkrepository.MemberRepository;
 import lombok.extern.log4j.Log4j2;
@@ -24,24 +25,31 @@ public class ServiceTests {
     private ModelMapper modelMapper;
     @Autowired
     private MemberRepository memberRepository;
+    @Autowired
+    private CartRepository cartRepository;
 
     @Test
     public void testCartItemInsert() {
-        Item item = new Item();
-        item.setItemId(1L);
+
+        Item item = itemRepository.findByItemId(2L);
+        Cart cart = cartRepository.findByMember_MemberId(2L);
+
+
+        log.info("Inserting item : " + item);
 
         CartItemDTO cartItemDTO = CartItemDTO.builder()
-                .cart(Cart.createCart(memberRepository.findByMemberEmail("dassf6@naver.com")))
+                .cart(cart)
                 .item(item)
                 .build();
+//        log.info("Inserting cartItemDTO : " + cartItemDTO);
 
-        Long rno = cartService.addCart(cartItemDTO,"dassf6@naver.com");
+        Long rno = cartService.addCart(cartItemDTO,"dassf1@naver.com");
         log.info("번호 : " + rno);
     }
 
     @Test
     public void testDelete() {
-        cartService.delete(1L);
+        cartService.deleteCartItem(1L);
     }
 
 }

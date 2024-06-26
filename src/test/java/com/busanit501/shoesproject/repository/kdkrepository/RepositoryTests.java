@@ -1,6 +1,8 @@
 package com.busanit501.shoesproject.repository.kdkrepository;
 
 
+import com.busanit501.shoesproject.domain.kdkdomain.Cart;
+import com.busanit501.shoesproject.domain.kdkdomain.CartItem;
 import com.busanit501.shoesproject.domain.kdkdomain.Item;
 import com.busanit501.shoesproject.domain.kdkdomain.Member;
 import lombok.extern.log4j.Log4j2;
@@ -22,6 +24,9 @@ public class RepositoryTests {
 
     @Autowired
     MemberRepository memberRepository;
+
+    @Autowired
+    CartItemRepository cartItemRepository;
 
     @Test
     public void testInsertItem() {
@@ -77,7 +82,22 @@ public class RepositoryTests {
         );
     } // insetMember test
 
+    @Test
+    public void testinsertCart() {
+        Long memberId = 2L;
+        Member member = memberRepository.findById(memberId).orElseThrow();
 
+        Long itemId = 1L;
+        Item item = itemRepository.findById(itemId).orElseThrow();
+
+        Cart cart = Cart.createCart(member);
+//        cart.getCartItems().add(CartItem.createCartItem(cart, item, 1));
+        cartRepository.save(cart);
+
+        log.info("testinsertCart cart : " + cart);
+
+
+    }
 
 
 

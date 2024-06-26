@@ -4,19 +4,22 @@ import com.busanit501.shoesproject.domain.kdkdomain.Cart;
 import com.busanit501.shoesproject.domain.kdkdomain.CartItem;
 import com.busanit501.shoesproject.domain.kdkdomain.Item;
 import com.busanit501.shoesproject.domain.kdkdomain.Member;
-import com.busanit501.shoesproject.dto.kdkdto.CartDetailDTO;
-import com.busanit501.shoesproject.dto.kdkdto.CartItemDTO;
+import com.busanit501.shoesproject.dto.kdkdto.*;
 import com.busanit501.shoesproject.repository.kdkrepository.CartItemRepository;
 import com.busanit501.shoesproject.repository.kdkrepository.CartRepository;
 import com.busanit501.shoesproject.repository.kdkrepository.ItemRepository;
 import com.busanit501.shoesproject.repository.kdkrepository.MemberRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+
+import static com.busanit501.shoesproject.domain.kdkdomain.QItem.item;
 
 @Service
 @RequiredArgsConstructor
@@ -27,16 +30,21 @@ public class CartService {
     private final MemberRepository memberRepository;
     private final CartRepository cartRepository;
     private final CartItemRepository cartItemRepository;
+    private final ModelMapper modelMapper;
 
     public Long addCart(CartItemDTO cartItemDto, String memberEmail) {
-        Item item = itemRepository.findByItemId(cartItemDto.getCartItemId())
-                .orElseThrow(() -> new EntityNotFoundException("Item not found"));
 
-        Member member = memberRepository.findByMemberEmail(memberEmail)
-                .orElseThrow(() -> new EntityNotFoundException("Member not found"));
 
-        Cart cart = cartRepository.findByMember_MemberId(member.getMemberId())
-                .orElseGet(() -> createAndSaveCart(member));
+        Item item = itemRepository.findByItemId();
+
+        Member member = memberRepository.findByMemberEmail(memberEmail);
+
+        Cart cart = cartRepository.findByMember_MemberId(member.getMemberId());
+
+        if(cart == null){
+            cart = Cart.createCart(member);
+            cartRepository.save(cart);
+        }
 
         CartItem savedCartItem = cartItemRepository.findByCart_CartIdAndItem_ItemId(cart.getCartId(), item.getItemId());
 
@@ -58,26 +66,29 @@ public class CartService {
 
     @Transactional(readOnly = true)
     public List<CartDetailDTO> getCartList(String memberEmail) {
-        Member member = memberRepository.findByMemberEmail(memberEmail)
-                .orElseThrow(() -> new EntityNotFoundException("Member not found"));
+        List<CartDetailDTO> cartDetailDtoList = new ArrayList<>();
 
-        Cart cart = cartRepository.findByMember_MemberId(member.getMemberId())
-                .orElse(null);
+        Member member = memberRepository.findByMemberEmail(memberEmail);
 
-        if (cart == null) {
-            return new ArrayList<>();
+        Cart cart = cartRepository.findByMember_MemberId(member.getMemberId());
+
+        if(cart == null){
+            cart = Cart.createCart(member);
+            cartRepository.save(cart);
+            return cartDetailDtoList;
         }
 
-        return cartItemRepository.findCartDetailDtoList(cart.getCartId());
+        cartDetailDtoList = cartItemRepository.findCartDetailDtoList(cart.getCartId());
+        return cartDetailDtoList;
     }
 
     @Transactional(readOnly = true)
     public boolean validateCartItem(Long cartItemId, String memberEmail) {
-        Member curMember = memberRepository.findByMemberEmail(memberEmail)
-                .orElseThrow(() -> new EntityNotFoundException("Member not found"));
+        Member curMember = memberRepository.findByMemberEmail(memberEmail);
+
 
         CartItem cartItem = cartItemRepository.findById(cartItemId)
-                .orElseThrow(() -> new EntityNotFoundException("CartItem not found"));
+                .orElseThrow(() -> new EntityNotFoundException("장바구니가 비어있습니다."));
 
         Member savedMember = cartItem.getCart().getMember();
 
@@ -86,7 +97,7 @@ public class CartService {
 
     public void updateCartItemCount(Long cartItemId, int count) {
         if (count <= 0) {
-            throw new IllegalArgumentException("Count must be greater than zero");
+            throw new IllegalArgumentException("수량은 0보다 커야합니다.");
         }
 
         CartItem cartItem = cartItemRepository.findById(cartItemId)
