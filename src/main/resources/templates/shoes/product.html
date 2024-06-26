@@ -5,85 +5,72 @@
       layout:decorate="~{layout/base.html}">
 <head>
     <title>상품 페이지</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 <body>
 <div layout:fragment="content">
-    <form action="/shoes/product" method="get">
-        <header>
-            <div id="header-container">
-                <h1>쇼핑몰</h1>
-                <nav>
-                    <ul>
-                        <li><a href="#">홈</a></li>
-                        <li><a href="#">신상품</a></li>
-                        <li><a href="#">베스트</a></li>
-                        <li><a href="#">이벤트</a></li>
-                        <li><a href="#">고객센터</a></li>
-                    </ul>
-                </nav>
-            </div>
-        </header>
-        <div class="main-container">
-            <aside class="left-nav">
-                <h2>필터</h2>
-                <ul>
-                    <li><a href="#">카테고리1</a></li>
-                    <li><a href="#">카테고리2</a></li>
-                    <li><a href="#">카테고리3</a></li>
-                    <li><a href="#">카테고리4</a></li>
-                    <li><a href="#">카테고리5</a></li>
-                </ul>
-            </aside>
-            <main>
-                <section class="products">
-                    <div class="product-card">
-                        <a th:href="@{/shoes/productpage}">
-                            <img th:src="@{/images/shoesimg1.PNG}" alt="상품 이미지1">
-                        </a>
-                        <h3>상품 이름 1</h3>
-                        <p>₩100,000</p>
-                    </div>
-                    <div class="product-card">
-                        <img th:src="@{/images/shoesimg1.PNG}" alt="상품 이미지2">
-                        <h3>상품 이름 2</h3>
-                        <p>₩120,000</p>
-                    </div>
-                    <div class="product-card">
-                        <img th:src="@{/images/shoesimg1.PNG}" alt="상품 이미지3">
-                        <h3>상품 이름 3</h3>
-                        <p>₩140,000</p>
-                    </div>
-                    <div class="product-card">
-                        <img th:src="@{/images/shoesimg1.PNG}" alt="상품 이미지4">
-                        <h3>상품 이름 3</h3>
-                        <p>₩140,000</p>
-                    </div>
-                    <div class="product-card">
-                        <img th:src="@{/images/shoesimg1.PNG}" alt="상품 이미지5">
-                        <h3>상품 이름 3</h3>
-                        <p>₩140,000</p>
-                    </div>
-                    <div class="product-card">
-                        <img th:src="@{/images/shoesimg1.PNG}" alt="상품 이미지6">
-                        <h3>상품 이름 3</h3>
-                        <p>₩140,000</p>
-                    </div>
-                    <div class="product-card">
-                        <img th:src="@{/images/shoesimg1.PNG}" alt="상품 이미지">
-                        <h3>상품 이름 3</h3>
-                        <p>₩140,000</p>
-                    </div>
-                    <div class="product-card">
-                        <img th:src="@{/images/shoesimg1.PNG}" alt="상품 이미지">
-                        <h3>상품 이름 3</h3>
-                        <p>₩140,000</p>
-                    </div>
-                    <!-- 추가 상품 카드 -->
-                </section>
-            </main>
-        </div>
-    </form>
-</div>
-</body>
+    <div class="subtitle-box">
+        <h2>상품 목록</h2>
+    </div>
 
+    <div class="main-container">
+        <aside class="left-nav2">
+            <ul id="category-list">
+                <li><a href="#" onclick="filterProducts('category1')">가격</a></li>
+                <li><a href="#" onclick="filterProducts('category2')">브랜드</a></li>
+                <li><a href="#" onclick="filterProducts('category3')">종류</a></li>
+                <li><a href="#" onclick="filterProducts('category4')">평점</a></li>
+
+            </ul>
+        </aside>
+        <section class="products">
+            <div class="product-card" data-category="category1">
+                <a th:href="@{/shoes/productpage}">
+                    <img th:src="@{/images/shoesimg1.PNG}" alt="상품 이미지1">
+                </a>
+                <h3>상품 이름 1</h3>
+                <p>₩100,000</p>
+            </div>
+            <div class="product-card" data-category="category2">
+                <img th:src="@{/images/shoesimg1.PNG}" alt="상품 이미지2">
+                <h3>상품 이름 2</h3>
+                <p>₩120,000</p>
+            </div>
+            <div class="product-card" data-category="category2">
+                <img th:src="@{/images/shoesimg1.PNG}" alt="상품 이미지2">
+                <h3>상품 이름 2</h3>
+                <p>₩120,000</p>
+            </div>
+            <div class="product-card" data-category="category2">
+                <img th:src="@{/images/shoesimg1.PNG}" alt="상품 이미지2">
+                <h3>상품 이름 2</h3>
+                <p>₩120,000</p>
+            </div>
+            <div class="product-card" data-category="category2">
+                <img th:src="@{/images/shoesimg1.PNG}" alt="상품 이미지2">
+                <h3>상품 이름 2</h3>
+                <p>₩120,000</p>
+            </div>
+            <div class="product-card" data-category="category2">
+                <img th:src="@{/images/shoesimg1.PNG}" alt="상품 이미지2">
+                <h3>상품 이름 2</h3>
+                <p>₩120,000</p>
+            </div>
+            <div class="product-card" data-category="category2">
+                <img th:src="@{/images/shoesimg1.PNG}" alt="상품 이미지2">
+                <h3>상품 이름 2</h3>
+                <p>₩120,000</p>
+            </div>
+            <div class="product-card" data-category="category2">
+                <img th:src="@{/images/shoesimg1.PNG}" alt="상품 이미지2">
+                <h3>상품 이름 2</h3>
+                <p>₩120,000</p>
+            </div>
+
+            <!-- 더 많은 상품 카드를 적절한 data-category 속성을 사용하여 추가하세요. -->
+        </section>
+    </div>
+</div>
+<script src="@{/js/scripts.js}"></script>
+</body>
 </html>
