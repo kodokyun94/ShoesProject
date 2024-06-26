@@ -19,8 +19,8 @@ body {
     background-color: #ddd;
     color: black;
 }
-.container {
-    margin-left: 100px;
+.product-container {
+    margin-left: 200px;
     margin-top: 40px;
     display: flex;
     padding: 20px;
@@ -69,7 +69,8 @@ body {
     border-color: #000;
 }
 .sizes div.selected {
-    border-color: #000;
+    border-color: hotpink;
+    background-color: deeppink;
 }
 .button {
     margin-top: 20px;
