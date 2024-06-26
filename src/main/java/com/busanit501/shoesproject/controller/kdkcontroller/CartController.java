@@ -39,6 +39,12 @@ public class CartController {
         model.addAttribute("cartItems", cartItems);
     }
 
+    @DeleteMapping
+    public String deleteCartItem(@PathVariable Long cartItemId){
+        cartService.deleteCartItem(cartItemId);
+        return "redirect:/shoes/cart";
+    }
+
 //    @PostMapping(value = "/cart")
 //    public @ResponseBody ResponseEntity order(@RequestBody @Valid CartItemDTO cartItemDTO, BindingResult bindingResult, Principal principal){
 //        if(bindingResult.hasErrors()){
