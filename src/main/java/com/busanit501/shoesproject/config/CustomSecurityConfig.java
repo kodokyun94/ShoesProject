@@ -1,5 +1,6 @@
 package com.busanit501.shoesproject.config;
 
+import com.busanit501.shoesproject.security.CustomUserDetailsService;
 import com.busanit501.shoesproject.security.handler.Custom403Handler;
 import com.busanit501.shoesproject.security.handler.CustomSocialLoginSuccessHandler;
 import lombok.RequiredArgsConstructor;
@@ -30,7 +31,7 @@ import javax.sql.DataSource;
 @EnableWebSecurity
 public class CustomSecurityConfig {
     private final DataSource dataSource;
-//    private final CustomUserDetailsService customUserDetailsService;
+    private final CustomUserDetailsService customUserDetailsService;
 
     // 평문 패스워드를 해시 함수 이용해서 인코딩 해주는 도구 주입.
     @Bean
@@ -77,74 +78,74 @@ public class CustomSecurityConfig {
 //                .anyRequest().authenticated();
                 .anyRequest().permitAll();
 
-//        //403 핸들러 적용하기.
-//        http.exceptionHandling(
-//                accessDeny -> {
-//                    accessDeny.accessDeniedHandler(accessDeniedHandler());
-//                }
+        //403 핸들러 적용하기.
+        http.exceptionHandling(
+                accessDeny -> {
+                    accessDeny.accessDeniedHandler(accessDeniedHandler());
+                }
+        );
+
+        // 자동로그인 설정.1
+        http.rememberMe(
+                httpSecurityRememberMeConfigurer ->
+                        httpSecurityRememberMeConfigurer
+                                // 토큰 생성시 사용할 암호
+                                .key("12345678")
+                                // 스프링 시큐리티에서 정의해둔 Repository
+                                .tokenRepository(persistentTokenRepository())
+                                // UserDetail를 반환하는 사용자가 정의한 클래스
+                                .userDetailsService(customUserDetailsService)
+                                // 토큰의 만료 시간.
+                                .tokenValiditySeconds(60*60*24*30)
+        );
+        //카카오 로그인 API 설정
+        http.oauth2Login(
+                // 로그인 후 처리 , 적용하기.
+                oauthLogin -> oauthLogin.loginPage("/member/signin")
+                        .successHandler(authenticationSuccessHandler())
+        );
+
+        // 캐시 설정 비활성화
+//        http.headers(
+//                cacheDisable -> cacheDisable.cacheControl(
+//                        disable -> disable.disable()
+//                )
 //        );
 
-//        // 자동로그인 설정.1
-//        http.rememberMe(
-//                httpSecurityRememberMeConfigurer ->
-//                        httpSecurityRememberMeConfigurer
-//                                // 토큰 생성시 사용할 암호
-//                                .key("12345678")
-//                                // 스프링 시큐리티에서 정의해둔 Repository
-//                                .tokenRepository(persistentTokenRepository())
-//                                // UserDetail를 반환하는 사용자가 정의한 클래스
-//                                .userDetailsService(customUserDetailsService)
-//                                // 토큰의 만료 시간.
-//                                .tokenValiditySeconds(60*60*24*30)
-//        );
-//        //카카오 로그인 API 설정
-//        http.oauth2Login(
-//                // 로그인 후 처리 , 적용하기.
-//                oauthLogin -> oauthLogin.loginPage("/member/signin")
-//                        .successHandler(authenticationSuccessHandler())
-//        );
-//
-//        // 캐시 설정 비활성화
-////        http.headers(
-////                cacheDisable -> cacheDisable.cacheControl(
-////                        disable -> disable.disable()
-////                )
-////        );
-//
-//
+
         return http.build();
     }
-//
-//    private AuthenticationSuccessHandler authenticationSuccessHandler() {
-//
-//        return new CustomSocialLoginSuccessHandler(passwordEncoder());
-//    }
-//
-//    // 자동로그인 설정 2
-//    // 시스템에서 정의해둔 기본 약속.
-//    @Bean
-//    public PersistentTokenRepository persistentTokenRepository() {
-//        // 시큐리에서 정의 해둔 구현체
-//        JdbcTokenRepositoryImpl repo = new JdbcTokenRepositoryImpl();
-//        repo.setDataSource(dataSource);
-//        return repo;
-//    }
-//
-//
-//    //정적 자원 시큐리티 필터 항목에 제외하기.
-//    @Bean
-//    public WebSecurityCustomizer webSecurityCustomizer() {
-//        log.info("시큐리티 동작 확인 ====webSecurityCustomizer======================");
-//        return (web) ->
-//                web.ignoring()
-//                        .requestMatchers(PathRequest.toStaticResources().atCommonLocations());
-//    }
-//
-//    //사용자 정의한 403 예외 처리
-//    @Bean
-//    public AccessDeniedHandler accessDeniedHandler() {
-//        return new Custom403Handler();
-//    }
-//
+
+    private AuthenticationSuccessHandler authenticationSuccessHandler() {
+
+        return new CustomSocialLoginSuccessHandler(passwordEncoder());
+    }
+
+    // 자동로그인 설정 2
+    // 시스템에서 정의해둔 기본 약속.
+    @Bean
+    public PersistentTokenRepository persistentTokenRepository() {
+        // 시큐리에서 정의 해둔 구현체
+        JdbcTokenRepositoryImpl repo = new JdbcTokenRepositoryImpl();
+        repo.setDataSource(dataSource);
+        return repo;
+    }
+
+
+    //정적 자원 시큐리티 필터 항목에 제외하기.
+    @Bean
+    public WebSecurityCustomizer webSecurityCustomizer() {
+        log.info("시큐리티 동작 확인 ====webSecurityCustomizer======================");
+        return (web) ->
+                web.ignoring()
+                        .requestMatchers(PathRequest.toStaticResources().atCommonLocations());
+    }
+
+    //사용자 정의한 403 예외 처리
+    @Bean
+    public AccessDeniedHandler accessDeniedHandler() {
+        return new Custom403Handler();
+    }
+
 
 }

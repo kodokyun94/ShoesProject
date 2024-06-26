@@ -32,7 +32,7 @@ public class CustomSocialLoginSuccessHandler implements AuthenticationSuccessHan
         if(shoesSecurityDTO.isMemberSocial() && shoesSecurityDTO.getMemberPw().equals("1111") || passwordEncoder.matches("1111", shoesSecurityDTO.getMemberPw())) {
             log.info("패스워드를 변경해주세요.");
             log.info("회원 정보 변경하는 페이지로 리다이렉트, 마이 페이지가 없음. 일단 수동으로 임의로 변경하기 ");
-            response.sendRedirect("/member/update");
+            response.sendRedirect("/member/signin");
             return;
         } else {
             response.sendRedirect("/shoes/main");
