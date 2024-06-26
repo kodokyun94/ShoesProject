@@ -1,7 +1,7 @@
 package com.busanit501.shoesproject.security;
 
 import com.busanit501.shoesproject.domain.lsjdomain.ShoesMember;
-import com.busanit501.shoesproject.repository.kdkrepository.MemberRepository;
+
 import com.busanit501.shoesproject.repository.lsjrepository.lsjShoesRepository;
 import com.busanit501.shoesproject.security.dto.ShoesSecurityDTO;
 import lombok.extern.log4j.Log4j2;

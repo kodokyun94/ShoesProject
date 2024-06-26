@@ -2,7 +2,6 @@
 <html lang="ko"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       xmlns:th="www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6"
       layout:decorate="~{layout/baseSearch.html}"
 >
 <body>
@@ -16,9 +15,7 @@
                 </div>
                 <div class="card-body">
                     <form method="post" th:action="@{shoes/update}" id="f1">
-                        <input type="hidden" name="page" th:value="${pageRequestDTO.page}">
-                        <input type="hidden" name="size" th:value="${pageRequestDTO.size}">
-                        <input type="hidden" name="itemId" th:value="${shoesDTO.itemId}">
+
                         <div class="mb-3">
                             <label for="itemName" class="form-label">상품이름</label>
                             <input type="text" name="itemName" class="form-control" id="itemName"
@@ -64,7 +61,6 @@
 
 
                         <div class="mb-3" th:with="link = ${pageRequestDTO.getLink()}">
-
                                     <button type="button" class="btn btn-primary updateBtn">수정하기</button>
                                     <button type="button" class="btn btn-warning deleteBtn">삭제하기</button>
 <!--                                </div>-->
@@ -141,6 +137,7 @@
 
 <!--자바스크립트 추가하는 영역-->
 <script layout:fragment="javascript" th:inline="javascript">
+    console.log("자바스크립트야 너 살아있니?")
     //글쓰기 후, 작성된 게시글 번호를 출력하기, 경고창으로
     // 모달창으로 변경해보기.
     const result = [[${result}]]
@@ -223,7 +220,6 @@
 
     // 이벤트 처리하기.
     uploadFileBtn.addEventListener("click", function (e) {
-
         e.preventDefault()
         e.stopPropagation()
         uploadModal.show()
@@ -300,14 +296,12 @@
     document.querySelector(".deleteBtn").addEventListener("click", function (e) {
         e.preventDefault()
         e.stopPropagation()
-
         // 화면에 있는 파일들을 form 태그에 추가 하기.
         // 눈에 보이는 사진.
         appendFileData()
         // 화면에 안보이게 처리한 파일들도 태그에 추가하기.
         // 임시로, 화면에서 만 안보이는 사진.
         appendNotShownData()
-
         formObj.action = `/shoes/delete`
         formObj.method = 'post'
         formObj.submit()
