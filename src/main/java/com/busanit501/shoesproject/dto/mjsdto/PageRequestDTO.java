@@ -20,7 +20,7 @@ public class PageRequestDTO {
     private int page = 1;
 
     @Builder.Default
-    private int size = 10;
+    private int size = 9;
 
     // 제목, 내용, 작성자
     // 검색 종류 , t, c, w, tc,tw, twc
@@ -50,7 +50,7 @@ public class PageRequestDTO {
     public Pageable getPageable(String... props) {
         // 화면에서 1페이지 -> 0
         // 화면에서 2페이지 -> 1
-        return PageRequest.of(this.page - 1, 10, Sort.by(props).descending());
+        return PageRequest.of(this.page - 1, 6, Sort.by(props).descending());
     }
 
     // 페이징 정보와, 검색 정보를 , URL에서, 쿼리스트링으로

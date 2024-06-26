@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org"
+      layout:decorate="~{layout/base.html}">
+<head>
+    <title>상품 상세 페이지</title>
+    <link rel="stylesheet" th:href="@{/css/productpageStyle.css}">
+    <link rel="stylesheet" th:href="@{/css/reviewStyle.css}">
+</head>
+<body>
+<div layout:fragment="content">
+    <input type="hidden" name="page" th:value="${pageRequestDTO.page}">
+    <input type="hidden" name="size" th:value="${pageRequestDTO.size}">
+    <div th:with="dto=${responseDTO.dtoList[0]}">
+        <form action="/shoes/productpage2" method="get">
+            <div class="product-images">
+                <div th:if="${dto.shoesImages != null && dto.shoesImages.size() > 1}">
+                    <img class="card-img-top" th:src="|/view/${dto.shoesImages[1].uuid}_${dto.shoesImages[1].fileName}|"
+                         alt="Product Image2">
+                </div>
+                <div th:if="${dto.shoesImages != null && dto.shoesImages.size() > 2}">
+                    <img class="card-img-top" th:src="|/view/${dto.shoesImages[2].uuid}_${dto.shoesImages[2].fileName}|"
+                         alt="Product Image3">
+                </div>
+                <div th:if="${dto.shoesImages != null && dto.shoesImages.size() > 3}">
+                    <img class="card-img-top" th:src="|/view/${dto.shoesImages[3].uuid}_${dto.shoesImages[3].fileName}|"
+                         alt="Product Image4">
+                </div>
+                <div th:if="${dto.shoesImages != null && dto.shoesImages.size() > 4}">
+                    <img class="card-img-top" th:src="|/view/${dto.shoesImages[4].uuid}_${dto.shoesImages[4].fileName}|"
+                         alt="Product Image5">
+                </div>
+            </div>
+            <div class="main-image">
+                <div th:if="${dto.shoesImages != null && dto.shoesImages.size() > 0}">
+                    <img class="card-img-top" th:src="|/view/s_${dto.shoesImages[0].uuid}_${dto.shoesImages[0].fileName}|"
+                         alt="Product Image">
+                </div>
+            </div>
+        </form>
+
+        <div class="details">
+            <h1>Product ID: <span th:text="${shoesDTO.itemId}"></span></h1>
+            <h1>Product Name: <span th:text="${shoesDTO.itemName}"></span></h1>
+            <h1>Gender: <span th:text="${shoesDTO.itemGender}"></span></h1>
+            <h1>Price: <span th:text="${shoesDTO.itemPrice}"></span></h1>
+            <div class="sizes">
+                <div th:each="size:${sizes}">
+                    [[${size.size}]]
+                </div>
+                </div>
+                <div class="cart-button">
+                    <button type="submit">장바구니에 추가</button>
+                </div>
+            </div>
+            </div>
+
+
+        </div>
+
+        <div class="reviews">
+            <h2>고객 리뷰</h2>
+            <form action="/shoes/review" method="post" enctype="multipart/form-data">
+<!--                예시 데이터-->
+                <input type="hidden" name="itemId" value="1">
+                <input type="hidden" name="memberId" value="nhj">
+<!--                평점-->
+                <fieldset class="rating">
+                    <input type="radio" id="star5" name="rating" value="5" /><label class="full" for="star5" title="Awesome - 5 stars"></label>
+                    <input type="radio" id="star4" name="rating" value="4" /><label class="full" for="star4" title="Pretty good - 4 stars"></label>
+                    <input type="radio" id="star3" name="rating" value="3" /><label class="full" for="star3" title="Meh - 3 stars"></label>
+                    <input type="radio" id="star2" name="rating" value="2" /><label class="full" for="star2" title="Kinda bad - 2 stars"></label>
+                    <input type="radio" id="star1" name="rating" value="1" /><label class="full" for="star1" title="Sucks big time - 1 star"></label>
+                </fieldset>
+<!--                리뷰 작성-->
+                <div class="textarea-container">
+                    <textarea id="content" name="content" placeholder="리뷰 내용을 입력해주세요..."></textarea>
+                    <input type="file" id="fileInput" name="file" style="display:none;">
+                    <div class="buttons">
+                        <button type="button" onclick="document.getElementById('fileInput').click()">사진 첨부</button>
+                        <button type="submit">글 작성</button>
+                    </div>
+                </div>
+            </form>
+<!--            리뷰 목록-->
+            <div class="reviews">
+                <div class="review-item" th:each="review : ${reviews}">
+                    <div class="review-image">
+                        <img th:if="${review.imagePath}" th:src="@{${review.imagePath}}" alt="리뷰 이미지">
+<!--                        <img th:if="${review.imagePath}" th:src="@{/images/shoesimg1.PNG}" alt="리뷰 이미지">이미지 크기확인용 주석-->
+                    </div>
+                    <div class="review-content">
+                        <h3 th:text="${#strings.repeat('★', review.rating)}">별점</h3>
+                        <p th:text="${review.content}">리뷰 내용</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+
+<script layout:fragment="javascript" th:inline="javascript">
+    // 신발 사이즈 선택
+    const sizeElements = document.querySelectorAll(".sizes div");
+
+    function handleClick(event) {
+        // 모든 div 요소에서 "selected" 클래스 제거
+        sizeElements.forEach((e) => {
+            e.classList.remove("selected");
+        });
+        // 클릭한 div에 "selected" 클래스 추가
+        event.target.classList.add("selected");
+    }
+
+    sizeElements.forEach((e) => {
+        e.addEventListener("click", handleClick);
+    });
+
+    // 장바구니 버튼 선택
+    const cartButton = document.querySelector('.cart-button button');
+
+    cartButton.addEventListener('click', function () {
+        const selectedSize = document.querySelector('.sizes div.selected');
+        if (selectedSize) {
+            const selectedSizeValue = selectedSize.textContent;
+            alert('선택한 사이즈: ' + selectedSizeValue);
+        } else {
+            alert('사이즈를 선택하세요');
+        }
+    });
+</script>
+</body>
+</html>

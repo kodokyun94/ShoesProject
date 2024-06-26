@@ -5,78 +5,71 @@
       layout:decorate="~{layout/base.html}">
 <head>
     <title>상품 상세 페이지</title>
-    <link rel="stylesheet" th:href="@{/css/productpageStyle.css}">
     <link rel="stylesheet" th:href="@{/css/reviewStyle.css}">
+    <link rel="stylesheet" th:href="@{/css/productpageStyle.css}">
 </head>
 <body>
 <div layout:fragment="content">
-    <form action="/shoes/productpage" method="get">
-        <div class="container">
-            <div class="product-images">
-                <img th:src="@{/images/shoesimg1.PNG}" alt="제품 이미지 1">
-                <img th:src="@{/images/shoesimg1.PNG}" alt="제품 이미지 2">
-                <img th:src="@{/images/shoesimg1.PNG}" alt="제품 이미지 3">
-                <img th:src="@{/images/shoesimg1.PNG}" alt="제품 이미지 4">
-            </div>
-            <div class="main-image">
-                <img th:src="@{/images/shoesimg1.PNG}" alt="주요 제품 이미지">
-            </div>
-            <div class="details">
-                <h1>나이키 에어 포스 1 '07 LV8</h1>
-                <p>남성 신발</p>
-                <p>₩149,000</p>
-                <div class="sizes">
-                    <div th:each="size:${sizes}">
-                        [[${size.size}]]
-                    </div>
+    <div class="product-container">
+        <div class="product-images">
+            <img th:src="@{/images/shoesimg1.PNG}" alt="제품 이미지 1">
+            <img th:src="@{/images/shoesimg1.PNG}" alt="제품 이미지 2">
+            <img th:src="@{/images/shoesimg1.PNG}" alt="제품 이미지 3">
+            <img th:src="@{/images/shoesimg1.PNG}" alt="제품 이미지 4">
+        </div>
+        <div class="main-image">
+            <img th:src="@{/images/shoesimg1.PNG}" alt="주요 제품 이미지">
+        </div>
+        <div class="details">
+            <h1>나이키 에어 포스 1 '07 LV8</h1>
+            <p>남성 신발</p>
+            <p>₩149,000</p>
+            <div class="sizes">
+                <div th:each="size:${sizes}">
+                    [[${size.size}]]
                 </div>
-                <div class="cart-button">
-                    <button type="submit">장바구니에 추가</button>
-                </div>
+            </div>
+            <div class="cart-button">
+                <button type="submit">장바구니에 추가</button>
             </div>
         </div>
+    </div>
 
-        <div class="reviews">
-            <h2>고객 리뷰</h2>
-            <form action="/shoes/review" method="post" enctype="multipart/form-data">
-                <!--                예시 데이터-->
-                <input type="hidden" name="itemId" value="1">
-                <input type="hidden" name="memberId" value="nhj">
-                <!--                평점-->
-                <fieldset class="rating">
-                    <input type="radio" id="star5" name="rating" value="5" /><label class="full" for="star5" title="Awesome - 5 stars"></label>
-                    <input type="radio" id="star4" name="rating" value="4" /><label class="full" for="star4" title="Pretty good - 4 stars"></label>
-                    <input type="radio" id="star3" name="rating" value="3" /><label class="full" for="star3" title="Meh - 3 stars"></label>
-                    <input type="radio" id="star2" name="rating" value="2" /><label class="full" for="star2" title="Kinda bad - 2 stars"></label>
-                    <input type="radio" id="star1" name="rating" value="1" /><label class="full" for="star1" title="Sucks big time - 1 star"></label>
-                </fieldset>
-                <!--                리뷰 작성-->
-                <div class="textarea-container">
-                    <textarea id="content" name="content" placeholder="리뷰 내용을 입력해주세요..."></textarea>
-                    <input type="file" id="fileInput" name="file" style="display:none;">
-                    <div class="buttons">
-                        <button type="button" onclick="document.getElementById('fileInput').click()">사진 첨부</button>
-                        <button type="submit">글 작성</button>
-                    </div>
+    <!-- 리뷰 섹션을 아래로 이동 -->
+    <div class="reviews">
+        <h2>고객 리뷰</h2>
+        <form action="/shoes/review" method="post" enctype="multipart/form-data">
+            <input type="hidden" name="itemId" value="1">
+            <input type="hidden" name="memberId" value="nhj">
+            <fieldset class="rating">
+                <input type="radio" id="star5" name="rating" value="5" /><label class="full" for="star5" title="Awesome - 5 stars"></label>
+                <input type="radio" id="star4" name="rating" value="4" /><label class="full" for="star4" title="Pretty good - 4 stars"></label>
+                <input type="radio" id="star3" name="rating" value="3" /><label class="full" for="star3" title="Meh - 3 stars"></label>
+                <input type="radio" id="star2" name="rating" value="2" /><label class="full" for="star2" title="Kinda bad - 2 stars"></label>
+                <input type="radio" id="star1" name="rating" value="1" /><label class="full" for="star1" title="Sucks big time - 1 star"></label>
+            </fieldset>
+            <div class="textarea-container">
+                <textarea id="content" name="content" placeholder="리뷰 내용을 입력해주세요..."></textarea>
+                <input type="file" id="fileInput" name="file" style="display:none;">
+                <div class="buttons">
+                    <button type="button" onclick="document.getElementById('fileInput').click()">사진 첨부</button>
+                    <button type="submit">글 작성</button>
                 </div>
-            </form>
-            <!--            리뷰 목록-->
-            <div class="reviews">
-                <div class="review-item" th:each="review : ${reviews}">
-                    <div class="review-image">
-                        <img th:if="${review.imagePath}" th:src="@{${review.imagePath}}" alt="리뷰 이미지">
-                        <!--                        <img th:if="${review.imagePath}" th:src="@{/images/shoesimg1.PNG}" alt="리뷰 이미지">이미지 크기확인용 주석-->
-                    </div>
-                    <div class="review-content">
-                        <h3 th:text="${#strings.repeat('★', review.rating)}">별점</h3>
-                        <p th:text="${review.content}">리뷰 내용</p>
-                    </div>
+            </div>
+        </form>
+        <div class="review-list">
+            <div class="review-item" th:each="review : ${reviews}">
+                <div class="review-image">
+                    <img th:src="${review.imagePath}" alt="리뷰 이미지">
+                </div>
+                <div class="review-content">
+                    <h3 th:text="${#strings.repeat('★', review.rating)}">별점</h3>
+                    <p th:text="${review.content}">리뷰 내용</p>
                 </div>
             </div>
         </div>
-    </form>
+    </div>
 </div>
-
 
 <script layout:fragment="javascript" th:inline="javascript">
     // 신발 사이즈 선택
@@ -100,6 +93,7 @@
 
     cartButton.addEventListener('click', function () {
         const selectedSize = document.querySelector('.sizes div.selected');
+
         if (selectedSize) {
             const selectedSizeValue = selectedSize.textContent;
             alert('선택한 사이즈: ' + selectedSizeValue);
