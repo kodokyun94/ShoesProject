@@ -31,7 +31,7 @@ public class ReviewServiceImpl implements ReviewService {
         String fileName = UUID.randomUUID() + "_" + file.getOriginalFilename();
 
         // 파일 저장 디렉토리
-        String uploadDir = "c:\\upload";
+        String uploadDir = "c:\\upload\\reviewTest";
 
         // 파일 객체 생성
         File dest = new File(uploadDir, fileName);

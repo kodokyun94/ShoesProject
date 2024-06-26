@@ -9,17 +9,12 @@ package com.busanit501.shoesproject.security.dto;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-import org.apache.catalina.Group;
-import org.apache.catalina.Role;
-import org.apache.catalina.UserDatabase;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 
 
 import java.util.Collection;
-import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
 
 @Getter

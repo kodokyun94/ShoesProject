@@ -1,10 +1,11 @@
-package com.busanit501.shoesproject.domain.nhjdomain;
+package com.busanit501.shoesproject.domain.kdkdomain;
 
 import jakarta.persistence.*;
 import lombok.*;
 
 @Builder
 @Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
@@ -16,21 +17,29 @@ public class Item {
     private Long itemId;
 
     @Column(length=50, nullable = false)
-    private String name;
+    private String itemName;
 
     @Column(length=50, nullable = false)
-    private String type;
+    private String itemType;
 
     @Column(length=50, nullable = false)
-    private String brand;
+    private String itemBrand;
 
     @Column(length=50, nullable = false)
-    private String price;
+    private String itemPrice;
 
     //@Column(length=50, nullable = false)
     //private String review_rank_avg;
 
+    @Column(nullable = false)
+    private int stockNumber; //재고수량
+
     @Column(length=50, nullable = false)
-    private String gender;
+    private String itemGender;
+
+
+    public void addStock(int stockNumber){
+        this.stockNumber += stockNumber;
+    }
 
 }

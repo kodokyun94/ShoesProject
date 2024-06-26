@@ -38,7 +38,7 @@ public class ShoesServiceImpl implements ShoesService {
 
     @Override
     public ShoesDTO read(Long itemId) {
-        Optional<Shoes> result = shoesRepository.findById(itemId);
+        Optional<Shoes> result = shoesRepository.findByIdWithImages(itemId);
         Shoes shoes = result.orElseThrow();
         ShoesDTO shoesDTO = entityToDTO(shoes);
         return shoesDTO;
