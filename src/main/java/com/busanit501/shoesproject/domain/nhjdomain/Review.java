@@ -1,5 +1,7 @@
 package com.busanit501.shoesproject.domain.nhjdomain;
 
+import com.busanit501.shoesproject.domain.kdkdomain.Item;
+import com.busanit501.shoesproject.domain.kdkdomain.Member;
 import jakarta.persistence.*;
 import lombok.*;
 @Builder
