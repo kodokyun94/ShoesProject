@@ -4,6 +4,7 @@
       xmlns:th="www.thymeleaf.org"
       layout:decorate="~{layout/baseSearch.html}"
 >
+
 <body>
 <div layout:fragment="content">
     <div class="row content">
@@ -15,6 +16,9 @@
                 </div>
                 <div class="card-body">
                     <form method="post" th:action="@{shoes/update}" id="f1">
+                        <input type="hidden" name="page" th:value="${pageRequestDTO.page}">
+                        <input type="hidden" name="size" th:value="${pageRequestDTO.size}">
+                        <input type="hidden" name="itemId" th:value="${shoesDTO.itemId}">
 
                         <div class="mb-3">
                             <label for="itemName" class="form-label">상품이름</label>
@@ -61,13 +65,12 @@
 
 
                         <div class="mb-3" th:with="link = ${pageRequestDTO.getLink()}">
-                                    <button type="button" class="btn btn-primary updateBtn">수정하기</button>
-                                    <button type="button" class="btn btn-warning deleteBtn">삭제하기</button>
-<!--                                </div>-->
-                                <a th:href="|@{/shoes/search}?${link}|">
-                                    <button type="button" class="btn btn-danger">목록가기</button>
-                                </a>
-                            </div>
+                            <button type="button" class="btn btn-primary updateBtn">수정하기</button>
+                            <button type="button" class="btn btn-warning deleteBtn">삭제하기</button>
+                            <!--                                </div>-->
+                            <a th:href="|@{/shoes/search}?${link}|">
+                                <button type="button" class="btn btn-danger">목록가기</button>
+                            </a>
                         </div>
 
                     </form>
@@ -132,6 +135,7 @@
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <!--    우리가 정의한 /js/reply.js 불러오기-->
     <script src="/js/upload.js"></script>
+
 </div>
 <!--끝 나는 부분 layout:fragment="content"-->
 

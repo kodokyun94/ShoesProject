@@ -45,7 +45,8 @@
                 <div class="card-body">
                     <div class="row row-cols-1 row-cols-md-3 g-4" >
                         <div class="col" th:each="dto:${responseDTO.dtoList}">
-                            <div class="card h-100" th:with="link = ${pageRequestDTO.getLink()}">
+                            <div class="card h-100" >
+                                <div class="mb-3" th:with="link = ${pageRequestDTO.getLink()}">
                                 <div class="card-body" >
 
                                     <div th:if="${dto.shoesImages != null && dto.shoesImages.size() > 0}">
@@ -91,6 +92,7 @@
                                 <a class="page-link" th:data-num="${responseDTO.end +1}">Next</a>
                             </li>
                         </ul>
+                    </div>
                     </div>
                     <script>
 
