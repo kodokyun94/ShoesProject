@@ -43,7 +43,7 @@
         </nav>
         <div class="search-cart">
 
-            <a th:if="${user != null && user.username=='admin'}" th:href="@{/shoes/register}">
+            <a th:if="${user != null && user.memberId == 'admin'}" th:href="@{/shoes/register}">
                 <button type="button">작성</button>
             </a>
 

@@ -15,6 +15,7 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -41,7 +42,7 @@ public class ShoesController {
     private final ReviewService reviewService;
 
     @GetMapping("/product2")
-    public void search( PageRequestDTO pageRequestDTO, Model model) {
+    public void search(UserDetails user, PageRequestDTO pageRequestDTO, Model model) {
 
         log.info("BoardController : /board/list  확인 중, pageRequestDTO : " + pageRequestDTO);
 
@@ -65,7 +66,7 @@ public class ShoesController {
     } //list 닫는 부분
 
     @GetMapping("/productpage2")
-    public void search2( Long itemId, ShoesDTO shoesDTO2,PageRequestDTO pageRequestDTO, Model model) {
+    public void search2( Long itemId, ShoesDTO shoesDTO2,UserDetails user, PageRequestDTO pageRequestDTO, Model model) {
 
         ShoesDTO shoesDTO = shoesService.read(itemId);
         model.addAttribute("shoesDTO", shoesDTO);
@@ -91,11 +92,11 @@ public class ShoesController {
         // 서버 -> 화면 데이터 전달.
         model.addAttribute("responseDTO", responseDTO);
         // 로그인 여부에 따라, 로그 아웃 표시하기.
-
+        model.addAttribute("user", user);
 
     } //list 닫는 부분
     @GetMapping("/search")
-    public void search3( PageRequestDTO pageRequestDTO, Model model) {
+    public void search3( UserDetails user, PageRequestDTO pageRequestDTO, Model model) {
 
         log.info("BoardController : /board/list  확인 중, pageRequestDTO : " + pageRequestDTO);
 
@@ -114,14 +115,14 @@ public class ShoesController {
         // 서버 -> 화면 데이터 전달.
         model.addAttribute("responseDTO", responseDTO);
         // 로그인 여부에 따라, 로그 아웃 표시하기.
-
+        model.addAttribute("user", user);
 
     } //list 닫는 부분
 
     @GetMapping("/register")
-    public void registerForm( Model model) {
+    public void registerForm( UserDetails user, Model model) {
         // 로그인 여부에 따라, 로그 아웃 표시하기.
-
+        model.addAttribute("user", user);
     }
 
     @PostMapping("/register")
@@ -150,7 +151,7 @@ public class ShoesController {
     }
 
     @GetMapping({"/read", "/update"})
-    public void read( Long itemId, ShoesDTO shoesDTO2, PageRequestDTO pageRequestDTO, Model model) {
+    public void read( Long itemId, ShoesDTO shoesDTO2, UserDetails user, PageRequestDTO pageRequestDTO, Model model) {
 
 
         log.info("BoardController : /shoes/read  확인 중, pageRequestDTO : " + pageRequestDTO);
@@ -161,6 +162,7 @@ public class ShoesController {
         log.info("BoardController 확인 중, shoesDTO : " + shoesDTO);
         // 서버 -> 화면 데이터 전달.
         model.addAttribute("shoesDTO", shoesDTO);
+        model.addAttribute("user", user);
 
 
     } //read 닫는 부분
