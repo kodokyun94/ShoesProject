@@ -25,19 +25,19 @@ public interface ShoesService2 {
         return shoesMember;
     }
 
-    // entityToDTO
-    // 화면(DTO) ->  컨트롤러 ->서비스(각 변환작업을함.) - Entity 타입으로 - DB
-//    default ShoesJoinDTO entityToDto(ShoesMember shoesMember) {
-//        ShoesJoinDTO shoesJoinDTO = ShoesJoinDTO.builder()
-//                .memberId(shoesMember.getMemberId())
-//                .memberPw(shoesMember.getMemberPw())
-//                .memberName(shoesMember.getMemberName())
-//                .memberEmail(shoesMember.getMemberEmail())
-//                .memberPhone(shoesMember.getMemberPhone())
-//                .build();
-//
-//        return shoesJoinDTO;
-//    }
+//     entityToDTO
+//     화면(DTO) ->  컨트롤러 ->서비스(각 변환작업을함.) - Entity 타입으로 - DB
+    default ShoesJoinDTO entityToDto(ShoesMember shoesMember) {
+        ShoesJoinDTO shoesJoinDTO = ShoesJoinDTO.builder()
+                .memberId(shoesMember.getMemberId())
+                .memberPw(shoesMember.getMemberPw())
+                .memberName(shoesMember.getMemberName())
+                .memberEmail(shoesMember.getMemberEmail())
+                .memberPhone(shoesMember.getMemberPhone())
+                .build();
+
+        return shoesJoinDTO;
+    }
 
 
 }
