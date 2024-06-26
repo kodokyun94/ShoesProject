@@ -6,6 +6,8 @@
 <head>
     <title>장바구니</title>
 </head>
+
+
 <body>
 <div layout:fragment="content">
     <section class="cart-section">
@@ -20,30 +22,32 @@
                 <th>총 금액</th>
                 <th>삭제</th>
             </tr>
+
             </thead>
             <tbody>
-            <tr>
-                <td><img th:src="@{/images/shoesimg1.PNG}" alt="상품 이미지1"></td>
-                <td>상품 이름 1</td>
-                <td>₩100,000</td>
-                <td><input type="number" value="1" min="1"></td>
-                <td>₩100,000</td>
+            <!-- 데이터베이스에서 가져온 장바구니 상품 목록 반복 처리 -->
+
+            <tr th:each="item : ${cartItems}">
+                <td><img th:src="@{/images/shoesimg1.PNG}" alt="상품 이미지"></td>
+                <td th:text="${item.item.itemName}">상품 이름</td>
+                <td th:text="${item.item.itemPrice}">₩ 가격</td>
+                <td><input type="number" value="${item.quantity}" min="1"></td>
+                <td th:text="${item.item.itemPrice * item.quantity}">₩ 총 금액</td>
                 <td><button>삭제</button></td>
             </tr>
-            <tr>
-                <td><img th:src="@{/images/shoesimg1.PNG}" alt="상품 이미지2"></td>
-                <td>상품 이름 2</td>
-                <td>₩120,000</td>
-                <td><input type="number" value="1" min="1"></td>
-                <td>₩120,000</td>
-                <td><button>삭제</button></td>
-            </tr>
-            <!-- 추가 상품 행 -->
+
             </tbody>
         </table>
         <div class="total-price">
-            <p>총 금액: <span>₩220,000</span></p>
-            <button>결제하기</button>
+            <h3 th:if="${cartItems == null}">
+                장바구니가 비어있습니다.
+            </h3>
+            <h2 class="text-center">
+                총 주문 금액 : <span id="orderTotalPrice" class="text-danger">0원</span>
+            </h2>
+            <div class="text-center mt-3">
+                <button type="button" class="btn btn-primary btn-lg" onclick="orders()">주문하기</button>
+            </div>
         </div>
     </section>
 </div>

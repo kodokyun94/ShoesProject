@@ -1,4 +1,5 @@
 package com.busanit501.shoesproject.domain.kdkdomain;
 
-public class kdkShoes {
+public enum OrderStatus {
+    ORDER, CANCEL
 }
