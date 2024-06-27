@@ -21,7 +21,7 @@ public class Cart extends BaseEntity {
     private Long cartId;
 
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "shoesMemberId")
+    @JoinColumn(name = "memberId")
     private ShoesMember shoesMember;
 
 //    @OneToMany(mappedBy = "cartItemId", cascade = CascadeType.ALL, orphanRemoval = true)

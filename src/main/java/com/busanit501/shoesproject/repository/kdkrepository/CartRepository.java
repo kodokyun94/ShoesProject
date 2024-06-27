@@ -1,6 +1,7 @@
 package com.busanit501.shoesproject.repository.kdkrepository;
 
 import com.busanit501.shoesproject.domain.kdkdomain.Cart;
+import com.busanit501.shoesproject.domain.lsjdomain.ShoesMember;
 import com.busanit501.shoesproject.dto.kdkdto.CartDTO;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -9,7 +10,7 @@ import org.springframework.stereotype.Repository;
 public interface CartRepository extends JpaRepository<Cart,Long> {
 //    Member member = new Member();
 
-    Cart findByShoesMember(String memberEmail);
+    Cart findByShoesMember(ShoesMember shoesMember);
 
     default Cart dtoToEntity(CartDTO cartDTO) {
 

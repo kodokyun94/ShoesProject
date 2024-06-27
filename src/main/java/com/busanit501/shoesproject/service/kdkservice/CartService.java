@@ -48,7 +48,7 @@ public class CartService {
         // 회원 조회
         ShoesMember shoesMember = kdkShoesRepository.findByMemberEmail(memberEmail);
 
-        Cart cart = cartRepository.findByShoesMember(shoesMember.getMemberEmail());
+        Cart cart = cartRepository.findByShoesMember(shoesMember);
 
 
         if(cart == null){
@@ -65,7 +65,7 @@ public class CartService {
             savedCartItem.addCount(cartItemDto.getCount());
             return savedCartItem.getCartItemId();
         } else {
-            CartItem cartItem = CartItem.createCartItem(cart, item, cartItemDto.getCount());
+            CartItem cartItem = CartItem.createCartItem(cart, item,cartItemDto.getSize() ,cartItemDto.getCount());
             cartItemRepository.save(cartItem);
             return cartItem.getCartItemId();
         }
@@ -85,7 +85,7 @@ public class CartService {
 
         ShoesMember member = kdkShoesRepository.findByMemberEmail(memberEmail);
 
-        Cart cart = cartRepository.findByShoesMember(member.getMemberEmail());
+        Cart cart = cartRepository.findByShoesMember(member);
 
         Size size = (Size) sizeRepository.findAll();
 
