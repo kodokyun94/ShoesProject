@@ -50,10 +50,10 @@
                     [[${size.size}]]
                 </div>
                 </div>
-            <form action="/addCart" method="post">
+            <form action="/shoes/cart" method="post">
                 <div class="cart-button">
-                    <input type="hidden" name="itemId" value="${items.itemId}">
-                    <input type="hidden" name="itemName" value="${items.itemName}">
+                    <input type="hidden" name="itemId" value="${shoesDTO.itemId}">
+                    <input type="hidden" name="itemName" value="${shoesDTO.itemName}">
                     <button type="submit">장바구니에 추가</button>
                 </div>
             </form>

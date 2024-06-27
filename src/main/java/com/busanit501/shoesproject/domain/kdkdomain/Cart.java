@@ -1,10 +1,10 @@
 package com.busanit501.shoesproject.domain.kdkdomain;
 
+import com.busanit501.shoesproject.domain.lsjdomain.ShoesMember;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Optional;
 
 @Entity
 @Table(name = "cart")
@@ -22,14 +22,14 @@ public class Cart extends BaseEntity {
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "memberId")
-    private Member member;
+    private ShoesMember shoesMember;
 
 //    @OneToMany(mappedBy = "cartItemId", cascade = CascadeType.ALL, orphanRemoval = true)
 //    private List<CartItem> cartItems = new ArrayList<>();
 
-    public static Cart createCart(Member member) {
+    public static Cart createCart(ShoesMember shoesMember) {
         Cart cart = new Cart();
-        cart.setMember(member);
+        cart.setShoesMember(shoesMember);
         return cart;
     }
 }
