@@ -48,24 +48,27 @@ public class CustomOauth2UserService extends DefaultOAuth2UserService {
 
         String email = null;
         String phone = null;
-        String profileUrlThumbnail = null;
+//        String profileUrlThumbnail = null;
 
         switch (clientName) {
             case "kakao":
                 // 소셜 로그인 정보에서, 이메일만 추출.
-                email = getKakaoEmail(paramMap);
+//                email = getKakaoEmail(paramMap);
+                // 이메일 정보가 없어서, 더미로 일단 테스트
+                email = "lsy1234@naver.com";
                 // 소셜 로그인 정보에서, 프로필 이미지 외부 미디어 서버 주소 추출.
-                profileUrlThumbnail = getKakaoProfile(paramMap);
+//                profileUrlThumbnail = getKakaoProfile(paramMap);
+//                profileUrlThumbnail = null;
                 break;
         }
 
         log.info("CustomOauth2UserService : email = " + email);
 
 
-        return generateDTO(email,phone,profileUrlThumbnail, paramMap);
+        return generateDTO(email,phone, paramMap);
     }
 
-    private ShoesSecurityDTO generateDTO(String name, String email, String phone , Map<String, Object> paramMap) {
+    private ShoesSecurityDTO generateDTO( String email, String phone , Map<String, Object> paramMap) {
 
         Optional<ShoesMember> result = lsjShoesRepository.findByMemberEmail(email);
         //디비에 유저가 없다면 , 소셜로그인. (이메일포함)
@@ -73,9 +76,10 @@ public class CustomOauth2UserService extends DefaultOAuth2UserService {
         if (result.isEmpty()) {
             // 회원 추가 하기, mid: 이메일, 패스워드 : 임시로 무조건 1111 , 로하기.
             ShoesMember shoesMember = ShoesMember.builder()
+
                     .memberId(email)
                     .memberPw(passwordEncoder.encode("1111"))
-                    .memberName(name)
+//                    .memberName(name)
                     .memberEmail(email)
                     .memberPhone(phone)
                     .memberSocial(true)
@@ -85,12 +89,12 @@ public class CustomOauth2UserService extends DefaultOAuth2UserService {
             shoesMember.addRole(ShoesRole.USER);
             lsjShoesRepository.save(shoesMember);
 
-            ShoesSecurityDTO shoesSecurityDTO;
-            shoesSecurityDTO = new ShoesSecurityDTO(email,"1111", name ,email,
+            ShoesSecurityDTO shoesSecurityDTO = new ShoesSecurityDTO(email,"1111", email,"",
                     phone,true, false, Arrays.asList(
                             new SimpleGrantedAuthority("ROLE_USER")
             ));
             shoesSecurityDTO.setProps(paramMap);
+            log.info("소셜 로그인 , 최초 로그인 했을 경우, 성공 후 반환");
             return shoesSecurityDTO;
         }
 
@@ -109,6 +113,7 @@ public class CustomOauth2UserService extends DefaultOAuth2UserService {
                                     shoesRole -> new SimpleGrantedAuthority("ROLE_" + shoesRole.name())
                             ).collect(Collectors.toList())
                     );
+            log.info("소셜 로그인 , 이미 로그인 했을 경우, 성공 후 반환");
             return shoesSecurityDTO;
         }
     }

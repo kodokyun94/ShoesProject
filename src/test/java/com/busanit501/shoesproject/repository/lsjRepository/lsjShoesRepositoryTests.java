@@ -65,7 +65,7 @@ public class lsjShoesRepositoryTests {
     @Commit
     @Test
     public void testUpdate() {
-        String memberId = "gowl002@naver.com";
+        String memberId = "lsy1234@naver.com";
         String memberPw = passwordEncoder.encode("0326");
         lsjShoesRepository.updatePassword(memberId, memberPw);
     }
