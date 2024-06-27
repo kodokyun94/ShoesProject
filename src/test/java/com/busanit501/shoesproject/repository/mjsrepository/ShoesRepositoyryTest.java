@@ -60,7 +60,7 @@ public class ShoesRepositoyryTest {
         Shoes shoes = result.orElseThrow();
 
         log.info("조회 결과1 전 : " + shoes);
-        shoes.changeall("신발","운동화","브랜드","10000원", "5","남성");
+        shoes.changeall("신발","운동화","브랜드",10000, "5","남성");
         // 반영.
         shoesRepository.save(shoes);
         log.info("조회 결과2 후: " + shoes);

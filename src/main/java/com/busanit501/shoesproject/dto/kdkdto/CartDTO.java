@@ -1,7 +1,7 @@
 package com.busanit501.shoesproject.dto.kdkdto;
 
 import com.busanit501.shoesproject.domain.kdkdomain.CartItem;
-import com.busanit501.shoesproject.domain.kdkdomain.Member;
+import com.busanit501.shoesproject.domain.lsjdomain.ShoesMember;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -16,6 +16,6 @@ import java.util.List;
 @NoArgsConstructor
 public class CartDTO {
     private Long cartId;
-    private Member member;
+    private ShoesMember shoesMember;
     private List<CartItem> cartItems;
 }

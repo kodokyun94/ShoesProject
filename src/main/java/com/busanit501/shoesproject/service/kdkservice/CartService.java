@@ -3,12 +3,15 @@ package com.busanit501.shoesproject.service.kdkservice;
 import com.busanit501.shoesproject.domain.kdkdomain.Cart;
 import com.busanit501.shoesproject.domain.kdkdomain.CartItem;
 import com.busanit501.shoesproject.domain.kdkdomain.Item;
-import com.busanit501.shoesproject.domain.kdkdomain.Member;
+import com.busanit501.shoesproject.domain.lsjdomain.ShoesMember;
+import com.busanit501.shoesproject.domain.nhjdomain.Size;
 import com.busanit501.shoesproject.dto.kdkdto.*;
 import com.busanit501.shoesproject.repository.kdkrepository.CartItemRepository;
 import com.busanit501.shoesproject.repository.kdkrepository.CartRepository;
 import com.busanit501.shoesproject.repository.kdkrepository.ItemRepository;
-import com.busanit501.shoesproject.repository.kdkrepository.MemberRepository;
+import com.busanit501.shoesproject.repository.kdkrepository.kdkShoesRepository;
+import com.busanit501.shoesproject.repository.lsjrepository.lsjShoesRepository;
+import com.busanit501.shoesproject.repository.nhjrepository.SizeRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -20,8 +23,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import static com.busanit501.shoesproject.domain.kdkdomain.QItem.item;
-
 @Service
 @RequiredArgsConstructor
 @Transactional
@@ -29,23 +30,29 @@ import static com.busanit501.shoesproject.domain.kdkdomain.QItem.item;
 public class CartService {
 
     private final ItemRepository itemRepository;
-    private final MemberRepository memberRepository;
+    private final kdkShoesRepository kdkShoesRepository;
     private final CartRepository cartRepository;
     private final CartItemRepository cartItemRepository;
     private final ModelMapper modelMapper;
+    private final SizeRepository sizeRepository;
 
 
-    public Long addCartItem(CartItemDTO cartItemDto, Long memberId){
+    public List<Size> getAllSizes() {
+        return sizeRepository.findAll();
+    }
+
+    public Long addCartItem(CartItemDTO cartItemDto, String memberEmail){
         // 아이템 조회
         Item item = itemRepository.findByItemId(cartItemDto.getItemId());
 
         // 회원 조회
-        Member member = memberRepository.findByMemberId(memberId);
+        ShoesMember shoesMember = kdkShoesRepository.findByMemberEmail(memberEmail);
 
-        Cart cart = cartRepository.findByMember_MemberId(member.getMemberId());
+        Cart cart = cartRepository.findByShoesMember(shoesMember.getMemberEmail());
+
 
         if(cart == null){
-            cart = Cart.createCart(member);
+            cart = Cart.createCart(shoesMember);
             cartRepository.save(cart);
         }
 
@@ -73,12 +80,14 @@ public class CartService {
 //    }
 
     @Transactional(readOnly = true)
-    public List<CartDetailDTO> getCartList(Long memberId) {
+    public List<CartDetailDTO> getCartList(String memberEmail) {
         List<CartDetailDTO> cartDetailDtoList = new ArrayList<>();
 
-        Member member = memberRepository.findByMemberId(memberId);
+        ShoesMember member = kdkShoesRepository.findByMemberEmail(memberEmail);
 
-        Cart cart = cartRepository.findByMember_MemberId(member.getMemberId());
+        Cart cart = cartRepository.findByShoesMember(member.getMemberEmail());
+
+        Size size = (Size) sizeRepository.findAll();
 
         if(cart == null){
             cart = Cart.createCart(member);
@@ -90,13 +99,18 @@ public class CartService {
         return cartDetailDtoList;
     }
 
-    // 장바구니에 아이템을 추가하는 메서드
-    public void addToCart(Long itemId, String itemName) {
-        Item item1=itemRepository.findByItemId(itemId);
-        item1.getItemName();
-        item1.getItemId();
+    public void addSizeToCart(Long itemId, String itemName) {
+        Item item = itemRepository.findByItemId(itemId);
 
-        System.out.println("장바구니에 아이템 추가: " + item1.getItemName() + ", " + item1.getItemId());
+        if (item != null) {
+            // 아이템 정보 출력
+            System.out.println("장바구니에 아이템 추가: " + item.getItemName() + ", " + item.getItemId());
+
+            // 여기에 실제로 장바구니에 아이템을 추가하는 로직을 구현할 수 있습니다.
+            // 예를 들어, 세션에 아이템을 추가하거나 데이터베이스에 저장할 수 있습니다.
+        } else {
+            System.out.println("해당 itemId에 해당하는 아이템을 찾을 수 없습니다: " + itemId);
+        }
     }
 
 //    @Transactional(readOnly = true)

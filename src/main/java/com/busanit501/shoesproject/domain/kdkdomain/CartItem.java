@@ -23,7 +23,7 @@ public class CartItem extends BaseEntity {
     @JoinColumn(name = "itemId")
     private Item item;
 
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "sizeId")
     private Size size;
 

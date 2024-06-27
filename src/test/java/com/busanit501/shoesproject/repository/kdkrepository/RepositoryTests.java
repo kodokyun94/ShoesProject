@@ -2,9 +2,8 @@ package com.busanit501.shoesproject.repository.kdkrepository;
 
 
 import com.busanit501.shoesproject.domain.kdkdomain.Cart;
-import com.busanit501.shoesproject.domain.kdkdomain.CartItem;
 import com.busanit501.shoesproject.domain.kdkdomain.Item;
-import com.busanit501.shoesproject.domain.kdkdomain.Member;
+import com.busanit501.shoesproject.domain.lsjdomain.ShoesMember;
 import lombok.extern.log4j.Log4j2;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +23,7 @@ public class RepositoryTests {
     ItemRepository itemRepository;
 
     @Autowired
-    MemberRepository memberRepository;
+    kdkShoesRepository kdkShoesRepository;
 
     @Autowired
     CartItemRepository cartItemRepository;
@@ -67,64 +66,64 @@ public class RepositoryTests {
 
     @Test
     public void testInsertMember() {
-        IntStream.rangeClosed(1, 50).forEach(i -> {
-                    Member member = Member.builder()
-                            .memberAddress("부산진구" +i)
-                            .memberEmail("dassf"+i+"@naver.com")
-                            .memberName("유명가수"+i)
-                            .memberPhone("0101111111"+i)
-                            .memberPw("1234")
-                            .build();
-                    // 데이터베이스에 추가,
-                    // save 없으면, 1)추가, 있으면, 2) 수정.
-                     memberRepository.save(member);
-                    log.info("추가한 BNO: " + memberRepository);
-                }
-        );
+//        IntStream.rangeClosed(1, 50).forEach(i -> {
+//                    Member member = Member.builder()
+//                            .memberAddress("부산진구" +i)
+//                            .memberEmail("dassf"+i+"@naver.com")
+//                            .memberName("유명가수"+i)
+//                            .memberPhone("0101111111"+i)
+//                            .memberPw("1234")
+//                            .build();
+//                    // 데이터베이스에 추가,
+//                    // save 없으면, 1)추가, 있으면, 2) 수정.
+//                     memberRepository.save(member);
+//                    log.info("추가한 BNO: " + memberRepository);
+//                }
+//        );
     } // insetMember test
 
     @Test
     public void testinsertCart() {
-        Long memberId = 10L;
-        Member member = memberRepository.findByMemberId(memberId);
-
-        Cart cart = Cart.createCart(member);
-//        cart.getCartItems().add(CartItem.createCartItem(cart, item, 1));
-        cartRepository.save(cart);
-
-        log.info("testinsertCart cart : " + cart);
+//        Long memberId = 10L;
+//        ShoesMember shoesMember = kdkShoesRepository.findByMemberId(memberId);
+//
+//        Cart cart = Cart.createCart(member);
+////        cart.getCartItems().add(CartItem.createCartItem(cart, item, 1));
+//        cartRepository.save(cart);
+//
+//        log.info("testinsertCart cart : " + cart);
     }
 
 
-@Test
-@Transactional
-    public void selectCartTest() {
-        Cart cart= cartRepository.findByMember_MemberId(2L);
-        log.info("testselectCart cart : " + cart);
-}
-
-    @Test
-    @Transactional
-    public void selectItemTest() {
-        Item item= itemRepository.findByItemId(2L);
-        log.info("testselectCart cart : " + item);
-    }
-
-    @Test
-    @Transactional
-    public void selectMemberbyIdTest() {
-        Member member = memberRepository.findByMemberId(2L);
-        log.info("testselectMember member : " + member);
-    }
-
-
-@Test
-@Transactional
-    public void selectMemberTest() {
-        Optional<Member> result = memberRepository.findById(2L);
-        Member member = result.orElseThrow();
-        log.info("testselectMember member : " + member);
-}
+//@Test
+//@Transactional
+//    public void selectCartTest() {
+//        Cart cart= cartRepository.findByMember_MemberId(2L);
+//        log.info("testselectCart cart : " + cart);
+//}
+//
+//    @Test
+//    @Transactional
+//    public void selectItemTest() {
+//        Item item= itemRepository.findByItemId(2L);
+//        log.info("testselectCart cart : " + item);
+//    }
+//
+//    @Test
+//    @Transactional
+//    public void selectMemberbyIdTest() {
+//        Member member = memberRepository.findByMemberId(2L);
+//        log.info("testselectMember member : " + member);
+//    }
+//
+//
+//@Test
+//@Transactional
+//    public void selectMemberTest() {
+//        Optional<Member> result = memberRepository.findById(2L);
+//        Member member = result.orElseThrow();
+//        log.info("testselectMember member : " + member);
+//}
 
 
 

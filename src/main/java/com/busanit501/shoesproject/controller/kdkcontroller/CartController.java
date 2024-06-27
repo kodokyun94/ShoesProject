@@ -1,28 +1,19 @@
 package com.busanit501.shoesproject.controller.kdkcontroller;
 
-import com.busanit501.shoesproject.domain.kdkdomain.Member;
-import com.busanit501.shoesproject.dto.kdkdto.CartDTO;
+import com.busanit501.shoesproject.domain.lsjdomain.ShoesMember;
 import com.busanit501.shoesproject.dto.kdkdto.CartDetailDTO;
-import com.busanit501.shoesproject.dto.kdkdto.CartItemDTO;
-import com.busanit501.shoesproject.dto.kdkdto.MemberDTO;
-import com.busanit501.shoesproject.repository.kdkrepository.MemberRepository;
+import com.busanit501.shoesproject.repository.kdkrepository.kdkShoesRepository;
 import com.busanit501.shoesproject.service.kdkservice.CartService;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.security.Principal;
-import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -32,7 +23,7 @@ import java.util.List;
 public class CartController {
 
     private final CartService cartService;
-    private final MemberRepository memberRepository; // 회원 조회를 위한 MemberRepository
+    private final kdkShoesRepository kdkShoesRepository; // 회원 조회를 위한 MemberRepository
 
     @GetMapping("/cart")
     public String showCart(Model model) {
@@ -45,27 +36,28 @@ public class CartController {
         }
 
         if (memberEmail != null) {
-            Member member = memberRepository.findByMemberEmail(memberEmail);
-            if (member != null) {
-                Long memberId = member.getMemberId();
+            ShoesMember shoesMember = kdkShoesRepository.findByMemberEmail(memberEmail);
+
+            if (shoesMember != null) {
+                String memberId = shoesMember.getMemberId();
                 List<CartDetailDTO> cartItems = cartService.getCartList(memberId);
                 log.info("cartItems showCart : " + cartItems);
                 model.addAttribute("cartItems", cartItems);
             } else {
                 String warningMessage = "Member not found for email: " + memberEmail;
                 log.warn(warningMessage);
-                model.addAttribute("cartItems", new ArrayList<>());
                 model.addAttribute("warningMessage", warningMessage);
             }
+
         } else {
             String warningMessage = "No authenticated user found";
             log.warn(warningMessage);
-            model.addAttribute("cartItems", new ArrayList<>());
             model.addAttribute("warningMessage", warningMessage);
         }
 
-        return "/shoes/cart"; // 뷰 이름을 반환
+        return "shoes/cart"; // 뷰 이름을 반환
     }
+
 
     @PostMapping("/cart/delete/{cartItemId}")
     public String deleteCartItem(@PathVariable Long cartItemId) {
@@ -75,15 +67,14 @@ public class CartController {
 
 
     @PostMapping("/addToCart")
-    public String addToCart(@RequestParam Long itemId, @RequestParam String itemName, Model model) {
+    public String addToCart(@RequestParam Long itemId, @RequestParam String itemName, RedirectAttributes redirectAttributes) {
         // 여기서 itemId와 itemName을 사용하여 장바구니에 아이템을 추가하는 로직을 구현합니다.
-        // 예를 들어, CartService를 사용하여 아이템을 장바구니에 추가할 수 있습니다.
-        cartService.addToCart(itemId, itemName);
+        cartService.addSizeToCart(itemId, itemName);
 
         // 추가가 완료되면, 다시 장바구니 화면으로 리다이렉트하거나 메시지를 추가할 수 있습니다.
-        model.addAttribute("message", "아이템이 장바구니에 추가되었습니다.");
+        redirectAttributes.addFlashAttribute("message", "아이템이 장바구니에 추가되었습니다.");
 
-        return "redirect:/cart"; // 장바구니 화면으로 리다이렉트
+        return "redirect:/shoes/cart"; // 장바구니 화면으로 리다이렉트
     }
 
 //    @PostMapping(value = "/cart")
