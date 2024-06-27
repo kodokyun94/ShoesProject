@@ -30,7 +30,7 @@ public class ShoesRepositoyryTest {
                     .itemBrand("더미 브렌드"+i)
                     .itemType("더미 타입" +i)
                     .itemName("더미 이름"+i)
-                    .itemPrice("더미 가격"+i)
+                    .itemPrice(35000+i)
                     .itemReviewRankAvg("더미 평점"+i)
                     .itemGender("더미 성별")
                     .build();
@@ -60,7 +60,7 @@ public class ShoesRepositoyryTest {
         Shoes shoes = result.orElseThrow();
 
         log.info("조회 결과1 전 : " + shoes);
-        shoes.changeall("신발","운동화","브랜드","10000원", "5","남성");
+        shoes.changeall("신발","운동화","브랜드",10000, "5","남성");
         // 반영.
         shoesRepository.save(shoes);
         log.info("조회 결과2 후: " + shoes);

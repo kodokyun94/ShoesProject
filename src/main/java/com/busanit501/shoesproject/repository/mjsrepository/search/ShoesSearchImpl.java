@@ -42,7 +42,7 @@ public class ShoesSearchImpl extends QuerydslRepositorySupport implements ShoesS
     booleanBuilder.or(shoes.itemName.contains("1"));
     booleanBuilder.or(shoes.itemBrand.contains("1"));
     booleanBuilder.or(shoes.itemType.contains("1"));
-    booleanBuilder.or(shoes.itemPrice.contains("1"));
+    booleanBuilder.or(shoes.itemPrice.eq (1));
     booleanBuilder.or(shoes.itemReviewRankAvg.contains("1"));
     booleanBuilder.or(shoes.itemGender.contains("1"));
 
@@ -97,7 +97,7 @@ public class ShoesSearchImpl extends QuerydslRepositorySupport implements ShoesS
             break;
           case "p":
             log.info("조건절 실행여부 확인 2 :  itemPrice");
-            booleanBuilder.or(shoes.itemPrice.contains(keyword));
+            booleanBuilder.or(shoes.itemPrice.eq(Integer.valueOf(keyword)));
             break;
           case "r":
             log.info("조건절 실행여부 확인 2 :  itemReviewRankAvg");

@@ -1,33 +1,35 @@
 package com.busanit501.shoesproject.domain.kdkdomain;
 
+import com.busanit501.shoesproject.domain.lsjdomain.ShoesMember;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
-import java.util.List;
+import java.util.Optional;
 
 @Entity
 @Table(name = "cart")
 @Getter @Setter
 @ToString
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class Cart extends BaseEntity {
 
     @Id
     @Column(name = "cartId")
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long cartId;
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "memberId")
-    private Member member;
+    private ShoesMember shoesMember;
 
-    @OneToMany(mappedBy = "cart")
-    private List<CartItem> cartItems;
+//    @OneToMany(mappedBy = "cartItemId", cascade = CascadeType.ALL, orphanRemoval = true)
+//    private List<CartItem> cartItems = new ArrayList<>();
 
-    public static Cart createCart(Member member) {
+    public static Cart createCart(ShoesMember shoesMember) {
         Cart cart = new Cart();
-        cart.setMember(member);
+        cart.setShoesMember(shoesMember);
         return cart;
     }
 }
