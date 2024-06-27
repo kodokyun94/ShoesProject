@@ -160,6 +160,7 @@ main {
     width: 450px;
     max-height: 100%;
     border-radius: 10px; /* 둥근 모서리 추가 */
+    margin-left: 750px;
 }
 
 .signup-card h2 {
