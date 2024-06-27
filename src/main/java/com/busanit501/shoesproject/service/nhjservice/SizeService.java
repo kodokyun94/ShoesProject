@@ -6,6 +6,7 @@ import java.util.List;
 
 public interface SizeService {
 
+//    Size getOne(Integer cartId);
     List<Size> getAllSizes();
 
 }

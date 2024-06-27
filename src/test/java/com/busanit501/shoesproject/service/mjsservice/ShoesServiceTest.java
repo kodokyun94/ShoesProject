@@ -23,7 +23,7 @@ public class ShoesServiceTest {
                 .itemBrand("더미 브렌드")
                 .itemType("더미 타입" )
                 .itemName("더미 이름")
-                .itemPrice("더미 가격")
+                .itemPrice(35000)
                 .itemReviewRankAvg("더미 평점")
                 .itemGender("더미 성별")
                 .build();
@@ -51,7 +51,7 @@ public class ShoesServiceTest {
                 .itemBrand("더미 브렌드")
                 .itemType("더미 타입" )
                 .itemName("더미 이름")
-                .itemPrice("더미 가격")
+                .itemPrice(35000)
                 .itemReviewRankAvg("더미 평점")
                 .itemGender("더미 성별")
                 .build();
@@ -62,7 +62,10 @@ public class ShoesServiceTest {
                         //파일명,
                         UUID.randomUUID()+"_testImage.png",
                         UUID.randomUUID()+"_testImage2.png",
-                        UUID.randomUUID()+"_testImage3.png"
+                        UUID.randomUUID()+"_testImage3.png",
+                        UUID.randomUUID()+"_testImage4.png",
+                        UUID.randomUUID()+"_testImage5.png",
+                        UUID.randomUUID()+"_testImage6.png"
                 )
         ); // 더미 이미지 파일명 추가
 
@@ -90,7 +93,7 @@ public class ShoesServiceTest {
                 .itemName("테스트")
                 .itemType("테스트")
                 .itemReviewRankAvg("테스트")
-                .itemPrice("테스트")
+                .itemPrice(35000)
                 .itemGender("테스트")
                 .build();
 

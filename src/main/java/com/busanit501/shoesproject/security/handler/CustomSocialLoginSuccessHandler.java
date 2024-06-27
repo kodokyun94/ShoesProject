@@ -29,7 +29,7 @@ public class CustomSocialLoginSuccessHandler implements AuthenticationSuccessHan
 
         // 소셜 로그인은 무조건 패스워드를 1111 , 설정
         // 변경이 필요함.
-        if(shoesSecurityDTO.isMemberSocial() && shoesSecurityDTO.getMemberPw().equals("1111") || passwordEncoder.matches("1111", shoesSecurityDTO.getMemberPw())) {
+        if(shoesSecurityDTO.isMemberSocial() && shoesSecurityDTO.getMemberPw().equals("1113") || passwordEncoder.matches("1113", shoesSecurityDTO.getMemberPw())) {
             log.info("패스워드를 변경해주세요.");
             log.info("회원 정보 변경하는 페이지로 리다이렉트, 마이 페이지가 없음. 일단 수동으로 임의로 변경하기 ");
             response.sendRedirect("/member/signin");

@@ -28,7 +28,7 @@ public class Shoes {
     private String itemBrand;
 
     @Column(length = 500,nullable = false)
-    private String itemPrice;
+    private int itemPrice;
 
     @Column(length = 50,nullable = false)
     private String itemReviewRankAvg;
@@ -73,7 +73,7 @@ public class Shoes {
         this.imageSet.clear();
     }
 
-    public void changeall(String itemName, String itemType,  String itemBrand, String itemPrice, String itemReviewRankAvg, String itemGender) {
+    public void changeall(String itemName, String itemType,  String itemBrand, int itemPrice, String itemReviewRankAvg, String itemGender) {
         this.itemName = itemName;
         this.itemType = itemType;
         this.itemBrand = itemBrand;

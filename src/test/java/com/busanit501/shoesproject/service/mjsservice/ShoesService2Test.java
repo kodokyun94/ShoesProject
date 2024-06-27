@@ -23,7 +23,7 @@ public class ShoesService2Test {
                 .itemBrand("더미 브렌드")
                 .itemType("더미 타입" )
                 .itemName("더미 이름")
-                .itemPrice("더미 가격")
+                .itemPrice(35000)
                 .itemReviewRankAvg("더미 평점")
                 .itemGender("더미 성별")
                 .build();
@@ -51,7 +51,7 @@ public class ShoesService2Test {
                 .itemBrand("더미 브렌드")
                 .itemType("더미 타입" )
                 .itemName("더미 이름")
-                .itemPrice("더미 가격")
+                .itemPrice(35000)
                 .itemReviewRankAvg("더미 평점")
                 .itemGender("더미 성별")
                 .build();

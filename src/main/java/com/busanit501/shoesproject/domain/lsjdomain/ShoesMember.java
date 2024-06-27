@@ -13,6 +13,7 @@ import java.util.Set;
 @NoArgsConstructor
 @ToString(exclude = "roleSet")
 public class ShoesMember extends  BaseEntity {
+
     @Id
     private String memberId;
     private String memberPw;
