@@ -134,10 +134,10 @@ main {
 }
 
 .login-body .container{
-        display: flex;
-        flex: 1;
-        justify-content: center;
-        align-items: center;
+    display: flex;
+    flex: 1;
+    justify-content: center;
+    align-items: center;
 
 }
 
@@ -160,6 +160,7 @@ main {
     width: 450px;
     max-height: 100%;
     border-radius: 10px; /* 둥근 모서리 추가 */
+    margin-left: 750px;
 }
 
 .signup-card h2 {
@@ -202,20 +203,15 @@ button:hover {
 
 /* 상품 목록 스타일 */
 .products {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 2fr));
-    gap: 20px;
-    padding: 70px;
-    max-width: 1200px;
+
 }
 
 .product-card {
-    background-color: #fff;
-    border: 1px solid #ddd;
-    border-radius: 10px;
-    padding: 10px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    text-align: center;
+    display: grid;
+    grid-template-columns: repeat(4, 4fr);
+    gap: 30px;
+    width: 100%;
+    padding: 15px;
 }
 
 .product-card img {
@@ -227,7 +223,6 @@ button:hover {
 .product-card h3 {
     font-size: 18px;
     margin: 10px 0;
-    border-block: inherit;
 }
 
 .product-card p {
@@ -331,58 +326,12 @@ button:hover {
     background-color: #555;
 }
 
-/*footer 위치 작업 중 */
-/*footer {*/
-/*    background-color: #333;*/
-/*    color: white;*/
-/*    padding: 20px 0;*/
-/*}*/
-
-/*.footer-container {*/
-/*    display: flex;*/
-/*    flex-direction: column;*/
-/*    align-items: center;*/
-/*}*/
-
-/*.footer-links {*/
-/*    display: flex;*/
-/*    justify-content: space-around;*/
-/*    width: 80%;*/
-/*    margin-bottom: 20px;*/
-/*}*/
-
-/*.footer-column {*/
-/*    flex: 1;*/
-/*    margin: 0 20px;*/
-/*}*/
-
-/*.footer-column h3 {*/
-/*    border-bottom: 1px solid #555;*/
-/*    padding-bottom: 10px;*/
-/*}*/
-
-/*.footer-column ul {*/
-/*    list-style: none;*/
-/*    padding: 0;*/
-/*}*/
-
-/*.footer-column ul li {*/
-/*    margin: 10px 0;*/
-/*}*/
-
-/*.footer-column ul li a {*/
-/*    text-decoration: none;*/
-/*    color: white;*/
-/*    transition: color 0.3s;*/
-/*}*/
-
-/*.footer-column ul li a:hover {*/
-/*    color: #ddd;*/
-/*}*/
-
-/*.footer-bottom {*/
-/*    text-align: center;*/
-/*}*/
+.header-container h1{
+    max-width: 100%;
+    height: 150px;
+    background-color: #d7d8da;
+    padding: 10px 20px;
+}
 
 .main-container {
     display: flex;
@@ -393,7 +342,9 @@ button:hover {
     width: 20%;
     padding: 10px;
 }
-
+.left-nav2 h2{
+    padding-bottom: 80px;
+}
 .left-nav2 ul {
     height: 100%;
     list-style: none;
@@ -410,36 +361,3 @@ button:hover {
     font-size: 18px;
 }
 
-.products {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    gap: 20px;
-    width: 80%;
-    padding: 10px;
-}
-
-.product-card {
-    background-color: #fff;
-    border: 1px solid #ddd;
-    border-radius: 10px;
-    padding: 10px;
-    text-align: center;
-}
-
-.product-card img {
-    width: 100%;
-    height: auto;
-    border-radius: 10px;
-}
-
-.product-card h3 {
-    font-size: 18px;
-    margin: 10px 0;
-}
-
-.product-card p {
-    font-size: 16px;
-    color: gray;
-    margin-bottom: 10px;
-    font-weight: bold;
-}

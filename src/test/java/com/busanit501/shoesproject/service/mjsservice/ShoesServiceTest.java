@@ -62,7 +62,10 @@ public class ShoesServiceTest {
                         //파일명,
                         UUID.randomUUID()+"_testImage.png",
                         UUID.randomUUID()+"_testImage2.png",
-                        UUID.randomUUID()+"_testImage3.png"
+                        UUID.randomUUID()+"_testImage3.png",
+                        UUID.randomUUID()+"_testImage4.png",
+                        UUID.randomUUID()+"_testImage5.png",
+                        UUID.randomUUID()+"_testImage6.png"
                 )
         ); // 더미 이미지 파일명 추가
 

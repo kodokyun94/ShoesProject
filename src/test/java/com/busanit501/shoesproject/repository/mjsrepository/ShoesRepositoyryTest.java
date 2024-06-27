@@ -24,7 +24,7 @@ public class ShoesRepositoyryTest {
 
     @Test
     public void testInsert(){
-        IntStream.rangeClosed(1, 100).forEach(i ->
+        IntStream.rangeClosed(1, 20).forEach(i ->
         {
             Shoes shoes = Shoes.builder()
                     .itemBrand("더미 브렌드"+i)
