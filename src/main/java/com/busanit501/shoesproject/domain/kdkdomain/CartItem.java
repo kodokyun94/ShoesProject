@@ -1,5 +1,6 @@
 package com.busanit501.shoesproject.domain.kdkdomain;
 
+import com.busanit501.shoesproject.domain.nhjdomain.Size;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Min;
 import lombok.*;
@@ -21,6 +22,10 @@ public class CartItem extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "itemId")
     private Item item;
+
+    @ManyToOne
+    @JoinColumn(name = "sizeId")
+    private Size size;
 
     @Min(value = 1, message = "최소 1개 이상 담아주세요")
     private int count;

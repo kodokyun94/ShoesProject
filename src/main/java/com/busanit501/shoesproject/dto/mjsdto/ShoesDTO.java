@@ -21,7 +21,7 @@ public class ShoesDTO {
 
     private String itemBrand;
 
-    private String itemPrice;
+    private int itemPrice;
 
     private String itemReviewRankAvg;
 

@@ -50,7 +50,7 @@ public class OrderService {
         Order order = Order.createOrder(Optional.ofNullable(member), orderItemList);
         orderRepository.save(order);
 
-        return order.getId();
+        return order.getOrderId();
     }
 
     @Transactional(readOnly = true)
@@ -108,7 +108,7 @@ public class OrderService {
         Order order = Order.createOrder(Optional.ofNullable(member), orderItemList);
         orderRepository.save(order);
 
-        return order.getId();
+        return order.getOrderId();
     }
 
 }

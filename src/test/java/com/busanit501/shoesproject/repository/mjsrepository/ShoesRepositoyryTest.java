@@ -30,7 +30,7 @@ public class ShoesRepositoyryTest {
                     .itemBrand("더미 브렌드"+i)
                     .itemType("더미 타입" +i)
                     .itemName("더미 이름"+i)
-                    .itemPrice("더미 가격"+i)
+                    .itemPrice(35000+i)
                     .itemReviewRankAvg("더미 평점"+i)
                     .itemGender("더미 성별")
                     .build();

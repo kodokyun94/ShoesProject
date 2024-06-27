@@ -90,6 +90,15 @@ public class CartService {
         return cartDetailDtoList;
     }
 
+    // 장바구니에 아이템을 추가하는 메서드
+    public void addToCart(Long itemId, String itemName) {
+        Item item1=itemRepository.findByItemId(itemId);
+        item1.getItemName();
+        item1.getItemId();
+
+        System.out.println("장바구니에 아이템 추가: " + item1.getItemName() + ", " + item1.getItemId());
+    }
+
 //    @Transactional(readOnly = true)
 //    public boolean validateCartItem(Long cartItemId, Long memberId) {
 //        Member curMember = memberRepository.findByMemberId(memberId);
