@@ -30,14 +30,14 @@ body {
     flex-direction: column;
     margin-right: 20px;
 }
-.product-images img {
+.product-images div .card-img-top {
     width: 100px;
     height: 100px;
     margin-bottom: 50px;
     cursor: pointer;
     border: 1px solid gray;
 }
-.main-image img {
+.main-image div .card-img-top {
     width: 550px;
     height: 600px;
     margin-right: 150px;
