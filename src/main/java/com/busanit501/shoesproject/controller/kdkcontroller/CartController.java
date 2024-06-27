@@ -55,7 +55,7 @@ public class CartController {
     }
 
 
-    @PatchMapping(value = "/cartItem/{cartId}")
+    @PutMapping(value = "/cartItem/{cartId}")
     public @ResponseBody ResponseEntity updateCartItem(@PathVariable("cartId") Long cartId, int count, Principal principal){
         if(count <= 0){
             return new ResponseEntity<String>("최소 1개 이상 담아주세요", HttpStatus.BAD_REQUEST);

@@ -38,6 +38,13 @@ public class CartService {
         Cart cart = cartRepository.findByMember_MemberId(member.getMemberId())
                 .orElseGet(() -> createAndSaveCart(member));
 
+        if (cart == null) {
+            // 카트가 null인 경우 새로운 카트 생성
+            cart = Cart.createCart(member);
+            cartRepository.save(cart);
+        }
+
+
         CartItem savedCartItem = cartItemRepository.findByCart_CartIdAndItem_ItemId(cart.getCartId(), item.getItemId());
 
         if (savedCartItem != null) {
