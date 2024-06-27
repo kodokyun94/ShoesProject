@@ -10,7 +10,8 @@ import org.springframework.stereotype.Repository;
 public interface CartRepository extends JpaRepository<Cart,Long> {
 //    Member member = new Member();
 
-    Cart findByShoesMember(ShoesMember shoesMember);
+    Cart findByShoesMember(String shoesMember);
+
 
     default Cart dtoToEntity(CartDTO cartDTO) {
 

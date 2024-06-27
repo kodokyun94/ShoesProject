@@ -20,6 +20,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -65,7 +66,7 @@ public class CartService {
             savedCartItem.addCount(cartItemDto.getCount());
             return savedCartItem.getCartItemId();
         } else {
-            CartItem cartItem = CartItem.createCartItem(cart, item,cartItemDto.getSize() ,cartItemDto.getCount());
+            CartItem cartItem = CartItem.createCartItem(cart, item ,cartItemDto.getCount());
             cartItemRepository.save(cartItem);
             return cartItem.getCartItemId();
         }
@@ -87,18 +88,61 @@ public class CartService {
 
         Cart cart = cartRepository.findByShoesMember(member);
 
-        Size size = (Size) sizeRepository.findAll();
-
-        if(cart == null){
+        if (cart == null) {
             cart = Cart.createCart(member);
             cartRepository.save(cart);
             return cartDetailDtoList;
         }
 
-        cartDetailDtoList = cartItemRepository.findCartDetailDtoList(cart.getCartId());
+        List<CartItem> cartItems = cartItemRepository.findByCart_CartId(cart.getCartId());
+
+        for (CartItem cartItem : cartItems) {
+            CartDetailDTO dto = new CartDetailDTO(cartItem);
+            dto.setCartItemId(cartItem.getCartItemId());
+            dto.setItemName(cartItem.getItem().getItemName());
+            dto.setCount(cartItem.getCount());
+            dto.setItemPrice(cartItem.getItem().getItemPrice());
+
+            // 사이즈 데이터를 가져와서 설정
+            Size size = sizeRepository.findById(cartItem.getItem().getItemId()).orElse(null);
+            if (size != null) {
+                dto.setSize(size);
+            }
+
+            cartDetailDtoList.add(dto);
+        }
+
         return cartDetailDtoList;
     }
 
+    @Transactional
+    public void addToCart(String memberId, Long itemId, String size) {
+        // 카트에 해당 회원의 정보가 있는지 확인
+        Cart cart = cartRepository.findByShoesMember(memberId);
+
+        if (cart == null) {
+            // 회원의 카트가 없으면 생성
+            ShoesMember member = new ShoesMember();
+            member.setMemberId(memberId);
+            cart = Cart.createCart(member);
+            cartRepository.save(cart);
+        }
+
+        // 아이템과 사이즈를 카트에 추가
+        Item item = itemRepository.findById(itemId).orElseThrow(() -> new RuntimeException("Item not found"));
+        Size sizeInfo = sizeRepository.findBySize(size);
+
+        CartItem cartItem = new CartItem();
+        cartItem.setCart(cart);
+        cartItem.setItem(item);
+        cartItem.setSize(sizeInfo); // 사이즈 정보도 함께 추가해야 함
+        cartItemRepository.save(cartItem);
+    }
+
+
+
+
+    //사이즈 추가
     public void addSizeToCart(Long itemId, String itemName) {
         Item item = itemRepository.findByItemId(itemId);
 

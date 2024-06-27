@@ -23,18 +23,15 @@ public class CartItem extends BaseEntity {
     @JoinColumn(name = "itemId")
     private Item item;
 
-    @OneToOne
-    @JoinColumn(name = "sizeId")
-    private Size size;
+    pr
 
     @Min(value = 1, message = "최소 1개 이상 담아주세요")
     private int count;
 
-    public static CartItem createCartItem(Cart cart, Item item, Size size , int count) {
+    public static CartItem createCartItem(Cart cart, Item item, int count) {
         CartItem cartItem = new CartItem();
         cartItem.setCart(cart);
         cartItem.setItem(item);
-        cartItem.setSize(size);
         cartItem.setCount(count);
         return cartItem;
     }

@@ -26,7 +26,6 @@ public class CartDetailDTO {
         this.itemName = cartItem.getItem().getItemName(); // itemName은 Item 엔티티에 따라 다를 수 있습니다
         this.count = cartItem.getCount();
         this.itemPrice = cartItem.getItem().getItemPrice(); // price는 Item 엔티티에 따라 다를 수 있습니다
-        this.size = cartItem.getSize();
     }
 
 }

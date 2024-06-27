@@ -66,15 +66,41 @@ public class CartController {
     }
 
 
-    @PostMapping("/addToCart")
-    public String addToCart(@RequestParam Long itemId, @RequestParam String itemName, RedirectAttributes redirectAttributes) {
-        // 여기서 itemId와 itemName을 사용하여 장바구니에 아이템을 추가하는 로직을 구현합니다.
-        cartService.addSizeToCart(itemId, itemName);
+    @PostMapping("/add-to-cart")
+    public String addToCart(@RequestParam Long itemId, @RequestParam String size, Model model) {
+        // 고객 식별 정보 (예: 회원 이메일) 가져오기
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String memberEmail = null;
 
-        // 추가가 완료되면, 다시 장바구니 화면으로 리다이렉트하거나 메시지를 추가할 수 있습니다.
-        redirectAttributes.addFlashAttribute("message", "아이템이 장바구니에 추가되었습니다.");
+        if (authentication != null && authentication.getPrincipal() instanceof UserDetails) {
+            UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+            memberEmail = userDetails.getUsername();
+        }
 
-        return "redirect:/shoes/cart"; // 장바구니 화면으로 리다이렉트
+        if (memberEmail != null) {
+            // 고객 정보 조회 (예: ShoesMember가 어떻게 구현되었는지에 따라 다름)
+            ShoesMember shoesMember = kdkShoesRepository.findByMemberEmail(memberEmail);
+
+            if (shoesMember != null) {
+                // 아이템 ID와 사이즈를 사용하여 장바구니에 추가
+                cartService.addToCart(shoesMember.getMemberId(), itemId, size);
+
+                // 장바구니 페이지로 리다이렉트
+                return "redirect:/shoes/cart";
+            } else {
+                // 고객 정보를 찾을 수 없는 경우 처리
+                String warningMessage = "Member not found for email: " + memberEmail;
+                log.warn(warningMessage);
+                model.addAttribute("warningMessage", warningMessage);
+                return "error-page"; // 예시에서는 에러 페이지로 리다이렉트
+            }
+        } else {
+            // 인증된 사용자가 없는 경우 처리
+            String warningMessage = "No authenticated user found";
+            log.warn(warningMessage);
+            model.addAttribute("warningMessage", warningMessage);
+            return "error-page"; // 예시에서는 에러 페이지로 리다이렉트
+        }
     }
 
 //    @PostMapping(value = "/cart")
