@@ -1,8 +1,7 @@
 package com.busanit501.shoesproject.controller.kdkcontroller;
 
 import com.busanit501.shoesproject.domain.lsjdomain.ShoesMember;
-import com.busanit501.shoesproject.dto.kdkdto.CartDetailDTO;
-import com.busanit501.shoesproject.repository.kdkrepository.kdkShoesRepository;
+import com.busanit501.shoesproject.dto.kdkdto.CartDetailDto;
 import com.busanit501.shoesproject.service.kdkservice.CartService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -40,7 +39,7 @@ public class CartController {
 
             if (shoesMember != null) {
                 String memberId = shoesMember.getMemberId();
-                List<CartDetailDTO> cartItems = cartService.getCartList(memberId);
+                List<CartDetailDto> cartItems = cartService.getCartList(memberId);
                 log.info("cartItems showCart : " + cartItems);
                 model.addAttribute("cartItems", cartItems);
             } else {

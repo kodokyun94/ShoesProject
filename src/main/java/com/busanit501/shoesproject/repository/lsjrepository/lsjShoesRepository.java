@@ -22,6 +22,10 @@ public interface lsjShoesRepository extends JpaRepository<ShoesMember, String> {
     @EntityGraph(attributePaths = "roleSet")
     Optional<ShoesMember> findByMemberEmail(String memberEmail);
 
+    // mid로 유저 확인.
+    @EntityGraph(attributePaths = "roleSet")
+    Optional<ShoesMember> findByMemberId(String mid);
+
     //DML 적용하기
     @Modifying
     @Transactional
