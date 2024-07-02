@@ -11,7 +11,7 @@ import java.util.List;
 @Repository
 public interface CartItemRepository extends JpaRepository<CartItem, Long> {
 
-    CartItem findByCartIdAndItemId(Long cartId, Long itemId);
+    CartItem findByCartCartIdAndItemItemId(Long cartId, Long itemId);
 
     @Query("select new com.busanit501.shoesproject.dto.kdkdto.CartDetailDto(ci.cartItemId, i.itemName, i.itemPrice, ci.count, im.imgUrl) " +
             "from CartItem ci, ItemImg im " +

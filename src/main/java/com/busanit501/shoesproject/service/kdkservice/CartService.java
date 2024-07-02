@@ -56,7 +56,7 @@ public class CartService {
         }
 
 
-        CartItem savedCartItem = cartItemRepository.findByCartIdAndItemId(cart.getCartId(), item.getItemId());
+        CartItem savedCartItem = cartItemRepository.findByCartCartIdAndItemItemId(cart.getCartId(), item.getItemId());
         log.info("CartService savedCartItem 확인 7: " + savedCartItem);
 
         if (savedCartItem != null) {

@@ -3,6 +3,11 @@ package com.busanit501.shoesproject.repository.kdkrepository;
 
 import com.busanit501.shoesproject.constant.ItemSellStatus;
 import com.busanit501.shoesproject.domain.kdkdomain.Item;
+import com.busanit501.shoesproject.domain.kdkdomain.QItem;
+import com.busanit501.shoesproject.domain.kdkdomain.QItemImg;
+import com.busanit501.shoesproject.dto.kdkdto.ItemSearchDto;
+import com.busanit501.shoesproject.dto.kdkdto.MainItemDto;
+import com.busanit501.shoesproject.dto.kdkdto.QMainItemDto;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.core.types.dsl.Wildcard;
 import com.querydsl.jpa.impl.JPAQueryFactory;
@@ -49,7 +54,7 @@ public class ItemRepositoryCustomImpl implements ItemRepositoryCustom{
     private BooleanExpression searchByLike(String searchBy, String searchQuery){
 
         if(StringUtils.equals("itemNm", searchBy)){
-            return QItem.item.itemNm.like("%" + searchQuery + "%");
+            return QItem.item.itemName.like("%" + searchQuery + "%");
         } else if(StringUtils.equals("createdBy", searchBy)){
             return QItem.item.createdBy.like("%" + searchQuery + "%");
         }
@@ -66,7 +71,7 @@ public class ItemRepositoryCustomImpl implements ItemRepositoryCustom{
                         searchSellStatusEq(itemSearchDto.getSearchSellStatus()),
                         searchByLike(itemSearchDto.getSearchBy(),
                                 itemSearchDto.getSearchQuery()))
-                .orderBy(QItem.item.id.desc())
+                .orderBy(QItem.item.itemName.desc())
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
                 .fetch();
@@ -82,7 +87,7 @@ public class ItemRepositoryCustomImpl implements ItemRepositoryCustom{
     }
 
     private BooleanExpression itemNmLike(String searchQuery){
-        return StringUtils.isEmpty(searchQuery) ? null : QItem.item.itemNm.like("%" + searchQuery + "%");
+        return StringUtils.isEmpty(searchQuery) ? null : QItem.item.itemName.like("%" + searchQuery + "%");
     }
 
     @Override
@@ -93,17 +98,17 @@ public class ItemRepositoryCustomImpl implements ItemRepositoryCustom{
         List<MainItemDto> content = queryFactory
                 .select(
                         new QMainItemDto(
-                                item.id,
-                                item.itemNm,
+                                item.itemId,
+                                item.itemName,
                                 item.itemDetail,
                                 itemImg.imgUrl,
-                                item.price)
+                                item.itemPrice)
                 )
                 .from(itemImg)
                 .join(itemImg.item, item)
                 .where(itemImg.repimgYn.eq("Y"))
                 .where(itemNmLike(itemSearchDto.getSearchQuery()))
-                .orderBy(item.id.desc())
+                .orderBy(item.itemId.desc())
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
                 .fetch();
@@ -119,5 +124,6 @@ public class ItemRepositoryCustomImpl implements ItemRepositoryCustom{
 
         return new PageImpl<>(content, pageable, total);
     }
+
 
 }

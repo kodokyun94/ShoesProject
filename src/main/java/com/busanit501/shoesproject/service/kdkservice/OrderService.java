@@ -1,7 +1,5 @@
 package com.busanit501.shoesproject.service.kdkservice;
 
-
-
 import com.busanit501.shoesproject.domain.kdkdomain.Item;
 import com.busanit501.shoesproject.domain.kdkdomain.ItemImg;
 import com.busanit501.shoesproject.domain.kdkdomain.Order;
@@ -74,7 +72,7 @@ public class OrderService {
             OrderHistDto orderHistDto = new OrderHistDto(order);
             List<OrderItem> orderItems = order.getOrderItems();
             for (OrderItem orderItem : orderItems) {
-                ItemImg itemImg = itemImgRepository.findByItemIdAndRepimgYn
+                ItemImg itemImg = itemImgRepository.findByItemItemIdAndRepimgYn
                         (orderItem.getItem().getItemId(), "Y");
                 OrderItemDto orderItemDto =
                         new OrderItemDto(orderItem, itemImg.getImgUrl());

@@ -6,14 +6,11 @@ import com.busanit501.shoesproject.exception.OutOfStockException;
 import jakarta.persistence.*;
 import lombok.*;
 
-@Builder
+@Entity
+@Table(name="item")
 @Getter
 @Setter
-@AllArgsConstructor
-@NoArgsConstructor
 @ToString
-@Entity
-@Table(name = "item")
 public class Item extends BaseEntity {
 
     @Id
