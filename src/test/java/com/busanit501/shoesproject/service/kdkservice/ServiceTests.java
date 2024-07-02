@@ -1,10 +1,5 @@
 package com.busanit501.shoesproject.service.kdkservice;
 
-import com.busanit501.shoesproject.domain.kdkdomain.Cart;
-import com.busanit501.shoesproject.domain.kdkdomain.Item;
-import com.busanit501.shoesproject.domain.lsjdomain.ShoesMember;
-import com.busanit501.shoesproject.dto.kdkdto.CartDetailDTO;
-import com.busanit501.shoesproject.dto.kdkdto.CartItemDTO;
 import com.busanit501.shoesproject.repository.kdkrepository.CartRepository;
 import com.busanit501.shoesproject.repository.kdkrepository.ItemRepository;
 import com.busanit501.shoesproject.repository.lsjrepository.lsjShoesRepository;
@@ -14,9 +9,6 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
-import java.util.Optional;
 
 @SpringBootTest
 @Log4j2

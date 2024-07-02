@@ -15,7 +15,9 @@ import java.util.Set;
 public class ShoesMember extends  BaseEntity {
 
     @Id
+    @Column(name = "memberId")
     private String memberId;
+
     private String memberPw;
     private String memberName ;
     private String memberPhone;

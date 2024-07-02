@@ -3,6 +3,9 @@ package com.busanit501.shoesproject.config;
 import com.busanit501.shoesproject.security.CustomUserDetailsService;
 import com.busanit501.shoesproject.security.handler.Custom403Handler;
 import com.busanit501.shoesproject.security.handler.CustomSocialLoginSuccessHandler;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
@@ -12,8 +15,10 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
@@ -21,6 +26,7 @@ import org.springframework.security.web.authentication.rememberme.JdbcTokenRepos
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 
 import javax.sql.DataSource;
+import java.io.IOException;
 
 @Log4j2
 @Configuration
@@ -29,7 +35,7 @@ import javax.sql.DataSource;
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 //@EnableMethodSecurity
 @EnableWebSecurity
-public class CustomSecurityConfig {
+public class CustomSecurityConfig implements AuthenticationEntryPoint {
     private final DataSource dataSource;
     private final CustomUserDetailsService customUserDetailsService;
 
@@ -145,6 +151,12 @@ public class CustomSecurityConfig {
     @Bean
     public AccessDeniedHandler accessDeniedHandler() {
         return new Custom403Handler();
+    }
+
+    @Override
+    public void commence(HttpServletRequest request, HttpServletResponse response,
+                         AuthenticationException authException) throws IOException, ServletException {
+        response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Unauthorized");
     }
 
 
