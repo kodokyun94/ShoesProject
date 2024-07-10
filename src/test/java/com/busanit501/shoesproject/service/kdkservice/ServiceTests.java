@@ -1,8 +1,8 @@
 package com.busanit501.shoesproject.service.kdkservice;
 
-import com.busanit501.shoesproject.repository.kdkrepository.CartRepository;
-import com.busanit501.shoesproject.repository.kdkrepository.ItemRepository;
-import com.busanit501.shoesproject.repository.lsjrepository.lsjShoesRepository;
+import com.busanit501.shoesproject.repository.CartRepository;
+import com.busanit501.shoesproject.repository.ItemRepository;
+import com.busanit501.shoesproject.repository.MemberRepository;
 import lombok.extern.log4j.Log4j2;
 import org.junit.jupiter.api.Test;
 import org.modelmapper.ModelMapper;
@@ -20,7 +20,7 @@ public class ServiceTests {
     @Autowired
     private ModelMapper modelMapper;
     @Autowired
-    private lsjShoesRepository memberRepository;
+    private MemberRepository memberRepository;
     @Autowired
     private CartRepository cartRepository;
 

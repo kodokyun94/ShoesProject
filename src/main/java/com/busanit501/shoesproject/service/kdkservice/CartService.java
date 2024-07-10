@@ -3,18 +3,16 @@ package com.busanit501.shoesproject.service.kdkservice;
 import com.busanit501.shoesproject.domain.kdkdomain.Cart;
 import com.busanit501.shoesproject.domain.kdkdomain.CartItem;
 import com.busanit501.shoesproject.domain.kdkdomain.Item;
-import com.busanit501.shoesproject.domain.lsjdomain.ShoesMember;
-import com.busanit501.shoesproject.domain.nhjdomain.Size;
+import com.busanit501.shoesproject.domain.Member;
+import com.busanit501.shoesproject.dto.CartDetailDto;
 import com.busanit501.shoesproject.dto.kdkdto.*;
-import com.busanit501.shoesproject.repository.kdkrepository.CartItemRepository;
-import com.busanit501.shoesproject.repository.kdkrepository.CartRepository;
-import com.busanit501.shoesproject.repository.kdkrepository.ItemRepository;
-import com.busanit501.shoesproject.repository.lsjrepository.lsjShoesRepository;
-import com.busanit501.shoesproject.repository.nhjrepository.SizeRepository;
+import com.busanit501.shoesproject.repository.CartItemRepository;
+import com.busanit501.shoesproject.repository.CartRepository;
+import com.busanit501.shoesproject.repository.ItemRepository;
+import com.busanit501.shoesproject.repository.MemberRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
-import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.thymeleaf.util.StringUtils;
@@ -31,7 +29,7 @@ public class CartService {
 
     private final ItemRepository itemRepository;
     // 합치기 수정
-    private final lsjShoesRepository memberRepository;
+    private final MemberRepository memberRepository;
     private final CartRepository cartRepository;
     private final CartItemRepository cartItemRepository;
     private final OrderService orderService;
@@ -42,8 +40,8 @@ public class CartService {
                 .orElseThrow(EntityNotFoundException::new);
         log.info("CartService cartItemDto 확인 2: " + item);
         // 합치기 수정
-        Optional<ShoesMember> result = memberRepository.findByMemberId(memberId);
-        ShoesMember member = result.orElseThrow();
+        Optional<Member> result = memberRepository.findByMemberId(memberId);
+        Member member = result.orElseThrow();
         log.info("CartService member 확인 3: " + member);
         // 합치기 수정
         Cart cart = cartRepository.findByShoesMemberMemberId(member.getMemberId());
@@ -76,8 +74,8 @@ public class CartService {
 
         // 합치기 수정
         //ShopMember shopMember = memberRepository.findByEmail(email);
-        Optional<ShoesMember> result = memberRepository.findByMemberId(memberId);
-        ShoesMember member = result.orElseThrow();
+        Optional<Member> result = memberRepository.findByMemberId(memberId);
+        Member member = result.orElseThrow();
         Cart cart = cartRepository.findByShoesMemberMemberId(member.getMemberId());
         if (cart == null) {
             return cartDetailDtoList;
@@ -92,11 +90,11 @@ public class CartService {
         // 합치기 수정
 
 //        ShopMember curShopMember = memberRepository.findByEmail(email);
-        Optional<ShoesMember> result = memberRepository.findByMemberId(memberId);
-        ShoesMember curMember = result.orElseThrow();
+        Optional<Member> result = memberRepository.findByMemberId(memberId);
+        Member curMember = result.orElseThrow();
         CartItem cartItem = cartItemRepository.findById(cartItemId)
                 .orElseThrow(EntityNotFoundException::new);
-        ShoesMember savedMember = cartItem.getCart().getShoesMember();
+        Member savedMember = cartItem.getCart().getMember();
 
         if (!StringUtils.equals(curMember.getMemberEmail(), savedMember.getMemberEmail())) {
             return false;

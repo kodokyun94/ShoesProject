@@ -1,8 +1,7 @@
 package com.busanit501.shoesproject.repository.mjsrepository;
 
 
-import com.busanit501.shoesproject.domain.mjsdomain.Member2;
-import com.busanit501.shoesproject.domain.mjsdomain.Reply;
+import com.busanit501.shoesproject.domain.Reply;
 import com.busanit501.shoesproject.domain.mjsdomain.Shoes;
 import lombok.extern.log4j.Log4j2;
 import org.junit.jupiter.api.Test;

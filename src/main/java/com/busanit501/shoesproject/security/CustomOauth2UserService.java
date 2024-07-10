@@ -1,8 +1,8 @@
 package com.busanit501.shoesproject.security;
 
-import com.busanit501.shoesproject.domain.lsjdomain.ShoesMember;
-import com.busanit501.shoesproject.domain.lsjdomain.ShoesRole;
-import com.busanit501.shoesproject.repository.lsjrepository.lsjShoesRepository;
+import com.busanit501.shoesproject.domain.Member;
+import com.busanit501.shoesproject.domain.kdkdomain.MemberRole;
+import com.busanit501.shoesproject.repository.MemberRepository;
 import com.busanit501.shoesproject.security.dto.ShoesSecurityDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -25,7 +25,7 @@ import java.util.stream.Collectors;
 @Log4j2
 @RequiredArgsConstructor
 public class CustomOauth2UserService extends DefaultOAuth2UserService {
-    private final lsjShoesRepository lsjShoesRepository;
+    private final MemberRepository MemberRepository;
     private final PasswordEncoder passwordEncoder;
 
     // 카카오 소셜 로그인시 , 로그인 로직 처리를 여기서 함.
@@ -70,24 +70,24 @@ public class CustomOauth2UserService extends DefaultOAuth2UserService {
 
     private ShoesSecurityDTO generateDTO( String email, String phone , Map<String, Object> paramMap) {
 
-        Optional<ShoesMember> result = lsjShoesRepository.findByMemberEmail(email);
+        Optional<Member> result = MemberRepository.findByEmail(email);
         //디비에 유저가 없다면 , 소셜로그인. (이메일포함)
         // 일반 로그인으로 로그인시 (가입한 이메일)
         if (result.isEmpty()) {
             // 회원 추가 하기, mid: 이메일, 패스워드 : 임시로 무조건 1111 , 로하기.
-            ShoesMember shoesMember = ShoesMember.builder()
+            Member member = Member.builder()
 
-                    .memberId(email)
-                    .memberPw(passwordEncoder.encode("1111"))
+                    .mid(email)
+                    .mpw(passwordEncoder.encode("1111"))
 //                    .memberName(name)
-                    .memberEmail(email)
+                    .email(email)
                     .memberPhone(phone)
                     .memberSocial(true)
                     .build();
 
             //권한, 일반 USER
-            shoesMember.addRole(ShoesRole.USER);
-            lsjShoesRepository.save(shoesMember);
+            member.addRole(MemberRole.USER);
+            MemberRepository.save(member);
 
             ShoesSecurityDTO shoesSecurityDTO = new ShoesSecurityDTO(email,"1111", email,"",
                     phone,true, false, Arrays.asList(
@@ -99,17 +99,17 @@ public class CustomOauth2UserService extends DefaultOAuth2UserService {
         }
 
         else{
-            ShoesMember shoesMember = result.get();
+            Member member = result.get();
             ShoesSecurityDTO shoesSecurityDTO  =
                     new ShoesSecurityDTO(
-                            shoesMember.getMemberId(),
-                            shoesMember.getMemberPw(),
-                            shoesMember.getMemberName(),
-                            shoesMember.getMemberEmail(),
-                            shoesMember.getMemberPhone(),
-                            shoesMember.isMemberSocial(),
-                            shoesMember.isMemberDel(),
-                            shoesMember.getRoleSet().stream().map(
+                            member.getMemberId(),
+                            member.getMemberPw(),
+                            member.getMemberName(),
+                            member.getMemberEmail(),
+                            member.getMemberPhone(),
+                            member.isMemberSocial(),
+                            member.isMemberDel(),
+                            member.getRoleSet().stream().map(
                                     shoesRole -> new SimpleGrantedAuthority("ROLE_" + shoesRole.name())
                             ).collect(Collectors.toList())
                     );

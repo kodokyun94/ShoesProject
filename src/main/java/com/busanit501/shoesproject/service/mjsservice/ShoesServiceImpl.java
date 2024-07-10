@@ -1,6 +1,6 @@
 package com.busanit501.shoesproject.service.mjsservice;
 
-import com.busanit501.shoesproject.domain.mjsdomain.Reply;
+import com.busanit501.shoesproject.domain.Reply;
 import com.busanit501.shoesproject.domain.mjsdomain.Shoes;
 import com.busanit501.shoesproject.dto.mjsdto.PageRequestDTO;
 import com.busanit501.shoesproject.dto.mjsdto.PageResponseDTO;

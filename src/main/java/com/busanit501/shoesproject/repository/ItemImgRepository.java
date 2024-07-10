@@ -1,0 +1,17 @@
+package com.busanit501.shoesproject.repository;
+
+
+import com.busanit501.shoesproject.domain.ItemImg;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import java.util.List;
+
+public interface ItemImgRepository extends JpaRepository<ItemImg, Long> {
+
+    List<ItemImg> findByItemIdOrderByIdAsc(Long itemId);
+
+    ItemImg findByItemIdAndRepimgYn(Long itemId, String repimgYn);
+
+    List<ItemImg> findByItemId(Long itemId);
+
+}

@@ -1,6 +1,6 @@
 package com.busanit501.shoesproject.controller.kdkcontroller;
 
-import com.busanit501.shoesproject.dto.kdkdto.CartDetailDto;
+import com.busanit501.shoesproject.dto.CartDetailDto;
 import com.busanit501.shoesproject.dto.kdkdto.CartItemDto;
 import com.busanit501.shoesproject.dto.kdkdto.CartOrderDto;
 import com.busanit501.shoesproject.service.kdkservice.CartService;
@@ -63,7 +63,7 @@ public class CartController {
         log.info("CartController 2-2 principal.getName() :  " + principal.getName());
         log.info("CartController 3 cartDetailList.isEmpty :  " + cartDetailList.isEmpty());
         model.addAttribute("cartItems", cartDetailList);
-        return "shop/cart/cartList";
+        return "shoes/cart";
     }
 
     @PatchMapping(value = "/cartItem/{cartItemId}")

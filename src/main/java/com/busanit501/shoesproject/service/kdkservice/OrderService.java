@@ -4,14 +4,14 @@ import com.busanit501.shoesproject.domain.kdkdomain.Item;
 import com.busanit501.shoesproject.domain.kdkdomain.ItemImg;
 import com.busanit501.shoesproject.domain.kdkdomain.Order;
 import com.busanit501.shoesproject.domain.kdkdomain.OrderItem;
-import com.busanit501.shoesproject.domain.lsjdomain.ShoesMember;
+import com.busanit501.shoesproject.domain.Member;
 import com.busanit501.shoesproject.dto.kdkdto.OrderDto;
 import com.busanit501.shoesproject.dto.kdkdto.OrderHistDto;
 import com.busanit501.shoesproject.dto.kdkdto.OrderItemDto;
-import com.busanit501.shoesproject.repository.kdkrepository.ItemImgRepository;
-import com.busanit501.shoesproject.repository.kdkrepository.ItemRepository;
-import com.busanit501.shoesproject.repository.kdkrepository.OrderRepository;
-import com.busanit501.shoesproject.repository.lsjrepository.lsjShoesRepository;
+import com.busanit501.shoesproject.repository.ItemImgRepository;
+import com.busanit501.shoesproject.repository.ItemRepository;
+import com.busanit501.shoesproject.repository.OrderRepository;
+import com.busanit501.shoesproject.repository.MemberRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -33,7 +33,7 @@ public class OrderService {
     private final ItemRepository itemRepository;
 
     // 합치기 수정
-    private final lsjShoesRepository memberRepository;
+    private final MemberRepository memberRepository;
 
     private final OrderRepository orderRepository;
 
@@ -47,8 +47,8 @@ public class OrderService {
         // 합치기 수정
 
 //        ShopMember shopMember = memberRepository.findByEmail(email);
-        Optional<ShoesMember> result = memberRepository.findByMemberId(memberId);
-        ShoesMember Member = result.orElseThrow();
+        Optional<Member> result = memberRepository.findByMemberId(memberId);
+        Member Member = result.orElseThrow();
 
         List<OrderItem> orderItemList = new ArrayList<>();
         OrderItem orderItem = OrderItem.createOrderItem(item, orderDto.getCount());
@@ -89,13 +89,13 @@ public class OrderService {
     public boolean validateOrder(Long orderId, String memberEmail){
         // 합치기 수정
 //        ShopMember curShopMember = memberRepository.findByEmail(email);
-        Optional<ShoesMember> result = memberRepository.findByMemberEmail(memberEmail);
-        ShoesMember curMember = result.orElseThrow();
+        Optional<Member> result = memberRepository.findByMemberEmail(memberEmail);
+        Member curMember = result.orElseThrow();
 
         Order order = orderRepository.findById(orderId)
                 .orElseThrow(EntityNotFoundException::new);
         // 합치기 수정
-        ShoesMember savedMember = order.getMember();
+        Member savedMember = order.getMember();
 
         if(!StringUtils.equals(curMember.getMemberEmail(), savedMember.getMemberEmail())){
             return false;
@@ -113,8 +113,8 @@ public class OrderService {
     public Long orders(List<OrderDto> orderDtoList, String memberId){
 // 합치기 수정
 //        ShopMember shopMember = memberRepository.findByEmail(email);
-        Optional<ShoesMember> result = memberRepository.findByMemberId(memberId);
-        ShoesMember Member = result.orElseThrow();
+        Optional<Member> result = memberRepository.findByMemberId(memberId);
+        Member Member = result.orElseThrow();
 
         List<OrderItem> orderItemList = new ArrayList<>();
 

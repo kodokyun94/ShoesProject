@@ -1,8 +1,8 @@
 package com.busanit501.shoesproject.security;
 
-import com.busanit501.shoesproject.domain.lsjdomain.ShoesMember;
+import com.busanit501.shoesproject.domain.Member;
 
-import com.busanit501.shoesproject.repository.lsjrepository.lsjShoesRepository;
+import com.busanit501.shoesproject.repository.MemberRepository;
 import com.busanit501.shoesproject.security.dto.ShoesSecurityDTO;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +24,7 @@ public class CustomUserDetailsService implements UserDetailsService {
     private PasswordEncoder passwordEncoder;
 
     @Autowired
-    private lsjShoesRepository lsjShoesRepository;
+    private MemberRepository MemberRepository;
 
     public CustomUserDetailsService() {
         this.passwordEncoder = new BCryptPasswordEncoder();
@@ -36,23 +36,23 @@ public class CustomUserDetailsService implements UserDetailsService {
         log.info("CustomUserDetailsService loadUserByUsername 확인 : "+ username);
 
         // 로그인 한 유저명으로, 디비에서 검색을함.
-        Optional<ShoesMember> result = lsjShoesRepository.getWithRoles(username);
+        Optional<Member> result = MemberRepository.getWithRoles(username);
 
         if(result.isEmpty()){
             throw new UsernameNotFoundException("유저가 존재하지 않습니다");
         }
 
-        ShoesMember shoesMember = result.get();
+        Member member = result.get();
 
         ShoesSecurityDTO shoesSecurityDTO = new ShoesSecurityDTO(
-          shoesMember.getMemberId(),
-          shoesMember.getMemberPw(),
-          shoesMember.getMemberName(),
-          shoesMember.getMemberEmail(),
-          shoesMember.getMemberPhone(),
+          member.getMemberId(),
+          member.getMemberPw(),
+          member.getMemberName(),
+          member.getMemberEmail(),
+          member.getMemberPhone(),
         false,
-            shoesMember.isMemberDel(),
-                shoesMember.getRoleSet().stream().map(
+            member.isMemberDel(),
+                member.getRoleSet().stream().map(
                     memberRole -> new SimpleGrantedAuthority("ROLE_"+ memberRole.name())
             ).collect(Collectors.toList())
         );

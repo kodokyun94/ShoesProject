@@ -2,7 +2,7 @@ package com.busanit501.shoesproject.service.kdkservice;
 
 
 import com.busanit501.shoesproject.domain.kdkdomain.ItemImg;
-import com.busanit501.shoesproject.repository.kdkrepository.ItemImgRepository;
+import com.busanit501.shoesproject.repository.ItemImgRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -10,6 +10,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import org.thymeleaf.util.StringUtils;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -55,6 +57,23 @@ public class ItemImgService {
             String imgName = fileService.uploadFile(itemImgLocation, oriImgName, itemImgFile.getBytes());
             String imgUrl = "/images/item/" + imgName;
             savedItemImg.updateItemImg(oriImgName, imgName, imgUrl);
+        }
+    }
+
+    public void deleteItemImg(Long itemId) throws Exception{
+        //상품 등록시 , 반드시 이미지 등록
+//        ItemImg savedItemImg = itemImgRepository.findById(itemImgId)
+//                .orElseThrow(EntityNotFoundException::new);
+        List<ItemImg> result = itemImgRepository.findByItemItemId(itemId);
+        if(result != null && !result.isEmpty()){
+            for(ItemImg itemImg : result){
+                //기존 이미지 파일 삭제
+                if(!StringUtils.isEmpty(itemImg.getImgName())) {
+                    fileService.deleteFile(itemImgLocation+"/"+
+                            itemImg.getImgName());
+                }
+                itemImgRepository.deleteById(itemImg.getId());
+            }
         }
     }
 
