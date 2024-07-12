@@ -1,14 +1,18 @@
 package com.busanit501.shoesproject.service.kdkservice;
 
 
+import com.busanit501.shoesproject.domain.kdkdomain.CartItem;
 import com.busanit501.shoesproject.domain.kdkdomain.Item;
 import com.busanit501.shoesproject.domain.kdkdomain.ItemImg;
+import com.busanit501.shoesproject.domain.kdkdomain.OrderItem;
 import com.busanit501.shoesproject.dto.kdkdto.ItemFormDto;
 import com.busanit501.shoesproject.dto.kdkdto.ItemImgDto;
 import com.busanit501.shoesproject.dto.kdkdto.ItemSearchDto;
 import com.busanit501.shoesproject.dto.kdkdto.MainItemDto;
-import com.busanit501.shoesproject.repository.kdkrepository.ItemImgRepository;
-import com.busanit501.shoesproject.repository.kdkrepository.ItemRepository;
+import com.busanit501.shoesproject.repository.CartItemRepository;
+import com.busanit501.shoesproject.repository.ItemImgRepository;
+import com.busanit501.shoesproject.repository.ItemRepository;
+import com.busanit501.shoesproject.repository.OrderItemRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -19,6 +23,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -30,6 +35,10 @@ public class ItemService {
     private final ItemImgService itemImgService;
 
     private final ItemImgRepository itemImgRepository;
+
+    private final CartItemRepository cartItemRepository;
+
+    private final OrderItemRepository orderItemRepository;
 
     public Long saveItem(ItemFormDto itemFormDto, List<MultipartFile> itemImgFileList) throws Exception{
 
@@ -55,7 +64,7 @@ public class ItemService {
 
     @Transactional(readOnly = true)
     public ItemFormDto getItemDtl(Long itemId){
-        List<ItemImg> itemImgList = itemImgRepository.findByItemIdOrderByIdAsc(itemId);
+        List<ItemImg> itemImgList = itemImgRepository.findByItemItemIdOrderByIdAsc(itemId);
         List<ItemImgDto> itemImgDtoList = new ArrayList<>();
         for (ItemImg itemImg : itemImgList) {
             ItemImgDto itemImgDto = ItemImgDto.of(itemImg);
@@ -83,6 +92,28 @@ public class ItemService {
         }
 
         return item.getItemId();
+    }
+
+    //상품 삭제
+    public void deleteItem(Long itemId) throws Exception {
+        //카트에 담긴 상품 삭제
+        Optional<CartItem> cartItemResult = cartItemRepository.findById(itemId);
+        if(cartItemResult.isPresent()){
+            cartItemRepository.deleteById(itemId);
+        }
+        //주문에 담긴 상품 삭제
+        Optional<OrderItem> orderItemResult = orderItemRepository.findById(itemId);
+        if (orderItemResult.isPresent()){
+            orderItemRepository.deleteById(itemId);
+        }
+        // 상품의 이미지들 삭제
+        itemImgService.deleteItemImg(itemId);
+
+        // 상품 삭제
+        itemRepository.deleteById(itemId);
+
+
+
     }
 
     @Transactional(readOnly = true)

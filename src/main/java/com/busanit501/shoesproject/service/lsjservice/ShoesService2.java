@@ -1,7 +1,7 @@
 package com.busanit501.shoesproject.service.lsjservice;
 
 
-import com.busanit501.shoesproject.domain.lsjdomain.ShoesMember;
+import com.busanit501.shoesproject.domain.Member;
 import com.busanit501.shoesproject.dto.lsjdto.ShoesJoinDTO;
 
 public interface ShoesService2 {
@@ -12,9 +12,9 @@ public interface ShoesService2 {
 
     void join(ShoesJoinDTO shoesJoinDTO) throws IdExistException;
 
-    default ShoesMember dtoToEntity(ShoesJoinDTO shoesJoinDTO) {
+    default Member dtoToEntity(ShoesJoinDTO shoesJoinDTO) {
 
-        ShoesMember shoesMember = ShoesMember.builder()
+        Member member = Member.builder()
                 .memberId(shoesJoinDTO.getMemberId())
                 .memberPw(shoesJoinDTO.getMemberPw())
                 .memberName(shoesJoinDTO.getMemberName())
@@ -22,18 +22,18 @@ public interface ShoesService2 {
                 .memberPhone(shoesJoinDTO.getMemberPhone())
                 .build();
 
-        return shoesMember;
+        return member;
     }
 
 //     entityToDTO
 //     화면(DTO) ->  컨트롤러 ->서비스(각 변환작업을함.) - Entity 타입으로 - DB
-    default ShoesJoinDTO entityToDto(ShoesMember shoesMember) {
+    default ShoesJoinDTO entityToDto(Member member) {
         ShoesJoinDTO shoesJoinDTO = ShoesJoinDTO.builder()
-                .memberId(shoesMember.getMemberId())
-                .memberPw(shoesMember.getMemberPw())
-                .memberName(shoesMember.getMemberName())
-                .memberEmail(shoesMember.getMemberEmail())
-                .memberPhone(shoesMember.getMemberPhone())
+                .memberId(member.getMemberId())
+                .memberPw(member.getMemberPw())
+                .memberName(member.getMemberName())
+                .memberEmail(member.getMemberEmail())
+                .memberPhone(member.getMemberPhone())
                 .build();
 
         return shoesJoinDTO;

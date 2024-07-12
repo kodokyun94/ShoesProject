@@ -122,6 +122,7 @@ public class CustomSecurityConfig implements AuthenticationEntryPoint {
         return http.build();
     }
 
+
     private AuthenticationSuccessHandler authenticationSuccessHandler() {
 
         return new CustomSocialLoginSuccessHandler(passwordEncoder());
