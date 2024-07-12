@@ -1,4 +1,4 @@
-package com.busanit501.shoesproject.dto.mjsdto;
+package com.busanit501.shoesproject.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class ShoesImageDTO {
+public class BoardImageDTO {
     private String uuid;
     private String fileName;
     private int ord;

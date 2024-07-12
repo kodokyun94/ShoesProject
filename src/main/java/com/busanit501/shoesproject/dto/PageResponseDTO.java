@@ -1,4 +1,4 @@
-package com.busanit501.shoesproject.dto.mjsdto;
+package com.busanit501.shoesproject.dto;
 
 import lombok.Builder;
 import lombok.Getter;

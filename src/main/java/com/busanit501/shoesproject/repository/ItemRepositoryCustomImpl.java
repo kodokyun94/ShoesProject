@@ -77,8 +77,7 @@ public class ItemRepositoryCustomImpl implements ItemRepositoryCustom{
                 .where(regDtsAfter(itemSearchDto.getSearchDateType()),
                         searchSellStatusEq(itemSearchDto.getSearchSellStatus()),
                         searchByLike(itemSearchDto.getSearchBy(), itemSearchDto.getSearchQuery()))
-                .fetchOne()
-                ;
+                .fetchOne();
 
         return new PageImpl<>(content, pageable, total);
     }

@@ -1,12 +1,11 @@
-package com.busanit501.shoesproject.dto.kdkdto;
+package com.busanit501.shoesproject.dto;
 
 import lombok.Getter;
 import lombok.Setter;
 
 import java.util.List;
 
-@Getter
-@Setter
+@Getter @Setter
 public class CartOrderDto {
 
     private Long cartItemId;

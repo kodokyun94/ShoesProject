@@ -1,4 +1,4 @@
-package com.busanit501.shoesproject.dto.mjsdto;
+package com.busanit501.shoesproject.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -19,15 +19,11 @@ public class ReplyDTO {
     private Long rno;
 
     @NotNull
-    private Long itemId;
+    private Long bno;
     @NotEmpty
-    private String content;
-    @NotEmpty
-    private String memberId;
-    private int rating;
-
-
-
+    private String replyText;
+//    @NotEmpty
+    private String replyer;
 
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime regDate;

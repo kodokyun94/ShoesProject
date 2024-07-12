@@ -1,9 +1,8 @@
-package com.busanit501.shoesproject.dto.kdkdto;
-
+package com.busanit501.shoesproject.dto;
 
 
 import com.busanit501.shoesproject.constant.ItemSellStatus;
-import com.busanit501.shoesproject.domain.kdkdomain.Item;
+import com.busanit501.shoesproject.domain.Item;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;

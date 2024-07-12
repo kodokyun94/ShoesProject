@@ -1,7 +1,7 @@
-package com.busanit501.shoesproject.dto.kdkdto;
+package com.busanit501.shoesproject.dto;
 
 
-import com.busanit501.shoesproject.domain.kdkdomain.ItemImg;
+import com.busanit501.shoesproject.domain.ItemImg;
 import lombok.Getter;
 import lombok.Setter;
 import org.modelmapper.ModelMapper;

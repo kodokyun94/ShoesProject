@@ -1,4 +1,4 @@
-package com.busanit501.shoesproject.dto.mjsdto.upload;
+package com.busanit501.shoesproject.dto.upload;
 
 import lombok.Data;
 import org.springframework.web.multipart.MultipartFile;

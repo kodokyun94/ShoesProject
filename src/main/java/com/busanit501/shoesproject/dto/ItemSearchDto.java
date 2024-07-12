@@ -1,4 +1,4 @@
-package com.busanit501.shoesproject.dto.kdkdto;
+package com.busanit501.shoesproject.dto;
 
 
 import com.busanit501.shoesproject.constant.ItemSellStatus;

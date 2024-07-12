@@ -1,9 +1,9 @@
 package com.busanit501.shoesproject.security;
 
 import com.busanit501.shoesproject.domain.Member;
-import com.busanit501.shoesproject.domain.kdkdomain.MemberRole;
+import com.busanit501.shoesproject.domain.MemberRole;
 import com.busanit501.shoesproject.repository.MemberRepository;
-import com.busanit501.shoesproject.security.dto.ShoesSecurityDTO;
+import com.busanit501.shoesproject.security.dto.MemberSecurityDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -25,7 +25,7 @@ import java.util.stream.Collectors;
 @Log4j2
 @RequiredArgsConstructor
 public class CustomOauth2UserService extends DefaultOAuth2UserService {
-    private final MemberRepository MemberRepository;
+    private final MemberRepository memberRepository;
     private final PasswordEncoder passwordEncoder;
 
     // 카카오 소셜 로그인시 , 로그인 로직 처리를 여기서 함.
@@ -47,74 +47,71 @@ public class CustomOauth2UserService extends DefaultOAuth2UserService {
         });
 
         String email = null;
-        String phone = null;
-//        String profileUrlThumbnail = null;
+        String profileUrlThumbnail = null;
 
         switch (clientName) {
             case "kakao":
                 // 소셜 로그인 정보에서, 이메일만 추출.
-//                email = getKakaoEmail(paramMap);
-                // 이메일 정보가 없어서, 더미로 일단 테스트
-                email = "lsy1234@naver.com";
+                email = getKakaoEmail(paramMap);
                 // 소셜 로그인 정보에서, 프로필 이미지 외부 미디어 서버 주소 추출.
-//                profileUrlThumbnail = getKakaoProfile(paramMap);
-//                profileUrlThumbnail = null;
+                profileUrlThumbnail = getKakaoProfile(paramMap);
                 break;
         }
 
         log.info("CustomOauth2UserService : email = " + email);
 
 
-        return generateDTO(email,phone, paramMap);
+        return generateDTO(email,profileUrlThumbnail, paramMap);
     }
 
-    private ShoesSecurityDTO generateDTO( String email, String phone , Map<String, Object> paramMap) {
+    private MemberSecurityDTO generateDTO(String email, String profile_img , Map<String, Object> paramMap) {
 
-        Optional<Member> result = MemberRepository.findByEmail(email);
+        Optional<Member> result = memberRepository.findByEmail(email);
         //디비에 유저가 없다면 , 소셜로그인. (이메일포함)
         // 일반 로그인으로 로그인시 (가입한 이메일)
         if (result.isEmpty()) {
             // 회원 추가 하기, mid: 이메일, 패스워드 : 임시로 무조건 1111 , 로하기.
             Member member = Member.builder()
-
                     .mid(email)
                     .mpw(passwordEncoder.encode("1111"))
-//                    .memberName(name)
                     .email(email)
-                    .memberPhone(phone)
-                    .memberSocial(true)
+                    .social(true)
+                    .profileImageServer(profile_img)
                     .build();
-
             //권한, 일반 USER
             member.addRole(MemberRole.USER);
-            MemberRepository.save(member);
+            memberRepository.save(member);
 
-            ShoesSecurityDTO shoesSecurityDTO = new ShoesSecurityDTO(email,"1111", email,"",
-                    phone,true, false, Arrays.asList(
+            // entitty -> DTO
+            MemberSecurityDTO memberSecurityDTO =
+                    new MemberSecurityDTO(email, "1111", email,
+                            false, true, null, null, profile_img, Arrays.asList(
                             new SimpleGrantedAuthority("ROLE_USER")
-            ));
-            shoesSecurityDTO.setProps(paramMap);
-            log.info("소셜 로그인 , 최초 로그인 했을 경우, 성공 후 반환");
-            return shoesSecurityDTO;
-        }
-
-        else{
+                    ),null,null);
+            memberSecurityDTO.setProps(paramMap);
+            return memberSecurityDTO;
+        } // 소셜 로그인 한 정보의 이메일이 디비에 없을 경우
+        // 직접 로그인한 정보가 있다, 디비에 소셜 로그인한 이메일이 존재 한다면
+        else {
             Member member = result.get();
-            ShoesSecurityDTO shoesSecurityDTO  =
-                    new ShoesSecurityDTO(
-                            member.getMemberId(),
-                            member.getMemberPw(),
-                            member.getMemberName(),
-                            member.getMemberEmail(),
-                            member.getMemberPhone(),
-                            member.isMemberSocial(),
-                            member.isMemberDel(),
+            MemberSecurityDTO memberSecurityDTO =
+                    new MemberSecurityDTO(
+                            member.getMid(),
+                            member.getMpw(),
+                            member.getEmail(),
+                            member.isDel(),
+                            member.isSocial(),
+                            member.getUuid(),
+                            member.getFileName(),
+                            member.getProfileImageServer(),
                             member.getRoleSet().stream().map(
-                                    shoesRole -> new SimpleGrantedAuthority("ROLE_" + shoesRole.name())
-                            ).collect(Collectors.toList())
+                                    memberRole -> new SimpleGrantedAuthority("ROLE_" + memberRole.name())
+
+                            ).collect(Collectors.toList()),
+                            member.getMemberName(),
+                            member.getAddress()
                     );
-            log.info("소셜 로그인 , 이미 로그인 했을 경우, 성공 후 반환");
-            return shoesSecurityDTO;
+            return memberSecurityDTO;
         }
     }
 
@@ -130,7 +127,7 @@ public class CustomOauth2UserService extends DefaultOAuth2UserService {
         log.info("CustomOauth2UserService : email = " + email);
         return email;
     }
-// paramMap : 소셜 로그인 정보가 다 들어가 있음.
+    // paramMap : 소셜 로그인 정보가 다 들어가 있음.
     private String getKakaoProfile(Map<String, Object> paramMap) {
         log.info("CustomOauth2UserService : kakao = ");
 

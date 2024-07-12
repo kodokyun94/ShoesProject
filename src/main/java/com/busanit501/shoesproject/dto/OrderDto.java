@@ -1,4 +1,4 @@
-package com.busanit501.shoesproject.dto.kdkdto;
+package com.busanit501.shoesproject.dto;
 
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;

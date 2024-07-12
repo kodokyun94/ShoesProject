@@ -1,4 +1,4 @@
-package com.busanit501.shoesproject.dto.mjsdto.upload;
+package com.busanit501.shoesproject.dto.upload;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

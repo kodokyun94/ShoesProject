@@ -2,6 +2,7 @@ package com.busanit501.shoesproject.repository;
 
 import com.busanit501.shoesproject.domain.Board;
 import com.busanit501.shoesproject.repository.search.BoardSearch;
+import jdk.jfr.Registered;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.EntityGraph;

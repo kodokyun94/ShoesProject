@@ -1,7 +1,7 @@
-package com.busanit501.shoesproject.dto.kdkdto;
+package com.busanit501.shoesproject.dto;
 
 
-import com.busanit501.shoesproject.domain.kdkdomain.OrderItem;
+import com.busanit501.shoesproject.domain.OrderItem;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -9,7 +9,7 @@ import lombok.Setter;
 public class OrderItemDto {
 
     public OrderItemDto(OrderItem orderItem, String imgUrl){
-        this.itemNm = orderItem.getItem().getItemName();
+        this.itemNm = orderItem.getItem().getItemNm();
         this.count = orderItem.getCount();
         this.orderPrice = orderItem.getOrderPrice();
         this.imgUrl = imgUrl;
