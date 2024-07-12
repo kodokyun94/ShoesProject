@@ -15,7 +15,7 @@ public interface ReplyRepository extends JpaRepository<Reply, Long> {
     //삭제 기능.
     void deleteByBoard_Bno (Long bno);
 
-    //추가 기능.
+    //추가 기능..
     // 1번 게시글 board_bno 에 있는 모든 댓글 다 조회.
     List<Reply> findByBoardBno(Long bno);
 }
