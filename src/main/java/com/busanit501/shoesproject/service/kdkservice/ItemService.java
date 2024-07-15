@@ -1,14 +1,6 @@
 package com.busanit501.shoesproject.service.kdkservice;
 
 
-import com.busanit501.shoesproject.domain.kdkdomain.CartItem;
-import com.busanit501.shoesproject.domain.kdkdomain.Item;
-import com.busanit501.shoesproject.domain.kdkdomain.ItemImg;
-import com.busanit501.shoesproject.domain.kdkdomain.OrderItem;
-import com.busanit501.shoesproject.dto.kdkdto.ItemFormDto;
-import com.busanit501.shoesproject.dto.kdkdto.ItemImgDto;
-import com.busanit501.shoesproject.dto.kdkdto.ItemSearchDto;
-import com.busanit501.shoesproject.dto.kdkdto.MainItemDto;
 import com.busanit501.shoesproject.repository.CartItemRepository;
 import com.busanit501.shoesproject.repository.ItemImgRepository;
 import com.busanit501.shoesproject.repository.ItemRepository;

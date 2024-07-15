@@ -1,7 +1,7 @@
 package com.busanit501.shoesproject.service.kdkservice;
 
 
-import com.busanit501.shoesproject.domain.kdkdomain.ItemImg;
+import com.busanit501.shoesproject.domain.ItemImg;
 import com.busanit501.shoesproject.repository.ItemImgRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -64,7 +64,7 @@ public class ItemImgService {
         //상품 등록시 , 반드시 이미지 등록
 //        ItemImg savedItemImg = itemImgRepository.findById(itemImgId)
 //                .orElseThrow(EntityNotFoundException::new);
-        List<ItemImg> result = itemImgRepository.findByItemItemId(itemId);
+        List<ItemImg> result = itemImgRepository.findByItemId(itemId);
         if(result != null && !result.isEmpty()){
             for(ItemImg itemImg : result){
                 //기존 이미지 파일 삭제

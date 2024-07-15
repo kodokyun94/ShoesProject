@@ -1,8 +1,7 @@
 package com.busanit501.shoesproject.controller.kdkcontroller;
 
-import com.busanit501.shoesproject.dto.CartDetailDto;
-import com.busanit501.shoesproject.dto.kdkdto.CartItemDto;
-import com.busanit501.shoesproject.dto.kdkdto.CartOrderDto;
+import com.busanit501.shoesproject.dto.CartDetailDTO;
+import com.busanit501.shoesproject.dto.CartItemDTO;
 import com.busanit501.shoesproject.service.kdkservice.CartService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -27,7 +26,7 @@ public class CartController {
     private final CartService cartService;
 
     @PostMapping(value = "/cart")
-    public @ResponseBody ResponseEntity order(@RequestBody @Valid CartItemDto cartItemDto, BindingResult bindingResult, Principal principal) {
+    public @ResponseBody ResponseEntity order(@RequestBody @Valid CartItemDTO cartItemDTO, BindingResult bindingResult, Principal principal) {
 
         if (bindingResult.hasErrors()) {
             StringBuilder sb = new StringBuilder();
@@ -39,14 +38,14 @@ public class CartController {
 
             return new ResponseEntity<String>(sb.toString(), HttpStatus.BAD_REQUEST);
         }
-        log.info("CartController 1 cartItemDto : " + cartItemDto);
+        log.info("CartController 1 cartItemDto : " + cartItemDTO);
         String mid = principal.getName();
         Long cartItemId;
         log.info("CartController 2 mid = email : " + mid);
 
         try {
             log.info("CartController 3 addCart 전 : ");
-            cartItemId = cartService.addCart(cartItemDto, mid);
+            cartItemId = cartService.addCart(cartItemDTO, mid);
             log.info("CartController 4 addCart 후 : ");
         } catch (Exception e) {
             return new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
@@ -58,7 +57,7 @@ public class CartController {
     @GetMapping(value = "/cart")
     public String orderHist(Principal principal, Model model) {
         log.info("CartController 1 orderHist ");
-        List<CartDetailDto> cartDetailList = cartService.getCartList(principal.getName());
+        List<CartDetailDTO> cartDetailList = cartService.getCartList(principal.getName());
         log.info("CartController 2 orderHist ");
         log.info("CartController 2-2 principal.getName() :  " + principal.getName());
         log.info("CartController 3 cartDetailList.isEmpty :  " + cartDetailList.isEmpty());

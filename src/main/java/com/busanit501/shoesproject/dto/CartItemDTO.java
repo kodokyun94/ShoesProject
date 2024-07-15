@@ -5,7 +5,7 @@ import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 @Getter @Setter
-public class CartItemDto {
+public class CartItemDTO {
     @NotNull(message = "상품 아이디는 필수 입력 값 입니다.")
     private Long itemId;
 

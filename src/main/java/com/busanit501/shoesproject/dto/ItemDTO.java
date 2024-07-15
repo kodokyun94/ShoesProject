@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
 
 @Getter
 @Setter
-public class ItemDto {
+public class ItemDTO {
 
     private Long id;
 

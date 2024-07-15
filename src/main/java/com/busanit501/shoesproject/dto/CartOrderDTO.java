@@ -6,10 +6,10 @@ import lombok.Setter;
 import java.util.List;
 
 @Getter @Setter
-public class CartOrderDto {
+public class CartOrderDTO {
 
     private Long cartItemId;
 
-    private List<CartOrderDto> cartOrderDtoList;
+    private List<CartOrderDTO> cartOrderDTOList;
 
 }

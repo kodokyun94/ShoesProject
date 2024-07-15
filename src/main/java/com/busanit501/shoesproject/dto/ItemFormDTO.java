@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Getter @Setter
-public class ItemFormDto {
+public class ItemFormDTO {
 
     private Long id;
 
@@ -31,7 +31,7 @@ public class ItemFormDto {
 
     private ItemSellStatus itemSellStatus;
 
-    private List<ItemImgDto> itemImgDtoList = new ArrayList<>();
+    private List<ItemImgDTO> itemImgDTOList = new ArrayList<>();
 
     private List<Long> itemImgIds = new ArrayList<>();
 
@@ -41,8 +41,8 @@ public class ItemFormDto {
         return modelMapper.map(this, Item.class);
     }
 
-    public static ItemFormDto of(Item item){
-        return modelMapper.map(item,ItemFormDto.class);
+    public static ItemFormDTO of(Item item){
+        return modelMapper.map(item, ItemFormDTO.class);
     }
 
 }

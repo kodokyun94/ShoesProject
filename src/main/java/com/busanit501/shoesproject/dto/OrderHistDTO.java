@@ -11,9 +11,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Getter @Setter
-public class OrderHistDto {
+public class OrderHistDTO {
 
-    public OrderHistDto(Order order){
+    public OrderHistDTO(Order order){
         this.orderId = order.getId();
         this.orderDate = order.getOrderDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
         this.orderStatus = order.getOrderStatus();
@@ -23,11 +23,11 @@ public class OrderHistDto {
     private String orderDate; //주문날짜
     private OrderStatus orderStatus; //주문 상태
 
-    private List<OrderItemDto> orderItemDtoList = new ArrayList<>();
+    private List<OrderItemDTO> orderItemDTOList = new ArrayList<>();
 
     //주문 상품리스트
-    public void addOrderItemDto(OrderItemDto orderItemDto){
-        orderItemDtoList.add(orderItemDto);
+    public void addOrderItemDto(OrderItemDTO orderItemDto){
+        orderItemDTOList.add(orderItemDto);
     }
 
 }

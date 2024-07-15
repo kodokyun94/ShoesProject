@@ -1,13 +1,10 @@
 package com.busanit501.shoesproject.service.kdkservice;
 
-import com.busanit501.shoesproject.domain.kdkdomain.Item;
-import com.busanit501.shoesproject.domain.kdkdomain.ItemImg;
-import com.busanit501.shoesproject.domain.kdkdomain.Order;
-import com.busanit501.shoesproject.domain.kdkdomain.OrderItem;
-import com.busanit501.shoesproject.domain.Member;
-import com.busanit501.shoesproject.dto.kdkdto.OrderDto;
-import com.busanit501.shoesproject.dto.kdkdto.OrderHistDto;
-import com.busanit501.shoesproject.dto.kdkdto.OrderItemDto;
+
+import com.busanit501.shoesproject.domain.*;
+import com.busanit501.shoesproject.dto.OrderDTO;
+import com.busanit501.shoesproject.dto.OrderHistDTO;
+import com.busanit501.shoesproject.dto.OrderItemDTO;
 import com.busanit501.shoesproject.repository.ItemImgRepository;
 import com.busanit501.shoesproject.repository.ItemRepository;
 import com.busanit501.shoesproject.repository.OrderRepository;
@@ -39,7 +36,7 @@ public class OrderService {
 
     private final ItemImgRepository itemImgRepository;
 
-    public Long order(OrderDto orderDto, String memberId){
+    public Long order(OrderDTO orderDto, String memberId){
 
         Item item = itemRepository.findById(orderDto.getItemId())
                 .orElseThrow(EntityNotFoundException::new);
@@ -47,7 +44,7 @@ public class OrderService {
         // 합치기 수정
 
 //        ShopMember shopMember = memberRepository.findByEmail(email);
-        Optional<Member> result = memberRepository.findByMemberId(memberId);
+        Optional<Member> result = memberRepository.findByMid(memberId);
         Member Member = result.orElseThrow();
 
         List<OrderItem> orderItemList = new ArrayList<>();
@@ -57,39 +54,39 @@ public class OrderService {
         Order order = Order.createOrder(Member, orderItemList);
         orderRepository.save(order);
 
-        return order.getOrderId();
+        return order.getId();
     }
 
     @Transactional(readOnly = true)
-    public Page<OrderHistDto> getOrderList(String mid, Pageable pageable) {
+    public Page<OrderHistDTO> getOrderList(String mid, Pageable pageable) {
 
         List<Order> orders = orderRepository.findOrders(mid, pageable);
         Long totalCount = orderRepository.countOrder(mid);
 
-        List<OrderHistDto> orderHistDtos = new ArrayList<>();
+        List<OrderHistDTO> orderHistDtos = new ArrayList<>();
 
         for (Order order : orders) {
-            OrderHistDto orderHistDto = new OrderHistDto(order);
+            OrderHistDTO orderHistDto = new OrderHistDTO(order);
             List<OrderItem> orderItems = order.getOrderItems();
             for (OrderItem orderItem : orderItems) {
-                ItemImg itemImg = itemImgRepository.findByItemItemIdAndRepimgYn
-                        (orderItem.getItem().getItemId(), "Y");
-                OrderItemDto orderItemDto =
-                        new OrderItemDto(orderItem, itemImg.getImgUrl());
+                ItemImg itemImg = itemImgRepository.findByItemIdAndRepimgYn
+                        (orderItem.getItem().getId(), "Y");
+                OrderItemDTO orderItemDto =
+                        new OrderItemDTO(orderItem, itemImg.getImgUrl());
                 orderHistDto.addOrderItemDto(orderItemDto);
             }
 
             orderHistDtos.add(orderHistDto);
         }
 
-        return new PageImpl<OrderHistDto>(orderHistDtos, pageable, totalCount);
+        return new PageImpl<OrderHistDTO>(orderHistDtos, pageable, totalCount);
     }
 
     @Transactional(readOnly = true)
     public boolean validateOrder(Long orderId, String memberEmail){
         // 합치기 수정
 //        ShopMember curShopMember = memberRepository.findByEmail(email);
-        Optional<Member> result = memberRepository.findByMemberEmail(memberEmail);
+        Optional<Member> result = memberRepository.findByEmail(memberEmail);
         Member curMember = result.orElseThrow();
 
         Order order = orderRepository.findById(orderId)
@@ -97,7 +94,7 @@ public class OrderService {
         // 합치기 수정
         Member savedMember = order.getMember();
 
-        if(!StringUtils.equals(curMember.getMemberEmail(), savedMember.getMemberEmail())){
+        if(!StringUtils.equals(curMember.getEmail(), savedMember.getEmail())){
             return false;
         }
 
@@ -110,15 +107,15 @@ public class OrderService {
         order.cancelOrder();
     }
 
-    public Long orders(List<OrderDto> orderDtoList, String memberId){
+    public Long orders(List<OrderDTO> orderDtoList, String memberId){
 // 합치기 수정
 //        ShopMember shopMember = memberRepository.findByEmail(email);
-        Optional<Member> result = memberRepository.findByMemberId(memberId);
+        Optional<Member> result = memberRepository.findByMid(memberId);
         Member Member = result.orElseThrow();
 
         List<OrderItem> orderItemList = new ArrayList<>();
 
-        for (OrderDto orderDto : orderDtoList) {
+        for (OrderDTO orderDto : orderDtoList) {
             Item item = itemRepository.findById(orderDto.getItemId())
                     .orElseThrow(EntityNotFoundException::new);
 
@@ -129,7 +126,7 @@ public class OrderService {
         Order order = Order.createOrder(Member, orderItemList);
         orderRepository.save(order);
 
-        return order.getOrderId();
+        return order.getId();
     }
 
 }
