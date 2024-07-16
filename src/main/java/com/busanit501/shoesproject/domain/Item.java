@@ -1,7 +1,7 @@
 package com.busanit501.shoesproject.domain;
 
 import com.busanit501.shoesproject.constant.ItemSellStatus;
-import com.busanit501.shoesproject.dto.ItemFormDTO;
+import com.busanit501.shoesproject.dto.shop.ItemFormDTO;
 import com.busanit501.shoesproject.exception.OutOfStockException;
 import jakarta.persistence.*;
 import lombok.Getter;

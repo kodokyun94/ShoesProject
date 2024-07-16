@@ -1,8 +1,8 @@
 package com.busanit501.shoesproject.service.kdkservice;
 
-import com.busanit501.shoesproject.repository.CartRepository;
-import com.busanit501.shoesproject.repository.ItemRepository;
-import com.busanit501.shoesproject.repository.MemberRepository;
+import com.busanit501.shoesproject.repository.shop.CartRepository;
+import com.busanit501.shoesproject.repository.shop.ItemRepository;
+import com.busanit501.shoesproject.repository.board.MemberRepository;
 import lombok.extern.log4j.Log4j2;
 import org.junit.jupiter.api.Test;
 import org.modelmapper.ModelMapper;
