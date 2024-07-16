@@ -3,8 +3,11 @@ package com.busanit501.shoesproject.repository;
 
 import com.busanit501.shoesproject.constant.ItemSellStatus;
 import com.busanit501.shoesproject.domain.Item;
-import com.busanit501.shoesproject.dto.kdkdto.ItemSearchDto;
-import com.busanit501.shoesproject.dto.kdkdto.MainItemDto;
+import com.busanit501.shoesproject.domain.QItem;
+import com.busanit501.shoesproject.domain.QItemImg;
+import com.busanit501.shoesproject.dto.ItemSearchDTO;
+import com.busanit501.shoesproject.dto.MainItemDto;
+import com.busanit501.shoesproject.dto.QMainItemDto;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.core.types.dsl.Wildcard;
 import com.querydsl.jpa.impl.JPAQueryFactory;
@@ -51,7 +54,7 @@ public class ItemRepositoryCustomImpl implements ItemRepositoryCustom{
     private BooleanExpression searchByLike(String searchBy, String searchQuery){
 
         if(StringUtils.equals("itemNm", searchBy)){
-            return QItem.item.itemName.like("%" + searchQuery + "%");
+            return QItem.item.itemNm.like("%" + searchQuery + "%");
         } else if(StringUtils.equals("createdBy", searchBy)){
             return QItem.item.createdBy.like("%" + searchQuery + "%");
         }
@@ -60,7 +63,7 @@ public class ItemRepositoryCustomImpl implements ItemRepositoryCustom{
     }
 
     @Override
-    public Page<Item> getAdminItemPage(ItemSearchDto itemSearchDto, Pageable pageable) {
+    public Page<Item> getAdminItemPage(ItemSearchDTO itemSearchDto, Pageable pageable) {
 
         List<Item> content = queryFactory
                 .selectFrom(QItem.item)
@@ -68,7 +71,7 @@ public class ItemRepositoryCustomImpl implements ItemRepositoryCustom{
                         searchSellStatusEq(itemSearchDto.getSearchSellStatus()),
                         searchByLike(itemSearchDto.getSearchBy(),
                                 itemSearchDto.getSearchQuery()))
-                .orderBy(QItem.item.itemName.desc())
+                .orderBy(QItem.item.itemNm.desc())
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
                 .fetch();
@@ -83,28 +86,28 @@ public class ItemRepositoryCustomImpl implements ItemRepositoryCustom{
     }
 
     private BooleanExpression itemNmLike(String searchQuery){
-        return StringUtils.isEmpty(searchQuery) ? null : QItem.item.itemName.like("%" + searchQuery + "%");
+        return StringUtils.isEmpty(searchQuery) ? null : QItem.item.itemNm.like("%" + searchQuery + "%");
     }
 
     @Override
-    public Page<MainItemDto> getMainItemPage(ItemSearchDto itemSearchDto, Pageable pageable) {
+    public Page<MainItemDto> getMainItemPage(ItemSearchDTO itemSearchDto, Pageable pageable) {
         QItem item = QItem.item;
         QItemImg itemImg = QItemImg.itemImg;
 
         List<MainItemDto> content = queryFactory
                 .select(
                         new QMainItemDto(
-                                item.itemId,
-                                item.itemName,
+                                item.id,
+                                item.itemNm,
                                 item.itemDetail,
                                 itemImg.imgUrl,
-                                item.itemPrice)
+                                item.price)
                 )
                 .from(itemImg)
                 .join(itemImg.item, item)
                 .where(itemImg.repimgYn.eq("Y"))
                 .where(itemNmLike(itemSearchDto.getSearchQuery()))
-                .orderBy(item.itemId.desc())
+                .orderBy(item.id.desc())
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
                 .fetch();

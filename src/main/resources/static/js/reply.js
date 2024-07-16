@@ -1,6 +1,6 @@
 //axios 통신 테스트용 함수
-async function getTest(itemId) {
-    const result = await axios.get(`/replies/search/${itemId}`)
+async function getTest(bno) {
+    const result = await axios.get(`/replies/list/${bno}`)
     // console.log("result 확인 : " + result)
     // 데이터 확인용
     // return result.data
@@ -11,14 +11,14 @@ async function getTest(itemId) {
 // page: 페이지번호
 // size: 페이지당 출력 갯수
 // goLast: 마지막에 최신 댓글이 있다면, 마지막 댓글로 가는 여부.
-async function getList({itemId,page,size,goLast}){
-   const result = await axios.get(`/replies/search/${itemId}`,{params : {page,size}})
+async function getList({bno,page,size,goLast}){
+   const result = await axios.get(`/replies/list/${bno}`,{params : {page,size}})
 
     // 마지막 댓글 보러가기
     if(goLast) {
         const total = result.data.total
         const lastPage = parseInt(Math.ceil(total/size))
-        return getList({itemId:itemId, page:lastPage, size:size})
+        return getList({bno:bno, page:lastPage, size:size})
     }
 
     return result.data
