@@ -2,6 +2,11 @@ package com.busanit501.shoesproject.repository.search;
 
 
 import com.busanit501.shoesproject.domain.Board;
+import com.busanit501.shoesproject.domain.QBoard;
+import com.busanit501.shoesproject.domain.QReply;
+import com.busanit501.shoesproject.dto.board.BoardImageDTO;
+import com.busanit501.shoesproject.dto.board.BoardListAllDTO;
+import com.busanit501.shoesproject.dto.board.BoardListReplyCountDTO;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.Tuple;
 import com.querydsl.core.types.Projections;

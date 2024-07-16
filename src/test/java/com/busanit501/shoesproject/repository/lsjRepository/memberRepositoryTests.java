@@ -3,7 +3,7 @@ package com.busanit501.shoesproject.repository.lsjRepository;
 
 import com.busanit501.shoesproject.domain.Member;
 import com.busanit501.shoesproject.domain.kdkdomain.MemberRole;
-import com.busanit501.shoesproject.repository.MemberRepository;
+import com.busanit501.shoesproject.repository.board.MemberRepository;
 import lombok.extern.log4j.Log4j2;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

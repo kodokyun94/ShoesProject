@@ -2,6 +2,8 @@ package com.busanit501.shoesproject.repository.search;
 
 
 import com.busanit501.shoesproject.domain.Board;
+import com.busanit501.shoesproject.dto.board.BoardListAllDTO;
+import com.busanit501.shoesproject.dto.board.BoardListReplyCountDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 

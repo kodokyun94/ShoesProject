@@ -2,7 +2,7 @@ package com.busanit501.shoesproject.security;
 
 import com.busanit501.shoesproject.domain.Member;
 
-import com.busanit501.shoesproject.repository.MemberRepository;
+import com.busanit501.shoesproject.repository.board.MemberRepository;
 import com.busanit501.shoesproject.security.dto.MemberSecurityDTO;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;

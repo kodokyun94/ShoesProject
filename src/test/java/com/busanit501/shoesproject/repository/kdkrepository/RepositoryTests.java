@@ -2,9 +2,9 @@ package com.busanit501.shoesproject.repository.kdkrepository;
 
 
 import com.busanit501.shoesproject.domain.kdkdomain.Item;
-import com.busanit501.shoesproject.repository.CartItemRepository;
-import com.busanit501.shoesproject.repository.CartRepository;
-import com.busanit501.shoesproject.repository.ItemRepository;
+import com.busanit501.shoesproject.repository.shop.CartItemRepository;
+import com.busanit501.shoesproject.repository.shop.CartRepository;
+import com.busanit501.shoesproject.repository.shop.ItemRepository;
 import lombok.extern.log4j.Log4j2;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,7 +1,7 @@
 package com.busanit501.shoesproject.domain;
 
 import com.busanit501.shoesproject.constant.ItemSellStatus;
-import com.busanit501.shoesproject.dto.kdkdto.ItemFormDto;
+import com.busanit501.shoesproject.dto.shop.ItemFormDTO;
 import com.busanit501.shoesproject.exception.OutOfStockException;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -36,7 +36,7 @@ public class Item extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private ItemSellStatus itemSellStatus; //상품 판매 상태
 
-    public void updateItem(ItemFormDto itemFormDto){
+    public void updateItem(ItemFormDTO itemFormDto){
         this.itemNm = itemFormDto.getItemNm();
         this.price = itemFormDto.getPrice();
         this.stockNumber = itemFormDto.getStockNumber();
